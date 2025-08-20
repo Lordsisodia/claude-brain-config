@@ -1,0 +1,70 @@
+name: Auto Sync Brain Config
+
+on:
+  schedule:
+    # Run every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Configure git
+      run: |
+        git config --global user.name "Claude Brain Auto-Sync"
+        git config --global user.email "noreply@claudebrain.ai"
+    
+    - name: Pull latest changes
+      run: |
+        git pull origin main || true
+    
+    - name: Check for changes
+      id: changes
+      run: |
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Commit and push changes
+      if: steps.changes.outputs.changes == 'true'
+      run: |
+        git add .
+        git commit -m "🧠 Auto-sync: Brain config updates $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+
+        - Automated sync of brain configuration changes
+        - Intelligence system updates
+        - Performance optimizations
+
+        🤖 Generated with Claude Brain Auto-Sync
+        Co-Authored-By: Claude <noreply@anthropic.com>"
+        git push origin main
+    
+    - name: Auto-pull from remote
+      run: |
+        git fetch origin
+        git merge origin/main --no-edit || true
+        git push origin main || true
+
+  notify:
+    needs: sync
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Notify completion
+      run: |
+        echo "🧠 Claude Brain Config auto-sync completed successfully"
+        echo "Repository: https://github.com/Lordsisodia/claude-brain-config"
+        echo "Status: ${{ needs.sync.result }}"
