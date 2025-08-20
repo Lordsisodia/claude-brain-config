@@ -1,0 +1,106 @@
+global:
+  scrape_interval: 60s
+  evaluation_interval: 60s
+  external_labels:
+    cluster: 'ai-federation-cluster'
+    role: 'federation-server'
+
+rule_files:
+  - "federation_alerting_rules.yml"
+
+scrape_configs:
+  # Federation from local Prometheus instances
+  - job_name: 'federate-local'
+    scrape_interval: 30s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        # AI Agent metrics
+        - '{__name__=~"ai_agent_.*"}'
+        - '{__name__=~"ai_model_.*"}'
+        - '{__name__=~"ai_inference_.*"}'
+        - '{__name__=~"ai_emergence_.*"}'
+        - '{__name__=~"ai_anomaly_.*"}'
+        
+        # System metrics (aggregated)
+        - '{__name__=~"up"}'
+        - '{__name__=~".*_duration_.*"}'
+        - '{__name__=~".*_total"}'
+        - '{__name__=~".*_errors_.*"}'
+        
+        # Resource metrics
+        - '{__name__=~"cpu_.*"}'
+        - '{__name__=~"memory_.*"}'
+        - '{__name__=~"gpu_.*"}'
+        - '{__name__=~"network_.*"}'
+    static_configs:
+      - targets:
+        - 'prometheus:9090'
+
+  # Federation from multiple data centers
+  - job_name: 'federate-datacenter-1'
+    scrape_interval: 60s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - '{datacenter="dc1",__name__=~"ai_.*"}'
+        - '{datacenter="dc1",__name__=~"emergence_.*"}'
+    static_configs:
+      - targets:
+        - 'prometheus-dc1.ai-platform.com:9090'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: datacenter
+        replacement: 'dc1'
+
+  - job_name: 'federate-datacenter-2'
+    scrape_interval: 60s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - '{datacenter="dc2",__name__=~"ai_.*"}'
+        - '{datacenter="dc2",__name__=~"emergence_.*"}'
+    static_configs:
+      - targets:
+        - 'prometheus-dc2.ai-platform.com:9090'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: datacenter
+        replacement: 'dc2'
+
+  # High-level cluster metrics
+  - job_name: 'cluster-metrics'
+    scrape_interval: 120s
+    static_configs:
+      - targets: ['cluster-metrics-exporter:9090']
+
+# Long-term storage configuration
+storage:
+  tsdb:
+    retention: '365d'  # 1 year retention for federated data
+    wal_compression: true
+    min_block_duration: '6h'
+    max_block_duration: '24h'
+
+# Remote storage for archival
+remote_write:
+  - url: "https://metrics-archive.ai-platform.com/api/v1/write"
+    queue_config:
+      max_samples_per_send: 50000
+      max_shards: 500
+      capacity: 500000
+      batch_send_deadline: 30s
+    write_relabel_configs:
+      # Only archive critical metrics
+      - source_labels: [__name__]
+        regex: 'ai_(agent|emergence|anomaly)_.*'
+        action: keep
+
+# Query optimization for billion-scale
+query:
+  max_concurrency: 50
+  timeout: 2m
+  max_samples: 50000000

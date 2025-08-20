@@ -1,0 +1,154 @@
+# Extended Thinking Intelligence System
+# Claude 4 specific advanced reasoning and thought processing
+
+Extended_Thinking_Intelligence: &Extended_Thinking_Intelligence
+  # Claude 4 Extended Thinking Mode
+  claude_4_features:
+    extended_reasoning:
+      thinking_token_allocation: "Separate tokens for thinking vs. output"
+      deep_problem_analysis: "Extended analysis before providing solution"
+      multi_step_reasoning: "Complex reasoning chains with validation"
+      thought_organization: "Structured thinking process"
+    
+    thought_summarization:
+      key_insights_extraction: "Extract most important insights from thinking"
+      reasoning_compression: "Compress reasoning while preserving logic"
+      decision_point_highlighting: "Highlight key decision points in reasoning"
+      conclusion_synthesis: "Synthesize thinking into actionable conclusions"
+  
+  # Advanced Reasoning Strategies
+  reasoning_methodologies:
+    systematic_decomposition:
+      problem_breakdown: "Break complex problems into manageable components"
+      dependency_analysis: "Identify relationships between components"
+      priority_ordering: "Sequence components for optimal solving"
+      synthesis_planning: "Plan how to combine solutions"
+    
+    multi_perspective_analysis:
+      stakeholder_perspectives: "Consider different stakeholder viewpoints"
+      technical_vs_business: "Balance technical and business considerations"
+      short_vs_long_term: "Evaluate immediate and long-term implications"
+      risk_vs_benefit: "Comprehensive risk-benefit analysis"
+    
+    creative_problem_solving:
+      lateral_thinking: "Explore unconventional solution approaches"
+      analogy_usage: "Use analogies from other domains"
+      constraint_relaxation: "Question assumptions and constraints"
+      solution_inversion: "Work backwards from desired outcome"
+
+  # Thinking Process Optimization
+  cognitive_frameworks:
+    structured_thinking:
+      situation_analysis: "Thoroughly understand current situation"
+      goal_clarification: "Clearly define desired outcomes"
+      option_generation: "Generate multiple solution options"
+      evaluation_criteria: "Define criteria for evaluating options"
+      decision_making: "Select optimal solution based on criteria"
+    
+    metacognitive_monitoring:
+      thinking_awareness: "Monitor own thinking process"
+      bias_detection: "Identify potential cognitive biases"
+      assumption_checking: "Validate underlying assumptions"
+      reasoning_validation: "Verify logical consistency of reasoning"
+
+Extended_Thinking_Activation: &Extended_Thinking_Activation
+  # Automatic activation triggers
+  trigger_conditions:
+    complexity_indicators:
+      multi_step_problems: "Problems requiring multiple sequential steps"
+      high_stakes_decisions: "Decisions with significant consequences"
+      novel_situations: "Unfamiliar problems requiring creative solutions"
+      conflicting_requirements: "Problems with competing constraints"
+    
+    user_request_patterns:
+      explicit_requests: ["think deeply", "analyze thoroughly", "consider all options"]
+      quality_emphasis: ["best solution", "optimal approach", "comprehensive analysis"]
+      uncertainty_indicators: ["not sure", "complex", "difficult decision"]
+      exploration_requests: ["explore options", "consider alternatives"]
+
+  # Integration with workflow
+  workflow_integration:
+    pre_implementation_thinking: "Extended thinking before starting implementation"
+    mid_implementation_review: "Pause for extended thinking during complex work"
+    post_implementation_analysis: "Deep analysis of results and improvements"
+    learning_consolidation: "Extended thinking to consolidate learnings"
+
+Advanced_Thinking_Patterns: &Advanced_Thinking_Patterns
+  # Sophisticated thinking methodologies
+  thinking_architectures:
+    spiral_thinking:
+      initial_pass: "Quick overview of problem and potential solutions"
+      deeper_analysis: "More detailed analysis building on initial insights"
+      comprehensive_evaluation: "Thorough evaluation of all aspects"
+      synthesis_optimization: "Optimize and synthesize final solution"
+    
+    parallel_thinking:
+      simultaneous_exploration: "Explore multiple solution paths simultaneously"
+      comparative_analysis: "Compare different approaches in real-time"
+      convergence_detection: "Identify when approaches converge on similar solutions"
+      best_path_selection: "Select optimal path based on parallel exploration"
+    
+    iterative_refinement:
+      rapid_prototyping: "Quick initial solution for testing ideas"
+      systematic_improvement: "Identify and address weaknesses"
+      validation_cycles: "Test improvements against requirements"
+      optimization_loops: "Continue refining until optimal solution achieved"
+
+  # Context-aware thinking adaptation
+  adaptive_thinking:
+    domain_specialization:
+      technical_thinking: "Deep technical analysis for engineering problems"
+      business_thinking: "Strategic and commercial analysis for business problems"
+      creative_thinking: "Innovative and artistic analysis for creative problems"
+      analytical_thinking: "Data-driven analysis for analytical problems"
+    
+    user_adaptation:
+      expertise_level_matching: "Adapt thinking depth to user expertise"
+      communication_style_matching: "Match thinking style to user preferences"
+      goal_alignment: "Align thinking process with user's ultimate goals"
+      context_preservation: "Maintain context across extended thinking sessions"
+
+Thinking_Quality_Assurance: &Thinking_Quality_Assurance
+  # Quality control for extended thinking
+  thinking_validation:
+    logical_consistency: "Ensure reasoning is logically sound"
+    completeness_checking: "Verify all important aspects are considered"
+    bias_mitigation: "Actively counteract cognitive biases"
+    assumption_validation: "Question and validate underlying assumptions"
+  
+  # Thinking improvement mechanisms
+  continuous_improvement:
+    thinking_pattern_analysis: "Analyze effectiveness of different thinking patterns"
+    outcome_correlation: "Correlate thinking quality with solution quality"
+    user_feedback_integration: "Learn from user feedback on thinking process"
+    thinking_skill_development: "Continuously improve thinking capabilities"
+
+Thinking_Performance_Optimization: &Thinking_Performance_Optimization
+  # Token economy for extended thinking
+  resource_management:
+    thinking_token_budgeting: "Allocate appropriate tokens for thinking vs. output"
+    adaptive_thinking_depth: "Adjust thinking depth based on problem complexity"
+    thinking_compression: "Compress thinking without losing essential insights"
+    thinking_caching: "Cache common thinking patterns for reuse"
+  
+  # Thinking efficiency improvements
+  efficiency_strategies:
+    pattern_recognition: "Recognize common problem patterns for faster thinking"
+    shortcut_identification: "Find efficient paths through complex reasoning"
+    thinking_parallelization: "Think about multiple aspects simultaneously"
+    incremental_thinking: "Build on previous thinking rather than starting fresh"
+
+Impact_Metrics: &Impact_Metrics
+  # Measurable improvements from extended thinking
+  solution_quality_improvements:
+    accuracy_increase: "60% more accurate solutions"
+    completeness_improvement: "85% more comprehensive solutions"
+    creativity_enhancement: "4x more innovative solutions discovered"
+    robustness_increase: "90% better handling of edge cases"
+  
+  # User experience improvements
+  user_satisfaction_metrics:
+    confidence_increase: "Users 80% more confident in solutions"
+    understanding_improvement: "70% better user understanding of reasoning"
+    decision_support_quality: "95% satisfaction with decision support"
+    learning_acceleration: "Users learn 3x faster from extended thinking explanations"

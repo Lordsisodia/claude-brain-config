@@ -1,0 +1,21 @@
+{
+  "deployment_id": "phase2_deploy_1755534319",
+  "failed_step": "Performance validation",
+  "error": {
+    "success": false,
+    "performance_results": {
+      "system_startup_time": 0.5,
+      "memory_usage_mb": 512,
+      "response_time_ms": 100,
+      "throughput_rps": 1000
+    },
+    "targets": {
+      "system_startup_time": 2.0,
+      "memory_usage_mb": 1024,
+      "response_time_ms": 200,
+      "throughput_rps": 500
+    },
+    "meets_all_targets": false
+  },
+  "timestamp": "2025-08-18T16:25:19.624815"
+}

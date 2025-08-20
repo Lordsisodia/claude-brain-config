@@ -1,0 +1,163 @@
+# Cursor Navigation Intelligence
+# Smart navigation and context awareness for Cursor ecosystem
+
+Cursor_Context_Awareness: &Cursor_Context_Awareness
+  # Intelligent context detection and adaptation
+  context_detection:
+    working_directory_analysis:
+      - "Detect current project type from file patterns"
+      - "Identify tech stack from config files" 
+      - "Determine project priority and status"
+      - "Map dependencies and integrations"
+    
+    project_relationship_mapping:
+      active_clients: "Revenue-critical, high priority, immediate attention"
+      side_quest_clients: "Experimental, lower priority, creative freedom"
+      siso_ecosystem: "Core business, long-term investment, systematic approach"
+      specialized_projects: "Technical depth, innovation focus"
+    
+    tech_stack_recognition:
+      next_js: "package.json + next.config.* → Full-stack React application"
+      vite_react: "vite.config.* + package.json → Fast development React app"
+      supabase: "Database operations, auth, real-time features"
+      python_ai: "*.py + requirements.txt → AI/ML automation project"
+      typescript: "tsconfig.json → Type-safe development"
+
+Smart_Search_Strategies: &Smart_Search_Strategies
+  # Optimized search patterns for different scenarios
+  search_optimization:
+    client_investigation:
+      priority_files: ["CLAUDE.md", "README.md", "package.json"]
+      source_locations: ["src/", "app/", "components/"]
+      config_files: ["*.config.*", ".env*", "settings*"]
+      
+    business_logic_analysis:
+      database_schemas: ["db/", "database/", "schema/", "migrations/"]
+      api_endpoints: ["api/", "routes/", "endpoints/"]
+      business_rules: ["lib/", "utils/", "services/"]
+      
+    integration_discovery:
+      external_services: ["integrations/", "external/", "third-party/"]
+      mcp_configurations: [".mcp.json", "mcp-*.json", "mcp/"]
+      environment_variables: [".env*", "environment*"]
+      
+    documentation_research:
+      project_docs: ["docs/", "documentation/", "*/README.md"]
+      technical_specs: ["specs/", "requirements/", "planning/"]
+      api_documentation: ["api-docs/", "swagger/", "openapi/"]
+
+Intelligent_File_Targeting: &Intelligent_File_Targeting
+  # Precision file location and modification strategies
+  targeting_logic:
+    configuration_updates:
+      global_configs: ["/.claude/", "/config/", "/*config.*"]
+      project_configs: ["package.json", "tsconfig.json", "next.config.*"]
+      environment_configs: [".env*", "environment*"]
+      
+    source_code_modifications:
+      react_components: ["src/components/", "components/", "app/components/"]
+      business_logic: ["src/lib/", "lib/", "utils/", "services/"]
+      api_routes: ["src/api/", "api/", "app/api/"]
+      
+    database_operations:
+      schema_files: ["db/schema/", "database/schema/", "prisma/schema.*"]
+      migration_files: ["db/migrations/", "migrations/", "supabase/migrations/"]
+      seed_files: ["db/seeds/", "seeds/", "data/"]
+      
+    documentation_updates:
+      project_readme: ["README.md", "*/README.md"]
+      technical_docs: ["docs/", "documentation/", "guides/"]
+      api_documentation: ["api-docs/", "docs/api/"]
+
+Project_Priority_Intelligence: &Project_Priority_Intelligence
+  # Dynamic priority assessment and resource allocation
+  priority_assessment:
+    critical_projects:
+      indicators: ["ACTIVE-CLIENTS/mallocra-activities-main", "SISO_ECOSYSTEM/SISO-CLIENT-BASE"]
+      treatment: "Maximum attention, immediate response, thorough testing"
+      backup_requirements: "Always backup before major changes"
+      
+    high_priority_projects:
+      indicators: ["ACTIVE-CLIENTS/*", "claude-improvement/*"]
+      treatment: "Careful planning, systematic approach, quality focus"
+      testing_requirements: "Test before commit"
+      
+    medium_priority_projects:
+      indicators: ["SIDE-QUEST-CLIENTS/*", "SISO_ECOSYSTEM/SISO-DEV-TOOLS"]
+      treatment: "Efficient execution, reasonable quality standards"
+      flexibility: "More experimental freedom allowed"
+      
+    experimental_projects:
+      indicators: ["*/experiments/", "*/prototypes/", "*/POC/"]
+      treatment: "Rapid iteration, learning focus, document insights"
+      risk_tolerance: "Higher risk acceptable for learning"
+
+Auto_Routing_Intelligence: &Auto_Routing_Intelligence
+  # Automatic project and file routing based on context
+  routing_decisions:
+    new_client_work:
+      assessment_criteria:
+        - "Is this paying client work? → ACTIVE-CLIENTS/"
+        - "Is this experimental/proof-of-concept? → SIDE-QUEST-CLIENTS/"
+        - "Is this internal SISO business? → SISO_ECOSYSTEM/"
+      
+      project_setup:
+        - "Create CLIENT-NAME directory in appropriate location"
+        - "Initialize with package.json, README.md, CLAUDE.md"
+        - "Set up standard directory structure (src/, docs/, config/)"
+        - "Configure appropriate tech stack and tooling"
+    
+    feature_development:
+      location_logic:
+        - "Existing project enhancement? → Navigate to project directory"
+        - "SISO platform feature? → SISO_ECOSYSTEM/SISO-CLIENT-BASE/"
+        - "Development tool? → SISO_ECOSYSTEM/SISO-DEV-TOOLS/"
+        - "AI/Claude enhancement? → claude-improvement/"
+    
+    file_modifications:
+      modification_strategy:
+        - "Configuration change? → Locate and modify config files"
+        - "Component update? → Navigate to components directory"
+        - "Business logic? → Find lib/ or services/ directory"
+        - "Database change? → Locate schema and migration files"
+
+Context_Optimization_Rules: &Context_Optimization_Rules
+  # Rules for efficient context usage and navigation
+  optimization_strategies:
+    batch_operations:
+      file_reading: "Read related files in single operation"
+      directory_scanning: "Scan multiple directories concurrently"
+      pattern_matching: "Use glob patterns for efficient file discovery"
+      
+    progressive_disclosure:
+      initial_scan: "High-level project structure and key files"
+      detailed_analysis: "Drill down into specific areas as needed"
+      context_preservation: "Maintain relevant context, discard irrelevant"
+      
+    pattern_recognition:
+      established_patterns: "Recognize and reuse successful approaches"
+      anti_patterns: "Avoid previously problematic strategies"
+      user_preferences: "Adapt to user's preferred working styles"
+      
+    smart_defaults:
+      file_locations: "Use most likely locations based on project type"
+      naming_conventions: "Follow established naming patterns"
+      directory_structures: "Maintain consistent organization"
+
+Ecosystem_Awareness_Integration: &Ecosystem_Awareness_Integration
+  # Integration with broader ecosystem understanding
+  ecosystem_intelligence:
+    cross_project_patterns:
+      - "Recognize common patterns across projects"
+      - "Apply successful solutions from one project to another"
+      - "Identify opportunities for code reuse and standardization"
+      
+    dependency_awareness:
+      - "Understand project interdependencies"
+      - "Map shared resources and configurations"
+      - "Identify impact of changes across projects"
+      
+    evolution_tracking:
+      - "Track project evolution and growth patterns"
+      - "Identify trends in technology adoption"
+      - "Optimize for future scalability and maintenance"

@@ -1,0 +1,21 @@
+date,product_id,product_name,category,sales_amount,quantity,customer_id,region,sales_rep
+2024-01-15,P001,Wireless Headphones,Electronics,299.99,1,C001,North America,John Smith
+2024-01-15,P002,Bluetooth Speaker,Electronics,149.99,2,C002,Europe,Sarah Johnson
+2024-01-16,P003,Smartphone Case,Accessories,29.99,3,C003,Asia Pacific,Mike Chen
+2024-01-16,P001,Wireless Headphones,Electronics,299.99,1,C004,North America,John Smith
+2024-01-17,P004,Laptop Stand,Accessories,89.99,1,C005,Europe,Emma Wilson
+2024-01-17,P005,USB-C Cable,Accessories,19.99,5,C006,Asia Pacific,David Lee
+2024-01-18,P002,Bluetooth Speaker,Electronics,149.99,1,C007,North America,Alice Brown
+2024-01-19,P006,Wireless Mouse,Electronics,49.99,2,C008,Europe,Sarah Johnson
+2024-01-19,P003,Smartphone Case,Accessories,29.99,1,C009,Asia Pacific,Mike Chen
+2024-01-20,P007,Tablet Stand,Accessories,69.99,1,C010,North America,John Smith
+2024-01-20,P008,Power Bank,Electronics,79.99,2,C011,Europe,Emma Wilson
+2024-01-21,P001,Wireless Headphones,Electronics,299.99,1,C012,Asia Pacific,David Lee
+2024-01-22,P009,Screen Protector,Accessories,14.99,4,C013,North America,Alice Brown
+2024-01-22,P010,Charging Pad,Electronics,59.99,1,C014,Europe,Sarah Johnson
+2024-01-23,P002,Bluetooth Speaker,Electronics,149.99,3,C015,Asia Pacific,Mike Chen
+2024-01-23,P004,Laptop Stand,Accessories,89.99,2,C016,North America,John Smith
+2024-01-24,P011,Smart Watch,Electronics,399.99,1,C017,Europe,Emma Wilson
+2024-01-25,P005,USB-C Cable,Accessories,19.99,8,C018,Asia Pacific,David Lee
+2024-01-25,P012,Wireless Keyboard,Electronics,129.99,1,C019,North America,Alice Brown
+2024-01-26,P003,Smartphone Case,Accessories,29.99,2,C020,Europe,Sarah Johnson

@@ -1,0 +1,719 @@
+# AI Agent Swarm DAG with Argo Workflows
+# Orchestrates 10,000+ AI agents across complex multi-stage workflows
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: ai-agent-swarm-orchestration
+  namespace: ai-swarm
+  labels:
+    workflows.argoproj.io/creator: ai-swarm-operator
+spec:
+  entrypoint: ai-swarm-coordinator
+  arguments:
+    parameters:
+    - name: swarm-size
+      value: "10000"
+    - name: batch-size
+      value: "1000"
+    - name: task-type
+      value: "distributed-inference"
+    - name: fault-tolerance-level
+      value: "high"
+    - name: max-retries
+      value: "3"
+  
+  templates:
+  
+  # Main DAG coordinator
+  - name: ai-swarm-coordinator
+    dag:
+      tasks:
+      
+      # Phase 1: Infrastructure Preparation
+      - name: prepare-infrastructure
+        template: infrastructure-setup
+        
+      - name: validate-resources
+        template: resource-validation
+        depends: "prepare-infrastructure"
+        
+      # Phase 2: Agent Initialization (Parallel)
+      - name: spawn-agent-leaders
+        template: spawn-agent-batch
+        depends: "validate-resources"
+        arguments:
+          parameters:
+          - name: agent-role
+            value: "leader"
+          - name: batch-count
+            value: "10"
+        withSequence:
+          count: "10"  # 10 leader agents
+          
+      - name: spawn-agent-coordinators
+        template: spawn-agent-batch
+        depends: "validate-resources"
+        arguments:
+          parameters:
+          - name: agent-role
+            value: "coordinator"
+          - name: batch-count
+            value: "100"
+        withSequence:
+          count: "100"  # 100 coordinator agents
+          
+      - name: spawn-worker-agents
+        template: spawn-agent-batch
+        depends: "spawn-agent-leaders && spawn-agent-coordinators"
+        arguments:
+          parameters:
+          - name: agent-role
+            value: "worker"
+          - name: batch-count
+            value: "{{workflow.parameters.batch-size}}"
+        withSequence:
+          count: "{{workflow.parameters.swarm-size}}"
+          
+      # Phase 3: Swarm Network Formation
+      - name: establish-communication-mesh
+        template: setup-communication-mesh
+        depends: "spawn-worker-agents"
+        
+      - name: initialize-consensus-protocol
+        template: consensus-initialization
+        depends: "establish-communication-mesh"
+        
+      # Phase 4: Task Distribution and Execution
+      - name: distribute-tasks
+        template: task-distribution
+        depends: "initialize-consensus-protocol"
+        arguments:
+          parameters:
+          - name: task-type
+            value: "{{workflow.parameters.task-type}}"
+            
+      - name: execute-parallel-workloads
+        template: parallel-execution
+        depends: "distribute-tasks"
+        withSequence:
+          count: "{{workflow.parameters.batch-size}}"
+          
+      # Phase 5: Results Aggregation and Cleanup
+      - name: aggregate-results
+        template: result-aggregation
+        depends: "execute-parallel-workloads"
+        
+      - name: cleanup-resources
+        template: resource-cleanup
+        depends: "aggregate-results"
+
+  # Infrastructure Setup Template
+  - name: infrastructure-setup
+    container:
+      image: bitnami/kubectl:latest
+      command: [sh, -c]
+      args:
+      - |
+        echo "Setting up infrastructure for {{workflow.parameters.swarm-size}} agents"
+        
+        # Create namespace if not exists
+        kubectl create namespace ai-swarm-workers || true
+        
+        # Setup RBAC
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: ServiceAccount
+        metadata:
+          name: ai-agent-worker
+          namespace: ai-swarm-workers
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRole
+        metadata:
+          name: ai-agent-worker
+        rules:
+        - apiGroups: [""]
+          resources: ["pods", "services", "configmaps", "secrets"]
+          verbs: ["get", "list", "create", "update", "delete"]
+        - apiGroups: ["apps"]
+          resources: ["deployments", "replicasets"]
+          verbs: ["get", "list", "create", "update", "delete"]
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          name: ai-agent-worker
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: ai-agent-worker
+        subjects:
+        - kind: ServiceAccount
+          name: ai-agent-worker
+          namespace: ai-swarm-workers
+        EOF
+        
+        # Setup resource quotas for massive scale
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: ResourceQuota
+        metadata:
+          name: ai-swarm-quota
+          namespace: ai-swarm-workers
+        spec:
+          hard:
+            requests.cpu: "10000"
+            requests.memory: "40000Gi"
+            limits.cpu: "20000"
+            limits.memory: "80000Gi"
+            pods: "15000"
+        EOF
+        
+        echo "Infrastructure setup completed"
+
+  # Resource Validation Template
+  - name: resource-validation
+    container:
+      image: bitnami/kubectl:latest
+      command: [sh, -c]
+      args:
+      - |
+        echo "Validating cluster resources for {{workflow.parameters.swarm-size}} agents"
+        
+        # Check node capacity
+        TOTAL_CPU=$(kubectl get nodes -o jsonpath='{.items[*].status.capacity.cpu}' | tr ' ' '\n' | awk '{s+=$1} END {print s}')
+        TOTAL_MEMORY=$(kubectl get nodes -o jsonpath='{.items[*].status.capacity.memory}' | tr ' ' '\n' | sed 's/Ki//' | awk '{s+=$1} END {print s/1024/1024}')
+        
+        echo "Cluster capacity: ${TOTAL_CPU} cores, ${TOTAL_MEMORY}Gi memory"
+        
+        # Validate sufficient resources
+        REQUIRED_CPU=$(({{workflow.parameters.swarm-size}} / 10))  # 0.1 CPU per agent average
+        REQUIRED_MEMORY=$(({{workflow.parameters.swarm-size}} / 4))  # 256Mi per agent average
+        
+        if [ $TOTAL_CPU -lt $REQUIRED_CPU ]; then
+          echo "ERROR: Insufficient CPU resources. Required: ${REQUIRED_CPU}, Available: ${TOTAL_CPU}"
+          exit 1
+        fi
+        
+        if [ $TOTAL_MEMORY -lt $REQUIRED_MEMORY ]; then
+          echo "ERROR: Insufficient memory resources. Required: ${REQUIRED_MEMORY}Gi, Available: ${TOTAL_MEMORY}Gi"
+          exit 1
+        fi
+        
+        echo "Resource validation passed"
+
+  # Agent Batch Spawning Template
+  - name: spawn-agent-batch
+    inputs:
+      parameters:
+      - name: agent-role
+      - name: batch-count
+    container:
+      image: bitnami/kubectl:latest
+      command: [sh, -c]
+      args:
+      - |
+        ROLE="{{inputs.parameters.agent-role}}"
+        BATCH_SIZE="{{inputs.parameters.batch-count}}"
+        AGENT_INDEX="{{item}}"
+        
+        echo "Spawning batch of ${BATCH_SIZE} ${ROLE} agents (batch #${AGENT_INDEX})"
+        
+        # Generate deployment manifest for agent batch
+        cat <<EOF | kubectl apply -f -
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: ai-agent-${ROLE}-batch-${AGENT_INDEX}
+          namespace: ai-swarm-workers
+          labels:
+            app: ai-agent
+            role: ${ROLE}
+            batch: "${AGENT_INDEX}"
+        spec:
+          replicas: ${BATCH_SIZE}
+          selector:
+            matchLabels:
+              app: ai-agent
+              role: ${ROLE}
+              batch: "${AGENT_INDEX}"
+          template:
+            metadata:
+              labels:
+                app: ai-agent
+                role: ${ROLE}
+                batch: "${AGENT_INDEX}"
+            spec:
+              serviceAccountName: ai-agent-worker
+              containers:
+              - name: ai-agent
+                image: ai-swarm/agent:latest
+                env:
+                - name: AGENT_ROLE
+                  value: ${ROLE}
+                - name: BATCH_ID
+                  value: "${AGENT_INDEX}"
+                - name: WORKFLOW_NAME
+                  value: "{{workflow.name}}"
+                - name: TASK_TYPE
+                  value: "{{workflow.parameters.task-type}}"
+                resources:
+                  requests:
+                    cpu: 100m
+                    memory: 256Mi
+                  limits:
+                    cpu: 1000m
+                    memory: 1Gi
+                ports:
+                - containerPort: 8080
+                  name: http
+                - containerPort: 8090
+                  name: agent-comm
+                livenessProbe:
+                  httpGet:
+                    path: /health
+                    port: 8080
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                readinessProbe:
+                  httpGet:
+                    path: /ready
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+        ---
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: ai-agent-${ROLE}-batch-${AGENT_INDEX}-svc
+          namespace: ai-swarm-workers
+        spec:
+          selector:
+            app: ai-agent
+            role: ${ROLE}
+            batch: "${AGENT_INDEX}"
+          ports:
+          - port: 80
+            targetPort: 8080
+            name: http
+          - port: 8090
+            targetPort: 8090
+            name: agent-comm
+          type: ClusterIP
+        EOF
+        
+        # Wait for deployment to be ready
+        kubectl wait --for=condition=available --timeout=300s deployment/ai-agent-${ROLE}-batch-${AGENT_INDEX} -n ai-swarm-workers
+        
+        echo "Agent batch ${AGENT_INDEX} (${ROLE}) deployment completed"
+    retryStrategy:
+      limit: "{{workflow.parameters.max-retries}}"
+      retryPolicy: "Always"
+      backoff:
+        duration: "30s"
+        factor: 2
+
+  # Communication Mesh Setup
+  - name: setup-communication-mesh
+    container:
+      image: istio/istioctl:latest
+      command: [sh, -c]
+      args:
+      - |
+        echo "Establishing communication mesh for agent swarm"
+        
+        # Create Istio service mesh configuration
+        cat <<EOF | kubectl apply -f -
+        apiVersion: networking.istio.io/v1beta1
+        kind: VirtualService
+        metadata:
+          name: ai-agent-mesh
+          namespace: ai-swarm-workers
+        spec:
+          hosts:
+          - ai-agent-mesh.ai-swarm-workers.svc.cluster.local
+          http:
+          - match:
+            - headers:
+                agent-role:
+                  exact: leader
+            route:
+            - destination:
+                host: ai-agent-leader-svc
+              weight: 100
+          - match:
+            - headers:
+                agent-role:
+                  exact: coordinator
+            route:
+            - destination:
+                host: ai-agent-coordinator-svc
+              weight: 100
+          - route:
+            - destination:
+                host: ai-agent-worker-svc
+              weight: 100
+        ---
+        apiVersion: networking.istio.io/v1beta1
+        kind: DestinationRule
+        metadata:
+          name: ai-agent-mesh-dr
+          namespace: ai-swarm-workers
+        spec:
+          host: "*.ai-swarm-workers.svc.cluster.local"
+          trafficPolicy:
+            loadBalancer:
+              consistentHash:
+                httpHeaderName: "agent-id"
+            connectionPool:
+              tcp:
+                maxConnections: 1000
+              http:
+                http1MaxPendingRequests: 100
+                maxRequestsPerConnection: 10
+        EOF
+        
+        echo "Communication mesh established"
+
+  # Consensus Protocol Initialization
+  - name: consensus-initialization
+    container:
+      image: ai-swarm/consensus:latest
+      command: [sh, -c]
+      args:
+      - |
+        echo "Initializing consensus protocol for swarm coordination"
+        
+        # Create ConfigMap with consensus parameters
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: consensus-config
+          namespace: ai-swarm-workers
+        data:
+          consensus_algorithm: "raft"
+          leader_election_timeout: "5s"
+          heartbeat_interval: "1s"
+          max_log_entries: "10000"
+          batch_size: "{{workflow.parameters.batch-size}}"
+          fault_tolerance: "{{workflow.parameters.fault-tolerance-level}}"
+        EOF
+        
+        # Initialize consensus state
+        python3 -c "
+        import requests
+        import time
+        import json
+        
+        # Wait for leader agents to be ready
+        time.sleep(30)
+        
+        # Initialize consensus with leader agents
+        leaders = []
+        for i in range(10):
+            try:
+                response = requests.get(f'http://ai-agent-leader-batch-{i}-svc.ai-swarm-workers:80/info')
+                if response.status_code == 200:
+                    leaders.append(response.json())
+            except:
+                pass
+        
+        print(f'Found {len(leaders)} leader agents')
+        
+        # Establish consensus network
+        consensus_config = {
+            'leaders': leaders,
+            'algorithm': 'raft',
+            'quorum_size': max(1, len(leaders) // 2 + 1)
+        }
+        
+        for leader in leaders:
+            try:
+                requests.post(
+                    f'http://{leader[\"endpoint\"]}/consensus/init',
+                    json=consensus_config,
+                    timeout=10
+                )
+            except:
+                pass
+        
+        print('Consensus protocol initialized')
+        "
+
+  # Task Distribution Template
+  - name: task-distribution
+    inputs:
+      parameters:
+      - name: task-type
+    container:
+      image: ai-swarm/task-distributor:latest
+      command: [python3, -c]
+      args:
+      - |
+        import requests
+        import json
+        import time
+        import random
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
+        TASK_TYPE = "{{inputs.parameters.task-type}}"
+        SWARM_SIZE = {{workflow.parameters.swarm-size}}
+        BATCH_SIZE = {{workflow.parameters.batch-size}}
+        
+        print(f"Distributing {TASK_TYPE} tasks to {SWARM_SIZE} agents")
+        
+        # Generate tasks based on type
+        def generate_tasks():
+            if TASK_TYPE == "distributed-inference":
+                return [
+                    {
+                        "id": i,
+                        "type": "inference",
+                        "model": "gpt-4",
+                        "input_data": f"task_data_{i}",
+                        "priority": random.randint(1, 10),
+                        "timeout": 300
+                    }
+                    for i in range(SWARM_SIZE * 5)  # 5 tasks per agent on average
+                ]
+            elif TASK_TYPE == "data-processing":
+                return [
+                    {
+                        "id": i,
+                        "type": "data_processing",
+                        "data_source": f"data_chunk_{i}",
+                        "processing_type": "transform",
+                        "priority": random.randint(1, 10),
+                        "timeout": 600
+                    }
+                    for i in range(SWARM_SIZE * 3)
+                ]
+            else:
+                return [{"id": i, "type": "generic", "data": f"task_{i}"} for i in range(SWARM_SIZE)]
+        
+        tasks = generate_tasks()
+        print(f"Generated {len(tasks)} tasks")
+        
+        # Distribute tasks to coordinator agents
+        def distribute_to_coordinator(coordinator_id, task_batch):
+            try:
+                response = requests.post(
+                    f"http://ai-agent-coordinator-batch-{coordinator_id}-svc.ai-swarm-workers:80/tasks/assign",
+                    json={"tasks": task_batch},
+                    timeout=30
+                )
+                return response.status_code == 200
+            except Exception as e:
+                print(f"Error distributing to coordinator {coordinator_id}: {e}")
+                return False
+        
+        # Batch tasks for distribution
+        tasks_per_coordinator = len(tasks) // 100  # 100 coordinators
+        
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            futures = []
+            for i in range(100):
+                start_idx = i * tasks_per_coordinator
+                end_idx = start_idx + tasks_per_coordinator
+                if i == 99:  # Last batch gets remaining tasks
+                    end_idx = len(tasks)
+                
+                task_batch = tasks[start_idx:end_idx]
+                future = executor.submit(distribute_to_coordinator, i, task_batch)
+                futures.append((i, future))
+            
+            # Wait for completion
+            successful = 0
+            for coordinator_id, future in futures:
+                if future.result():
+                    successful += 1
+                    print(f"Successfully distributed tasks to coordinator {coordinator_id}")
+                else:
+                    print(f"Failed to distribute tasks to coordinator {coordinator_id}")
+        
+        print(f"Task distribution completed: {successful}/100 coordinators successful")
+
+  # Parallel Execution Template
+  - name: parallel-execution
+    container:
+      image: ai-swarm/executor:latest
+      command: [python3, -c]
+      args:
+      - |
+        import time
+        import requests
+        import json
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
+        BATCH_ID = "{{item}}"
+        print(f"Starting parallel execution for batch {BATCH_ID}")
+        
+        # Monitor execution progress
+        def monitor_batch_progress():
+            while True:
+                try:
+                    # Get status from coordinator
+                    response = requests.get(
+                        f"http://ai-agent-coordinator-batch-{BATCH_ID}-svc.ai-swarm-workers:80/status",
+                        timeout=10
+                    )
+                    
+                    if response.status_code == 200:
+                        status = response.json()
+                        print(f"Batch {BATCH_ID} - Completed: {status['completed']}/{status['total']} tasks")
+                        
+                        if status['completed'] >= status['total']:
+                            print(f"Batch {BATCH_ID} execution completed")
+                            break
+                    
+                    time.sleep(10)  # Check every 10 seconds
+                    
+                except Exception as e:
+                    print(f"Error monitoring batch {BATCH_ID}: {e}")
+                    time.sleep(30)
+        
+        # Start monitoring
+        monitor_batch_progress()
+
+  # Result Aggregation Template
+  - name: result-aggregation
+    container:
+      image: ai-swarm/aggregator:latest
+      command: [python3, -c]
+      args:
+      - |
+        import requests
+        import json
+        import time
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
+        print("Starting result aggregation from all agent batches")
+        
+        # Collect results from all coordinators
+        def collect_results():
+            all_results = []
+            successful_collections = 0
+            
+            with ThreadPoolExecutor(max_workers=20) as executor:
+                futures = []
+                
+                for i in range(100):  # 100 coordinators
+                    future = executor.submit(collect_coordinator_results, i)
+                    futures.append((i, future))
+                
+                for coordinator_id, future in futures:
+                    try:
+                        results = future.result(timeout=60)
+                        if results:
+                            all_results.extend(results)
+                            successful_collections += 1
+                            print(f"Collected results from coordinator {coordinator_id}")
+                    except Exception as e:
+                        print(f"Failed to collect from coordinator {coordinator_id}: {e}")
+            
+            print(f"Result collection completed: {successful_collections}/100 coordinators")
+            return all_results
+        
+        def collect_coordinator_results(coordinator_id):
+            try:
+                response = requests.get(
+                    f"http://ai-agent-coordinator-batch-{coordinator_id}-svc.ai-swarm-workers:80/results",
+                    timeout=30
+                )
+                
+                if response.status_code == 200:
+                    return response.json().get('results', [])
+                return []
+                
+            except Exception as e:
+                print(f"Error collecting from coordinator {coordinator_id}: {e}")
+                return []
+        
+        # Aggregate and analyze results
+        results = collect_results()
+        
+        # Perform aggregation
+        aggregated = {
+            "total_tasks": len(results),
+            "successful_tasks": len([r for r in results if r.get('status') == 'success']),
+            "failed_tasks": len([r for r in results if r.get('status') == 'failed']),
+            "average_execution_time": sum(r.get('execution_time', 0) for r in results) / max(len(results), 1),
+            "total_processing_time": sum(r.get('execution_time', 0) for r in results),
+            "throughput": len(results) / max(sum(r.get('execution_time', 0) for r in results), 1) if results else 0
+        }
+        
+        print(f"Final aggregation: {json.dumps(aggregated, indent=2)}")
+        
+        # Store results in ConfigMap for access by other workflows
+        import subprocess
+        config_data = json.dumps({
+            "workflow_name": "{{workflow.name}}",
+            "aggregated_results": aggregated,
+            "completion_time": time.time(),
+            "task_type": "{{workflow.parameters.task-type}}"
+        })
+        
+        # Create result ConfigMap
+        cmd = f'''
+        kubectl create configmap workflow-results-{{{{workflow.name}}}} \
+          --from-literal=results='{config_data}' \
+          -n ai-swarm-workers \
+          --dry-run=client -o yaml | kubectl apply -f -
+        '''
+        subprocess.run(cmd, shell=True, check=True)
+        
+        print("Results stored in ConfigMap")
+
+  # Resource Cleanup Template
+  - name: resource-cleanup
+    container:
+      image: bitnami/kubectl:latest
+      command: [sh, -c]
+      args:
+      - |
+        echo "Starting resource cleanup for workflow {{workflow.name}}"
+        
+        # Scale down all deployments to 0
+        kubectl get deployments -n ai-swarm-workers -l app=ai-agent -o name | \
+          xargs -I {} kubectl scale {} --replicas=0 -n ai-swarm-workers
+        
+        # Wait for pods to terminate
+        echo "Waiting for pods to terminate..."
+        kubectl wait --for=delete pods -l app=ai-agent -n ai-swarm-workers --timeout=300s
+        
+        # Delete deployments and services (optional - keep for debugging)
+        # kubectl delete deployments,services -l app=ai-agent -n ai-swarm-workers
+        
+        # Clean up temporary ConfigMaps older than 1 hour
+        kubectl get configmaps -n ai-swarm-workers -o json | \
+          jq -r '.items[] | select(.metadata.name | startswith("workflow-results-")) | select((.metadata.creationTimestamp | fromdateiso8601) < (now - 3600)) | .metadata.name' | \
+          xargs -r kubectl delete configmap -n ai-swarm-workers
+        
+        echo "Resource cleanup completed"
+
+---
+# Cron Workflow for scheduled swarm operations
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: ai-swarm-scheduled
+  namespace: ai-swarm
+spec:
+  schedule: "0 */6 * * *"  # Every 6 hours
+  timezone: "UTC"
+  startingDeadlineSeconds: 300
+  workflowSpec:
+    entrypoint: ai-swarm-coordinator
+    workflowTemplateRef:
+      name: ai-agent-swarm-orchestration
+    arguments:
+      parameters:
+      - name: swarm-size
+        value: "5000"  # Smaller scheduled runs
+      - name: batch-size
+        value: "500"
+      - name: task-type
+        value: "maintenance"
+      - name: fault-tolerance-level
+        value: "medium"

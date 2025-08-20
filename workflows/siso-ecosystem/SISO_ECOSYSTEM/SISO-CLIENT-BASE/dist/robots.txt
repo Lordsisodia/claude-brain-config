@@ -1,0 +1,40 @@
+User-agent: *
+Allow: /
+
+# Allow all industry landing pages
+Allow: /restaurant
+Allow: /fitness
+Allow: /healthcare
+Allow: /barbershop
+Allow: /auto-repair
+Allow: /real-estate
+Allow: /law-firm
+Allow: /beauty
+Allow: /digital-marketing
+Allow: /accounting
+Allow: /home-services
+Allow: /retail
+Allow: /photography
+Allow: /pet-services
+Allow: /construction
+Allow: /cleaning
+Allow: /consulting
+Allow: /video-production
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /client-dashboard/
+Disallow: /partner/
+Disallow: /auth/
+Disallow: /testing/
+Disallow: /debug/
+
+# Allow public pages
+Allow: /portfolio
+Allow: /partnership
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://siso.ai/sitemap.xml

@@ -1,0 +1,163 @@
+# Command Execution Intelligence System
+# Smart command selection and execution based on project context
+
+Command_Context_Intelligence: &Command_Context_Intelligence
+  # Intelligent Command Selection Based on Project Type
+  project_command_mapping:
+    mallocra_activities:
+      dev_commands: ["npm run dev", "npm run dev --turbo"]
+      test_commands: ["npm run test", "npm run test:e2e", "npm run test:e2e:console", "npm run test:booking"]
+      build_commands: ["npm run build", "npm run pre-deploy"]
+      quality_commands: ["npm run type-check", "npm run lint:fix", "npm run format:write", "npm run clean"]
+      db_commands: ["npm run db:generate", "npm run db:migrate"]
+      analysis_commands: ["npm run analyze", "npm run analyze:server", "npm run analyze:browser"]
+      
+    siso_client_base:
+      dev_commands: ["npm run dev"]
+      platform_commands:
+        electron: ["npm run electron:dev", "npm run electron:prod", "npm run electron:build"]
+        tauri: ["npm run tauri:dev", "npm run tauri:build"]
+        whatsapp: ["npm run whatsapp:dev", "npm run whatsapp:prod"]
+        multi: ["npm run multi:dev"]
+      build_commands: ["npm run build", "npm run build:dev"]
+      project_commands: ["npm run project:siso:dev", "npm run project:claudia:dev"]
+      
+    ubahcryp_trading:
+      dev_commands: ["npm run dev"]
+      test_commands: ["npm run test", "npm run test:coverage"]
+      build_commands: ["npm run build", "npm run build:production"]
+      crypto_commands: ["npm run blockchain:test", "npm run wallet:connect"]
+      
+    delta_sports:
+      frontend_commands: ["cd frontend && npm run dev", "cd frontend && npm run build"]
+      backend_commands: ["cd backend && npm run dev", "cd backend && npm run start"]
+      full_stack: ["npm run dev:all", "npm run build:all"]
+
+Execution_Context_Awareness: &Execution_Context_Awareness
+  # Smart execution based on current working directory and project state
+  context_detection:
+    directory_based_execution:
+      root_project: "Execute main project commands"
+      frontend_subdirectory: "Execute frontend-specific commands"
+      backend_subdirectory: "Execute backend-specific commands"
+      monorepo_workspace: "Execute workspace-specific commands"
+      
+    file_based_context:
+      package_json_detection:
+        - "Analyze scripts section for available commands"
+        - "Detect project type from dependencies"
+        - "Identify platform-specific scripts"
+        - "Map testing frameworks and build tools"
+        
+    dependency_based_intelligence:
+      next_js: "next dev, next build, next start"
+      vite: "vite dev, vite build, vite preview"
+      react_scripts: "react-scripts start, react-scripts build"
+      electron: "electron ., electron-dev, electron-prod"
+      tauri: "tauri dev, tauri build"
+
+Smart_Command_Chaining: &Smart_Command_Chaining
+  # Intelligent command sequences for common workflows
+  workflow_commands:
+    development_startup:
+      simple_project: ["npm install", "npm run dev"]
+      complex_project: ["npm install", "npm run type-check", "npm run dev"]
+      full_stack: ["npm install", "cd backend && npm install", "cd frontend && npm install", "npm run dev:all"]
+      
+    quality_assurance:
+      basic: ["npm run lint", "npm run type-check", "npm run test"]
+      comprehensive: ["npm run lint:fix", "npm run format:write", "npm run type-check", "npm run test", "npm run build"]
+      pre_commit: ["npm run clean", "npm run pre-deploy"]
+      
+    deployment_preparation:
+      standard: ["npm run type-check", "npm run lint", "npm run test", "npm run build"]
+      with_analysis: ["npm run analyze", "npm run type-check", "npm run lint", "npm run test", "npm run build"]
+      production: ["npm run pre-deploy", "npm run vercel:build"]
+      
+    database_workflows:
+      schema_update: ["npm run db:generate", "npm run db:migrate"]
+      full_reset: ["supabase db reset", "npm run db:generate", "npm run db:migrate"]
+      testing: ["npm run db:seed", "npm run test:db"]
+
+Error_Recovery_Commands: &Error_Recovery_Commands
+  # Intelligent error recovery and debugging commands
+  recovery_strategies:
+    dependency_issues:
+      node_modules_corruption: ["rm -rf node_modules", "rm package-lock.json", "npm install"]
+      cache_issues: ["npm cache clean --force", "rm -rf .next", "npm run build"]
+      version_conflicts: ["npm audit fix", "npm update", "npm install"]
+      
+    build_failures:
+      type_errors: ["npm run type-check", "npm run lint:fix"]
+      test_failures: ["npm run test -- --verbose", "npm run test:debug"]
+      deployment_issues: ["npm run vercel:check", "npm run build:dev"]
+      
+    development_server_issues:
+      port_conflicts: ["lsof -ti:3000 | xargs kill -9", "npm run dev"]
+      hot_reload_broken: ["rm -rf .next", "npm run dev"]
+      cache_problems: ["npm run dev -- --reset-cache"]
+
+Platform_Specific_Intelligence: &Platform_Specific_Intelligence
+  # Platform-aware command execution
+  platform_commands:
+    electron_development:
+      setup: ["npm install", "npm run build", "npm run electron:dev"]
+      debugging: ["npm run electron:dev -- --debug", "npm run electron:dev -- --inspect"]
+      building: ["npm run electron:build", "npm run electron:build:mac", "npm run electron:build:win"]
+      
+    tauri_development:
+      setup: ["npm install", "cargo install tauri-cli", "npm run tauri:dev"]
+      debugging: ["npm run tauri:dev -- --debug", "tauri dev --debug"]
+      building: ["npm run tauri:build", "tauri build --target universal-apple-darwin"]
+      
+    web_development:
+      standard: ["npm run dev", "npm run build", "npm run preview"]
+      with_https: ["npm run dev:https", "npm run dev -- --https"]
+      production: ["npm run build", "npm run start"]
+      
+    mobile_development:
+      react_native: ["npx react-native start", "npx react-native run-ios", "npx react-native run-android"]
+      expo: ["expo start", "expo build:ios", "expo build:android"]
+
+Intelligent_Script_Detection: &Intelligent_Script_Detection
+  # Advanced script analysis and execution recommendations
+  script_analysis:
+    custom_script_detection:
+      build_scripts: "Identify custom build processes and optimizations"
+      test_scripts: "Map testing frameworks and execution patterns"
+      deployment_scripts: "Understand deployment workflows and requirements"
+      utility_scripts: "Catalog utility and maintenance scripts"
+      
+    script_dependencies:
+      prerequisite_detection: "Identify commands that must run before others"
+      parallel_execution: "Identify scripts that can run concurrently"
+      environment_requirements: "Detect environment variable dependencies"
+      
+    execution_optimization:
+      caching_strategies: "Leverage npm/yarn caching for faster execution"
+      parallel_processing: "Execute independent scripts concurrently"
+      conditional_execution: "Skip unnecessary scripts based on context"
+
+Development_Workflow_Intelligence: &Development_Workflow_Intelligence
+  # Comprehensive development workflow optimization
+  workflow_patterns:
+    feature_development:
+      setup: ["git checkout -b feature/new-feature", "npm install", "npm run dev"]
+      development: ["npm run dev", "npm run test:watch"]
+      testing: ["npm run test", "npm run test:e2e"]
+      completion: ["npm run lint:fix", "npm run type-check", "npm run build", "git commit"]
+      
+    bug_fixing:
+      investigation: ["npm run test", "npm run lint", "npm run type-check"]
+      debugging: ["npm run dev -- --debug", "npm run test -- --verbose"]
+      verification: ["npm run test:affected", "npm run e2e:critical"]
+      
+    refactoring:
+      preparation: ["npm run test", "npm run type-check", "git checkout -b refactor/component"]
+      execution: ["npm run test:watch", "npm run type-check:watch"]
+      validation: ["npm run test:coverage", "npm run build", "npm run lint"]
+      
+    deployment:
+      pre_deployment: ["npm run pre-deploy", "npm run test:e2e"]
+      deployment: ["npm run build", "npm run deploy"]
+      post_deployment: ["npm run test:production", "npm run monitor"]

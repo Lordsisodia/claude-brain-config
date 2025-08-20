@@ -1,0 +1,31 @@
+{
+  "system_metrics": {
+    "execution_summary": {
+      "total_runtime": 20.00199604034424,
+      "components_active": 3,
+      "processing_agents": 3,
+      "health_monitors": 2
+    },
+    "processing_metrics": {
+      "total_items_processed": 95,
+      "processing_rate": 4.749525987725624,
+      "average_per_agent": 31.666666666666668
+    },
+    "alert_metrics": {
+      "total_alerts_generated": 36,
+      "alert_rate": 1.7998203742960261,
+      "active_alerts": 12
+    },
+    "system_health": {
+      "uptime": 20.00199604034424,
+      "error_rate": 0.036347466092627144,
+      "overall_performance": "excellent"
+    }
+  },
+  "execution_timestamp": "2025-08-18T18:21:09.708851",
+  "system_configuration": {
+    "processing_agents": 3,
+    "health_monitors": 2,
+    "runtime_duration": 20
+  }
+}

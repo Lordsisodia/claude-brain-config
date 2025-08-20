@@ -1,0 +1,266 @@
+groups:
+  - name: ai_agent_health
+    rules:
+      # Agent health alerts
+      - alert: AgentUnhealthy
+        expr: ai_agent_health_score < 0.3
+        for: 2m
+        labels:
+          severity: critical
+          service: ai-agent
+        annotations:
+          summary: "AI Agent {{ $labels.agent_id }} is unhealthy"
+          description: "Agent {{ $labels.agent_id }} has health score {{ $value | humanizePercentage }} which is below 30%"
+          runbook_url: "https://runbooks.ai-platform.com/agent-health"
+          
+      - alert: AgentDown
+        expr: up{job=~"ai-agent.*"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: ai-agent
+        annotations:
+          summary: "AI Agent {{ $labels.instance }} is down"
+          description: "Agent {{ $labels.instance }} has been down for more than 1 minute"
+          
+      - alert: HighAgentResponseTime
+        expr: ai_agent_response_time_seconds > 10
+        for: 5m
+        labels:
+          severity: warning
+          service: ai-agent
+        annotations:
+          summary: "High response time for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} response time is {{ $value }}s, which is above 10s threshold"
+          
+      - alert: HighAgentErrorRate
+        expr: rate(ai_agent_requests_total{status!="200"}[5m]) / rate(ai_agent_requests_total[5m]) > 0.1
+        for: 3m
+        labels:
+          severity: warning
+          service: ai-agent
+        annotations:
+          summary: "High error rate for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} error rate is {{ $value | humanizePercentage }}, above 10% threshold"
+          
+      - alert: AgentMemoryHigh
+        expr: ai_agent_memory_usage_bytes > 2 * 1024 * 1024 * 1024  # 2GB
+        for: 5m
+        labels:
+          severity: warning
+          service: ai-agent
+        annotations:
+          summary: "High memory usage for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} memory usage is {{ $value | humanizeBytes }}, above 2GB threshold"
+          
+      - alert: AgentCPUHigh
+        expr: ai_agent_cpu_usage_percent > 90
+        for: 5m
+        labels:
+          severity: warning
+          service: ai-agent
+        annotations:
+          summary: "High CPU usage for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} CPU usage is {{ $value }}%, above 90% threshold"
+
+  - name: anomaly_detection
+    rules:
+      # Anomaly detection alerts
+      - alert: HighAnomalyRate
+        expr: rate(anomalies_detected_total[15m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+          service: anomaly-detector
+        annotations:
+          summary: "High anomaly detection rate"
+          description: "Anomaly detection rate is {{ $value }} anomalies per second over last 15 minutes"
+          
+      - alert: CriticalAnomaly
+        expr: increase(anomalies_detected_total{severity="critical"}[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+          service: anomaly-detector
+        annotations:
+          summary: "Critical anomaly detected"
+          description: "{{ $value }} critical anomalies detected in the last 5 minutes"
+          
+      - alert: AnomalyDetectorDown
+        expr: up{job="anomaly-detector"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: anomaly-detector
+        annotations:
+          summary: "Anomaly detector service is down"
+          description: "Anomaly detector has been down for more than 2 minutes"
+          
+      - alert: LowDetectionAccuracy
+        expr: anomaly_detection_accuracy < 0.7
+        for: 10m
+        labels:
+          severity: warning
+          service: anomaly-detector
+        annotations:
+          summary: "Low anomaly detection accuracy"
+          description: "Detection accuracy for {{ $labels.detector_type }} is {{ $value | humanizePercentage }}, below 70%"
+
+  - name: emergence_monitoring
+    rules:
+      # Emergence detection alerts
+      - alert: EmergenceEventDetected
+        expr: increase(emergence_events_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: info
+          service: emergence-detector
+        annotations:
+          summary: "Emergence event detected"
+          description: "{{ $value }} emergence events of type {{ $labels.emergence_type }} detected"
+          
+      - alert: CriticalEmergenceEvent
+        expr: increase(emergence_events_total{magnitude="critical"}[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+          service: emergence-detector
+        annotations:
+          summary: "Critical emergence event detected"
+          description: "Critical emergence event of type {{ $labels.emergence_type }} detected"
+          
+      - alert: HighCollectiveIntelligence
+        expr: collective_intelligence_score > 0.9
+        for: 10m
+        labels:
+          severity: info
+          service: emergence-detector
+        annotations:
+          summary: "High collective intelligence achieved"
+          description: "Collective intelligence score is {{ $value | humanizePercentage }} for group {{ $labels.agent_group }}"
+          
+      - alert: PhaseTransition
+        expr: phase_transition_indicator > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: emergence-detector
+        annotations:
+          summary: "Phase transition detected"
+          description: "Phase transition indicator is {{ $value | humanizePercentage }} for {{ $labels.system_level }}"
+          
+      - alert: LowSwarmCoherence
+        expr: swarm_coherence_score < 0.3
+        for: 15m
+        labels:
+          severity: warning
+          service: emergence-detector
+        annotations:
+          summary: "Low swarm coherence"
+          description: "Swarm coherence score is {{ $value | humanizePercentage }} for swarm {{ $labels.swarm_id }}"
+
+  - name: autoscaling
+    rules:
+      # Autoscaling alerts
+      - alert: FrequentScaling
+        expr: rate(scaling_actions_total[30m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          service: autoscaler
+        annotations:
+          summary: "Frequent scaling actions"
+          description: "{{ $value }} scaling actions per second over last 30 minutes, indicating possible instability"
+          
+      - alert: ScalingFailure
+        expr: increase(scaling_actions_total{action_type="error"}[15m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+          service: autoscaler
+        annotations:
+          summary: "Scaling action failed"
+          description: "{{ $value }} scaling actions failed in the last 15 minutes"
+          
+      - alert: HighResourceUtilization
+        expr: resource_utilization > 0.9
+        for: 10m
+        labels:
+          severity: warning
+          service: autoscaler
+        annotations:
+          summary: "High resource utilization"
+          description: "Resource utilization for {{ $labels.resource_type }} in {{ $labels.agent_group }} is {{ $value | humanizePercentage }}"
+          
+      - alert: LowSystemEfficiency
+        expr: system_efficiency{efficiency_type="overall"} < 0.5
+        for: 15m
+        labels:
+          severity: warning
+          service: autoscaler
+        annotations:
+          summary: "Low system efficiency"
+          description: "Overall system efficiency is {{ $value | humanizePercentage }}, below 50%"
+          
+      - alert: AutoscalerDown
+        expr: up{job="autoscaler"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: autoscaler
+        annotations:
+          summary: "Autoscaler service is down"
+          description: "Autoscaler has been down for more than 2 minutes"
+
+  - name: system_health
+    rules:
+      # Overall system health
+      - alert: LowAgentCount
+        expr: count(ai_agent_health_score) < 10
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "Low agent count"
+          description: "Only {{ $value }} agents are currently active, below minimum threshold of 10"
+          
+      - alert: MassAgentFailure
+        expr: count(ai_agent_health_score < 0.5) / count(ai_agent_health_score) > 0.5
+        for: 3m
+        labels:
+          severity: critical
+          service: system
+        annotations:
+          summary: "Mass agent failure"
+          description: "{{ $value | humanizePercentage }} of agents are unhealthy, indicating system-wide issues"
+          
+      - alert: HighSystemLatency
+        expr: avg(ai_agent_response_time_seconds) > 15
+        for: 10m
+        labels:
+          severity: critical
+          service: system
+        annotations:
+          summary: "High system-wide latency"
+          description: "Average system response time is {{ $value }}s, above 15s critical threshold"
+          
+      - alert: PrometheusDown
+        expr: up{job="prometheus"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: monitoring
+        annotations:
+          summary: "Prometheus is down"
+          description: "Prometheus monitoring system has been down for more than 1 minute"
+          
+      - alert: ElasticsearchDown
+        expr: up{job="elasticsearch"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: monitoring
+        annotations:
+          summary: "Elasticsearch is down"
+          description: "Elasticsearch logging system has been down for more than 2 minutes"

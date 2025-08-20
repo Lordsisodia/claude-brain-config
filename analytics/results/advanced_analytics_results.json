@@ -1,0 +1,178 @@
+{
+  "orchestration_metadata": {
+    "total_execution_time": 1.2728619575500488,
+    "agents_utilized": 4,
+    "processing_timestamp": "2025-08-18T18:19:47.378848",
+    "parallel_tasks_executed": 12
+  },
+  "enriched_data_sample": [
+    {
+      "date": "2024-01-15",
+      "product_id": "P001",
+      "product_name": "Wireless Headphones",
+      "category": "Electronics",
+      "sales_amount": 299.99,
+      "quantity": 1,
+      "customer_id": "C001",
+      "region": "North America",
+      "sales_rep": "John Smith",
+      "enrichment_metadata": {
+        "agent_id": "ENRICH-001",
+        "enrichment_timestamp": "2025-08-18T18:19:46.257544",
+        "processing_time": 0.15162992477416992
+      },
+      "market_segment": "Premium Tech",
+      "price_tier": "High",
+      "popularity_score": 0.5015127883822127,
+      "retention_probability": 0.500726967333645
+    },
+    {
+      "date": "2024-01-15",
+      "product_id": "P002",
+      "product_name": "Bluetooth Speaker",
+      "category": "Electronics",
+      "sales_amount": 149.99,
+      "quantity": 2,
+      "customer_id": "C002",
+      "region": "Europe",
+      "sales_rep": "Sarah Johnson",
+      "enrichment_metadata": {
+        "agent_id": "ENRICH-001",
+        "enrichment_timestamp": "2025-08-18T18:19:46.356306",
+        "processing_time": 0.2504148483276367
+      },
+      "market_segment": "Premium Tech",
+      "price_tier": "Mid",
+      "popularity_score": 0.7594267514980689,
+      "retention_probability": 0.6651868843402438
+    },
+    {
+      "date": "2024-01-16",
+      "product_id": "P003",
+      "product_name": "Smartphone Case",
+      "category": "Accessories",
+      "sales_amount": 29.99,
+      "quantity": 3,
+      "customer_id": "C003",
+      "region": "Asia Pacific",
+      "sales_rep": "Mike Chen",
+      "enrichment_metadata": {
+        "agent_id": "ENRICH-001",
+        "enrichment_timestamp": "2025-08-18T18:19:46.356443",
+        "processing_time": 0.25052905082702637
+      },
+      "market_segment": "Accessories",
+      "price_tier": "Budget",
+      "popularity_score": 0.23675446359991928,
+      "retention_probability": 0.7383407491747949
+    }
+  ],
+  "market_analysis": {
+    "analysis_timestamp": "2025-08-18T18:19:46.749961",
+    "agent_id": "MARKET-001",
+    "category_trends": {
+      "Electronics": {
+        "growth_rate": -0.01061792329189766,
+        "market_share": 0.3361786020878237,
+        "competitive_pressure": 0.7565619590815519,
+        "seasonality_factor": 1.4098745342886037
+      },
+      "Accessories": {
+        "growth_rate": 0.1276789006587837,
+        "market_share": 0.2641017820767065,
+        "competitive_pressure": 0.38456724473123705,
+        "seasonality_factor": 0.586393675238822
+      }
+    },
+    "overall_market_health": 0.5529596668102628
+  },
+  "forecasting_results": {
+    "forecasting_timestamp": "2025-08-18T18:19:47.378591",
+    "agent_id": "FORECAST-001",
+    "model_forecasts": {
+      "ARIMA": {
+        "next_month_prediction": 2674.1237011696826,
+        "confidence_interval": [
+          2011.8907122204141,
+          2841.0506437550703
+        ],
+        "model_accuracy": 0.8375128071331265,
+        "training_time": 0.6697833184583023
+      },
+      "Prophet": {
+        "next_month_prediction": 2923.449575853972,
+        "confidence_interval": [
+          2029.173268701878,
+          3002.4311747110037
+        ],
+        "model_accuracy": 0.863892658314896,
+        "training_time": 0.8658852625207913
+      },
+      "LSTM": {
+        "next_month_prediction": 2269.2348682204683,
+        "confidence_interval": [
+          2032.932907404399,
+          2751.397020825857
+        ],
+        "model_accuracy": 0.7320481002935081,
+        "training_time": 1.4333816189228874
+      },
+      "Random Forest": {
+        "next_month_prediction": 2267.4246443009824,
+        "confidence_interval": [
+          2266.7471626587326,
+          2906.0405445677875
+        ],
+        "model_accuracy": 0.77995573814863,
+        "training_time": 1.6728150666453376
+      }
+    },
+    "ensemble_prediction": 2533.5581973862763,
+    "model_consensus": 2
+  },
+  "anomaly_detection_results": {
+    "detection_timestamp": "2025-08-18T18:19:47.148985",
+    "agent_id": "ANOMALY-001",
+    "anomalies_detected": 1,
+    "anomaly_details": [
+      {
+        "record_index": 16,
+        "product_id": "P011",
+        "anomaly_score": 2.48572064915394,
+        "anomaly_type": "statistical_outlier",
+        "severity": "medium"
+      }
+    ],
+    "statistical_summary": {
+      "mean_sales": 123.23999999999997,
+      "std_deviation": 111.33592187609534,
+      "total_records_analyzed": 20
+    }
+  },
+  "performance_metrics": {
+    "throughput_records_per_second": 3.142524588997091,
+    "agent_efficiency": {
+      "enrichment": {
+        "processed_items": 10,
+        "avg_processing_time": 0
+      },
+      "market_analysis": {
+        "processed_items": 0,
+        "avg_processing_time": 0
+      },
+      "forecasting": {
+        "processed_items": 0,
+        "avg_processing_time": 0
+      },
+      "anomaly_detection": {
+        "processed_items": 0,
+        "avg_processing_time": 0
+      }
+    },
+    "system_utilization": {
+      "cpu_intensive_tasks": 2,
+      "io_intensive_tasks": 4,
+      "memory_usage_estimate": "~50MB"
+    }
+  }
+}

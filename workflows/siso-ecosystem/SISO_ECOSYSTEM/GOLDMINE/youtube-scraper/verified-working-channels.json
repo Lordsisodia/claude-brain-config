@@ -1,0 +1,109 @@
+{
+  "verified_working_channels": [
+    {
+      "id": "UCPGrgwfbkjTIgPoOh2q1BAg",
+      "name": "David Ondrej",
+      "category": "Claude Code Specialist",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCsBjURrPoezykLs9EqgamOA",
+      "name": "Fireship",
+      "category": "Web Development",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UC29ju8bIPH5as8OGnQzwJyA",
+      "name": "Traversy Media",
+      "category": "Web Development",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCFbNIlppjAuEX4znoulh0Cw",
+      "name": "Web Dev Simplified",
+      "category": "Web Development",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCW5YeuERMmlnqo4oq8vwUpg",
+      "name": "The Net Ninja",
+      "category": "Web Development",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCbRP3c757lWg9M-U7TyEkXA",
+      "name": "Theo - t3.gg",
+      "category": "Modern Stack Master",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UC-8QAzbLcRglXeN_MY9blyw",
+      "name": "Ben Awad",
+      "category": "Modern Stack Master",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UC8butISFwT-Wl7EV0hUK0BQ",
+      "name": "freeCodeCamp.org",
+      "category": "Programming Education",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCbfYPyITQ-7l4upoX8nvctg",
+      "name": "Two Minute Papers",
+      "category": "AI Research",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCSHZKyawb77ixDdsGog4iWA",
+      "name": "Lex Fridman",
+      "category": "AI/Tech Interviews",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCYO_jab_esuFRV4b17AJtAw",
+      "name": "3Blue1Brown",
+      "category": "Math/AI",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCZHmQk67mSJgfCCTn7xBfew",
+      "name": "Yannic Kilcher",
+      "category": "AI Research",
+      "status": "✅ VERIFIED"
+    },
+    {
+      "id": "UCWv7vMbMWH4-V0ZXdmDpPBA",
+      "name": "Programming with Mosh",
+      "category": "Programming Education",
+      "status": "✅ VERIFIED"
+    }
+  ],
+  "broken_channels_to_fix": [
+    {
+      "id": "UCJmJgKCYrNvK3pgIgLyC4aQ",
+      "name": "Anthropic",
+      "status": "❌ BROKEN - 404 error"
+    },
+    {
+      "id": "UCXZCJLdBC09xxGZ6gcdrc6A",
+      "name": "OpenAI",
+      "status": "❌ NEEDS TESTING"
+    },
+    {
+      "id": "UCqRlEXn0Z_0pIYvxm8dGamw",
+      "name": "Matthew Berman",
+      "status": "❌ BROKEN - 404 error"
+    }
+  ],
+  "summary": {
+    "verified_working": 13,
+    "total_configured": 47,
+    "success_rate": "28%",
+    "next_steps": [
+      "Test remaining 34 channels",
+      "Find correct IDs for broken channels",
+      "Update config.ts with verified list"
+    ]
+  }
+}

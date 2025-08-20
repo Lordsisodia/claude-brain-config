@@ -1,0 +1,158 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+  
+  # Prometheus receiver for scraping metrics
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: 'ai-agents'
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['agent-health-monitor:8080', 'anomaly-detector:8081', 'emergence-detector:8082']
+          metrics_path: /metrics
+  
+  # Host metrics for system monitoring
+  hostmetrics:
+    collection_interval: 30s
+    scrapers:
+      cpu:
+        metrics:
+          system.cpu.utilization:
+            enabled: true
+      memory:
+        metrics:
+          system.memory.utilization:
+            enabled: true
+      disk:
+      network:
+      load:
+      filesystem:
+
+processors:
+  # Batch processor for performance
+  batch:
+    timeout: 1s
+    send_batch_size: 8192
+    send_batch_max_size: 16384
+  
+  # Memory limiter to prevent OOM
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 512
+  
+  # Resource processor to add resource attributes
+  resource:
+    attributes:
+      - key: service.name
+        value: ai-observability-platform
+        action: upsert
+      - key: service.version
+        value: 1.0.0
+        action: upsert
+      - key: deployment.environment
+        value: production
+        action: upsert
+  
+  # Attributes processor for AI-specific metadata
+  attributes:
+    actions:
+      - key: ai.agent.id
+        action: insert
+        from_attribute: agent_id
+      - key: ai.model.name
+        action: insert
+        from_attribute: model_name
+      - key: ai.inference.type
+        action: insert
+        from_attribute: inference_type
+      - key: ai.token.count
+        action: insert
+        from_attribute: token_count
+      - key: ai.emergence.level
+        action: insert
+        from_attribute: emergence_level
+  
+  # Probabilistic sampler for high-volume traces
+  probabilistic_sampler:
+    sampling_percentage: 1.0  # Adjust for billion-scale (0.01 for 1% sampling)
+  
+  # Filter processor for reducing noise
+  filter:
+    traces:
+      span:
+        - 'attributes["http.status_code"] == 200 and duration < 100ms'
+    metrics:
+      metric:
+        - 'name == "http_requests_total" and attributes["status"] == "200"'
+
+exporters:
+  # Jaeger for distributed tracing
+  jaeger:
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
+  
+  # Prometheus for metrics
+  prometheus:
+    endpoint: "0.0.0.0:8888"
+    namespace: ai_platform
+    const_labels:
+      platform: ai-observability
+  
+  # Prometheus remote write for federation
+  prometheusremotewrite:
+    endpoint: http://prometheus:9090/api/v1/write
+    headers:
+      X-Prometheus-Remote-Write-Version: "0.1.0"
+  
+  # Elasticsearch for logs and traces
+  elasticsearch:
+    endpoints: [http://elasticsearch:9200]
+    logs_index: ai-logs
+    traces_index: ai-traces
+    metrics_index: ai-metrics
+    mapping:
+      mode: ecs
+  
+  # Logging for debugging
+  logging:
+    loglevel: info
+    sampling_initial: 5
+    sampling_thereafter: 200
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+  pprof:
+    endpoint: 0.0.0.0:1777
+  zpages:
+    endpoint: 0.0.0.0:55679
+
+service:
+  extensions: [health_check, pprof, zpages]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, attributes, probabilistic_sampler, batch]
+      exporters: [jaeger, elasticsearch, logging]
+    
+    metrics:
+      receivers: [otlp, prometheus, hostmetrics]
+      processors: [memory_limiter, resource, attributes, filter, batch]
+      exporters: [prometheus, prometheusremotewrite, elasticsearch]
+    
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, attributes, batch]
+      exporters: [elasticsearch, logging]
+
+  telemetry:
+    logs:
+      level: "info"
+    metrics:
+      address: 0.0.0.0:8888

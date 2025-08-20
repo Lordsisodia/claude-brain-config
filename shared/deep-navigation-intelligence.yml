@@ -1,0 +1,219 @@
+# Deep Navigation Intelligence System
+# Advanced project structure mapping and command intelligence
+
+Deep_Project_Structure_Mapping: &Deep_Project_Structure_Mapping
+  # Complex Project Architectures
+  multi_tier_projects:
+    Delta-Sports:
+      base_path: "ACTIVE-CLIENTS/Delta-Sports/"
+      architecture: "full_stack_separated"
+      directories:
+        frontend: "frontend/src/, frontend/components/, frontend/pages/"
+        backend: "backend/src/, backend/api/, backend/database/"
+        shared: "src/, components/, shared/"
+      tech_stack: ["React", "TypeScript", "Vite", "Tailwind", "Backend API"]
+      config_files: ["vite.config.ts", "tailwind.config.js", "postcss.config.js"]
+      
+    ubahcrypcom-main:
+      base_path: "ACTIVE-CLIENTS/ubahcrypcom-main/"
+      architecture: "crypto_trading_platform"
+      directories:
+        frontend: "src/, components/, pages/, crypto/"
+        backend: "backend/src/, backend/api/, backend/blockchain/"
+        config: "config/, scripts/, tools/"
+        testing: "tests/, e2e/, __tests__/"
+      tech_stack: ["React", "Vite", "TypeScript", "Blockchain", "Crypto APIs"]
+      config_files: ["vite.config.ts", "vite.config.https.ts", "eslint.config.js", "jest.config.js"]
+      special_features: ["https_development", "blockchain_integration", "crypto_apis"]
+      
+    mallocra-activities-main:
+      base_path: "ACTIVE-CLIENTS/mallocra-activities-main/"
+      architecture: "tourism_platform_fullstack"
+      directories:
+        app: "app/, app/api/, app/(marketing)/, app/(dashboard)/"
+        components: "components/, components/ui/, components/forms/"
+        database: "db/, db/schema/, db/migrations/"
+        lib: "lib/, lib/utils/, lib/auth/, lib/database/"
+        business: "actions/, context/, types/"
+      tech_stack: ["Next.js", "Supabase", "TypeScript", "Clerk", "Stripe", "Tailwind"]
+      config_files: ["next.config.mjs", "drizzle.config.ts", "playwright.config.ts", "vitest.config.ts"]
+      special_features: ["supabase_integration", "clerk_auth", "stripe_payments", "e2e_testing"]
+
+  complex_siso_projects:
+    SISO-CLIENT-BASE:
+      base_path: "SISO_ECOSYSTEM/SISO-CLIENT-BASE/"
+      architecture: "multi_platform_business_app"
+      directories:
+        frontend: "src/, src/components/, src/pages/, src/features/"
+        integrations: "integrations/, integrations/supabase/, integrations/external/"
+        platforms: "src-tauri/, electron/, whatsapp/"
+        scripts: "scripts/, scripts/build/, scripts/deploy/"
+        data: "data/, database/, seeds/"
+      tech_stack: ["React", "Vite", "TypeScript", "Supabase", "Tauri", "Electron"]
+      config_files: ["vite.config.ts", "tailwind.config.ts", "postcss.config.js"]
+      multi_platform_support:
+        electron: "electron-dev.cjs, electron-prod.cjs, electron builds"
+        tauri: "src-tauri/, tauri dev/build commands"
+        whatsapp: "whatsapp integration, server.js"
+        web: "standard vite development"
+      special_commands:
+        - "npm run electron:dev, npm run electron:build"
+        - "npm run tauri:dev, npm run tauri:build"
+        - "npm run whatsapp:dev, npm run whatsapp:prod"
+        - "npm run multi:dev (multi-platform)"
+
+Advanced_Command_Intelligence: &Advanced_Command_Intelligence
+  # Project-Specific Command Mapping
+  command_patterns:
+    development_commands:
+      next_js: ["npm run dev", "npm run dev --turbo"]
+      vite_react: ["npm run dev", "npm run build:dev"]
+      electron: ["npm run electron:dev", "npm run electron:prod"]
+      tauri: ["npm run tauri:dev", "npm run tauri:build"]
+      whatsapp: ["npm run whatsapp:dev", "npm run whatsapp:prod"]
+      multi_platform: ["npm run multi:dev"]
+      
+    testing_commands:
+      playwright: ["npm run test:e2e", "npm run test:e2e:ui", "npm run test:e2e:debug"]
+      vitest: ["npm run test", "npm run test:watch"]
+      jest: ["npm run test", "npm run test:coverage"]
+      e2e_specific: ["npm run test:e2e:console", "npm run test:booking"]
+      
+    build_commands:
+      standard: ["npm run build", "npm run build:dev", "npm run build:production"]
+      platform_specific: ["npm run electron:build", "npm run tauri:build"]
+      analysis: ["npm run analyze", "npm run analyze:server", "npm run analyze:browser"]
+      
+    database_commands:
+      drizzle: ["npm run db:generate", "npm run db:migrate"]
+      supabase: ["supabase start", "supabase db reset", "supabase gen types"]
+      
+    quality_commands:
+      linting: ["npm run lint", "npm run lint:fix"]
+      formatting: ["npm run format:write", "npm run format:check"]
+      type_checking: ["npm run type-check"]
+      comprehensive: ["npm run clean", "npm run pre-deploy"]
+
+Deep_Directory_Intelligence: &Deep_Directory_Intelligence
+  # Advanced Directory Structure Recognition
+  directory_patterns:
+    next_js_app_router:
+      structure: "app/, app/api/, app/(groups)/, app/[dynamic]/"
+      file_patterns: ["layout.tsx", "page.tsx", "loading.tsx", "error.tsx"]
+      api_patterns: ["app/api/[...routes]/route.ts"]
+      
+    react_vite_structure:
+      structure: "src/, src/components/, src/pages/, src/hooks/, src/utils/"
+      file_patterns: ["main.tsx", "App.tsx", "index.html"]
+      config_patterns: ["vite.config.ts", "index.html"]
+      
+    full_stack_separation:
+      frontend: "frontend/, frontend/src/, frontend/components/"
+      backend: "backend/, backend/src/, backend/api/, backend/models/"
+      shared: "shared/, common/, types/"
+      
+    multi_platform_structure:
+      web: "src/, components/, pages/"
+      electron: "electron/, electron-dev.cjs, electron-prod.cjs"
+      tauri: "src-tauri/, src-tauri/src/, Cargo.toml"
+      mobile: "mobile/, react-native/, expo/"
+      
+    testing_structure:
+      unit_tests: "__tests__/, src/**/*.test.ts, tests/unit/"
+      integration_tests: "tests/integration/, tests/api/"
+      e2e_tests: "tests/e2e/, playwright/, cypress/"
+      
+    database_structure:
+      schema: "db/schema/, database/schema/, prisma/schema.prisma"
+      migrations: "db/migrations/, migrations/, supabase/migrations/"
+      seeds: "db/seeds/, seeds/, data/"
+
+Technology_Stack_Detection: &Technology_Stack_Detection
+  # Advanced Technology Pattern Recognition
+  detection_patterns:
+    framework_detection:
+      next_js: ["next.config.*", "app/", "pages/", "next-env.d.ts"]
+      react_vite: ["vite.config.*", "src/main.tsx", "index.html"]
+      vue: ["vue.config.*", "src/main.js", "App.vue"]
+      svelte: ["svelte.config.*", "src/app.html", "App.svelte"]
+      
+    backend_detection:
+      node_express: ["express", "app.js", "server.js", "api/"]
+      fastapi: ["main.py", "requirements.txt", "fastapi"]
+      django: ["manage.py", "settings.py", "urls.py"]
+      
+    database_detection:
+      supabase: ["supabase/", ".env.local SUPABASE", "createClient"]
+      prisma: ["prisma/", "schema.prisma", "@prisma/client"]
+      drizzle: ["drizzle.config.*", "db/schema/", "drizzle-orm"]
+      
+    platform_detection:
+      electron: ["electron-", "main.js", "renderer.js", "electron-builder"]
+      tauri: ["src-tauri/", "Cargo.toml", "tauri.conf.json"]
+      react_native: ["react-native", "metro.config.*", "android/", "ios/"]
+      
+    deployment_detection:
+      vercel: ["vercel.json", ".vercel/", "vercel:build"]
+      docker: ["Dockerfile", "docker-compose.*", ".dockerignore"]
+      github_actions: [".github/workflows/", "*.yml"]
+
+Context_Aware_Navigation: &Context_Aware_Navigation
+  # Intelligent Context-Based File Targeting
+  navigation_intelligence:
+    task_based_targeting:
+      bug_fixing:
+        primary_locations: ["src/", "components/", "lib/", "app/"]
+        secondary_locations: ["tests/", "__tests__/", "e2e/"]
+        config_locations: ["*.config.*", ".env*", "package.json"]
+        
+      feature_development:
+        planning_files: ["README.md", "CLAUDE.md", "docs/"]
+        implementation_files: ["src/", "components/", "pages/", "app/"]
+        testing_files: ["tests/", "e2e/", "*.test.*"]
+        
+      database_work:
+        schema_files: ["db/schema/", "prisma/", "database/"]
+        migration_files: ["migrations/", "db/migrations/"]
+        query_files: ["lib/database/", "queries/", "services/"]
+        
+      deployment_work:
+        config_files: ["*.config.*", "Dockerfile", "docker-compose.*"]
+        script_files: ["scripts/", "deploy/", ".github/"]
+        env_files: [".env*", "environment*"]
+    
+    priority_based_search:
+      critical_files: ["CLAUDE.md", "README.md", "package.json", "*.config.*"]
+      source_files: ["src/", "app/", "components/", "pages/"]
+      test_files: ["tests/", "e2e/", "__tests__/", "*.test.*"]
+      docs_files: ["docs/", "documentation/", "*.md"]
+      
+Smart_Project_Routing: &Smart_Project_Routing
+  # Intelligent Project Selection and Routing
+  routing_intelligence:
+    project_identification:
+      by_keywords:
+        tourism: "mallocra-activities-main"
+        crypto: "ubahcrypcom-main"
+        trading: "ubahcrypcom-main"
+        sports: "Delta-Sports"
+        agency: "SISO-CLIENT-BASE"
+        claude: "claude-improvement"
+        
+      by_technology:
+        next_js: ["mallocra-activities-main", "Harry-OF-Clone"]
+        vite_react: ["SISO-CLIENT-BASE", "ubahcrypcom-main", "bdbt"]
+        electron: ["SISO-CLIENT-BASE"]
+        tauri: ["SISO-CLIENT-BASE", "SISO-INTERNAL"]
+        supabase: ["mallocra-activities-main", "SISO-CLIENT-BASE"]
+        
+      by_complexity:
+        high_complexity: ["mallocra-activities-main", "SISO-CLIENT-BASE", "ubahcrypcom-main"]
+        medium_complexity: ["Delta-Sports", "Quimimar", "bdbt"]
+        low_complexity: ["clean-cold-shower-app", "ibby-brother"]
+    
+    context_switching:
+      work_type_detection:
+        client_work: "ACTIVE-CLIENTS/ projects get priority attention"
+        internal_development: "SISO_ECOSYSTEM/ projects for business growth"
+        experimentation: "SIDE-QUEST-CLIENTS/ for creative freedom"
+        ai_enhancement: "claude-improvement/ for system improvements"

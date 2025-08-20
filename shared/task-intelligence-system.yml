@@ -1,0 +1,82 @@
+# Task Intelligence System
+# Revolutionary task decomposition and management
+
+Intelligent_Task_Analysis: &Intelligent_Task_Analysis
+  # Automatic Task Assessment Protocol
+  complexity_assessment:
+    simple: "1-2 steps: Execute immediately, no TodoWrite needed"
+    medium: "3-5 steps: Use TodoWrite with dependencies and success criteria"
+    complex: "6+ steps: Break into phases with milestones and checkpoints"
+  
+  # Resource Requirement Analysis
+  resource_analysis:
+    - "What MCPs are needed?"
+    - "What files need to be read/modified?"
+    - "What external research is required?"
+    - "What dependencies exist between tasks?"
+    - "What are the potential blockers?"
+  
+  # Success Criteria Definition
+  success_criteria:
+    - "What constitutes completion?"
+    - "How will we verify success?"
+    - "What are the quality gates?"
+    - "What metrics indicate progress?"
+    - "When can we consider this done?"
+
+Enhanced_TodoWrite_Protocol: &Enhanced_TodoWrite_Protocol
+  # Mandatory for ALL tasks >2 steps
+  required_fields:
+    id: "unique-identifier"
+    content: "Specific, measurable task description"
+    status: "pending|in_progress|blocked|completed"
+    priority: "critical|high|medium|low"
+    dependencies: "Array of prerequisite task IDs"
+    tools_required: "List of MCPs and tools needed"
+    success_criteria: "Specific completion criteria"
+    estimated_complexity: "1-10 scale"
+    blockers: "Current obstacles or dependencies"
+  
+  # TodoWrite Usage Rules
+  usage_rules:
+    - "Create todos BEFORE starting any multi-step task"
+    - "Include dependencies and required tools"
+    - "Define success criteria explicitly"
+    - "Update status in real-time"
+    - "Log lessons learned when completing"
+    - "Only one task in_progress at a time"
+    - "Mark completed immediately after finishing"
+
+Task_Decomposition_Framework: &Task_Decomposition_Framework
+  # Systematic Task Breakdown
+  breakdown_strategy:
+    1_identify_outcome: "What is the final desired state?"
+    2_map_dependencies: "What must happen first?"
+    3_identify_blockers: "What could prevent progress?"
+    4_define_milestones: "What are the key checkpoints?"
+    5_assign_complexity: "How difficult is each step?"
+    6_sequence_optimally: "What's the most efficient order?"
+  
+  # Task Sizing Guidelines
+  optimal_task_size:
+    - "Each task should be completable in one focused session"
+    - "Tasks should have clear, binary completion criteria"
+    - "Complex tasks should be broken into 3-7 subtasks maximum"
+    - "Dependencies should be explicit and minimal"
+    - "Each task should advance toward the overall goal"
+
+Risk_Assessment_Protocol: &Risk_Assessment_Protocol
+  # Systematic Risk Analysis
+  risk_categories:
+    technical: "Code complexity, integration challenges, unknown technologies"
+    resource: "Tool availability, API limits, system constraints"
+    dependency: "External requirements, team coordination, timing"
+    scope: "Requirement changes, feature creep, unclear objectives"
+  
+  # Mitigation Strategies
+  mitigation_approaches:
+    - "Identify fallback options for each critical dependency"
+    - "Plan alternative approaches for high-risk components"
+    - "Create early validation checkpoints"
+    - "Establish clear success/failure criteria"
+    - "Build in buffer time for unknowns"

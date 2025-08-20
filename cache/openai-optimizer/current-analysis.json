@@ -1,0 +1,12 @@
+{
+    "original_length": 44,
+    "has_clear_role": false,
+    "has_specific_instructions": false,
+    "is_vague": false,
+    "is_coding_task": false,
+    "is_frontend_task": false,
+    "is_complex_task": false,
+    "needs_persistence": false,
+    "needs_tool_preambles": false,
+    "timestamp": "2025-08-17 21:13:31"
+}

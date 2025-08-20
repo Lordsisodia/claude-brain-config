@@ -1,0 +1,264 @@
+# Codebase Intelligence System
+# Revolutionary project navigation and organization for Cursor ecosystem
+
+Cursor_Ecosystem_Structure: &Cursor_Ecosystem_Structure
+  # ROOT: /Users/shaansisodia/Desktop/Cursor
+  base_path: "/Users/shaansisodia/Desktop/Cursor"
+  
+  # ACTIVE CLIENT PROJECTS - Primary revenue-generating work
+  active_clients:
+    path: "ACTIVE-CLIENTS/"
+    purpose: "Current paying client projects requiring immediate attention"
+    projects:
+      Delta-Sports:
+        type: "web_development"
+        tech_stack: ["Next.js", "TypeScript", "Tailwind"]
+        status: "active"
+        priority: "high"
+      
+      mallocra-activities-main:
+        type: "tourism_platform"  
+        tech_stack: ["Next.js", "Supabase", "Clerk", "Stripe"]
+        status: "active"
+        priority: "critical"
+        notes: "87 files - comprehensive tourism platform"
+        
+      ubahcrypcom-main:
+        type: "crypto_trading"
+        tech_stack: ["React", "Vite", "Blockchain"]
+        status: "active" 
+        priority: "high"
+        notes: "67 files - crypto trading platform"
+        
+      Face-Swap-Automation-Project:
+        type: "ai_automation"
+        tech_stack: ["Python", "AI/ML"]
+        status: "active"
+        priority: "medium"
+  
+  # SIDE QUEST CLIENTS - Secondary projects and experiments  
+  side_quest_clients:
+    path: "SIDE-QUEST-CLIENTS/"
+    purpose: "Secondary projects, experiments, proof-of-concepts"
+    projects:
+      Quimimar:
+        type: "landing_page"
+        tech_stack: ["React", "TypeScript"]
+        status: "completed"
+        notes: "57 files - comprehensive landing page system"
+        
+      bdbt:
+        type: "web_application"
+        tech_stack: ["Vite", "TypeScript"] 
+        status: "maintenance"
+        notes: "43 files"
+        
+      Harry-OF-Clone:
+        type: "content_platform"
+        tech_stack: ["Next.js", "TypeScript"]
+        status: "archived"
+        
+      clean-cold-shower-app:
+        type: "health_app"
+        tech_stack: ["Vite", "React"]
+        status: "completed"
+        
+      ibby-brother:
+        type: "personal_website"
+        tech_stack: ["HTML", "CSS", "JavaScript"]
+        status: "completed"
+
+  # SISO ECOSYSTEM - Core business infrastructure
+  siso_ecosystem:
+    path: "SISO_ECOSYSTEM/"
+    purpose: "Core business platform and development tools"
+    components:
+      SISO-CLIENT-BASE:
+        type: "agency_platform"
+        tech_stack: ["React", "Supabase", "TypeScript"]
+        purpose: "Main business application with 70+ database tables"
+        priority: "critical"
+        
+      SISO-DEV-TOOLS:
+        type: "development_tools"
+        tech_stack: ["Multiple"]
+        purpose: "Development environments and Claude integrations"
+        priority: "high"
+        
+      SISO-INTERNAL:
+        type: "internal_tools"
+        tech_stack: ["React", "Vite"]
+        purpose: "Internal business operations"
+        priority: "medium"
+        
+      MCP-ACCESS-TOOLS:
+        type: "ai_integrations"
+        tech_stack: ["Node.js", "Python"]
+        purpose: "Claude Code MCP server integrations"
+        priority: "high"
+        
+      DOCUMENTATION:
+        type: "knowledge_base"
+        purpose: "Project documentation and guides"
+        priority: "medium"
+
+  # SPECIALIZED PROJECTS
+  specialized_projects:
+    claude-improvement:
+      path: "claude-improvement/"
+      type: "ai_enhancement"
+      purpose: "Claude Code improvements and autonomous systems"
+      priority: "critical"
+      notes: "26 files - AI enhancement tools"
+      
+    Face_Swap_Automation_Project:
+      path: "Face_Swap_Automation_Project/"
+      type: "ai_automation"
+      purpose: "Automated face swap processing system"
+      priority: "medium"
+      notes: "53 files - comprehensive automation system"
+      
+    siso-ide:
+      path: "siso-ide/"
+      type: "development_environment"
+      purpose: "Custom IDE and development tools"
+      priority: "medium"
+      notes: "22 files"
+
+  # ORGANIZATIONAL DIRECTORIES
+  organizational:
+    ARCHIVE:
+      path: "ARCHIVE/"
+      purpose: "Completed or deprecated projects"
+      access_pattern: "read_only"
+      
+    TRASH:
+      path: "TRASH/"
+      purpose: "Items pending deletion"
+      access_pattern: "avoid"
+      
+    config:
+      path: "config/"
+      purpose: "Global configuration files"
+      access_pattern: "careful_modification"
+      
+    data:
+      path: "data/"
+      purpose: "Data files and databases"
+      access_pattern: "read_primary"
+      
+    docs:
+      path: "docs/"
+      purpose: "General documentation"
+      access_pattern: "read_write"
+
+Project_Classification_Logic: &Project_Classification_Logic
+  # Automatic project type detection
+  classification_rules:
+    web_development:
+      indicators: ["package.json", "next.config.*", "vite.config.*", "tailwind.config.*"]
+      common_files: ["src/", "components/", "pages/", "app/"]
+      
+    tourism_platform:
+      indicators: ["activities", "bookings", "supabase", "clerk"]
+      tech_markers: ["Next.js", "Supabase", "Stripe"]
+      
+    crypto_trading:
+      indicators: ["crypto", "trading", "blockchain", "wallet"]
+      tech_markers: ["Web3", "Ethereum", "DeFi"]
+      
+    ai_automation:
+      indicators: ["automation", "ai", "ml", "python"]
+      file_patterns: ["*.py", "requirements.txt", "automation*"]
+      
+    agency_platform:
+      indicators: ["client", "agency", "onboarding", "supabase"]
+      database_complexity: "high"
+      
+    development_tools:
+      indicators: ["dev-tools", "ide", "claude", "mcp"]
+      purpose_markers: ["development", "tooling", "automation"]
+
+Smart_Navigation_Patterns: &Smart_Navigation_Patterns
+  # Intelligent file and directory targeting
+  navigation_strategies:
+    client_work:
+      primary_locations: ["ACTIVE-CLIENTS/", "SIDE-QUEST-CLIENTS/"]
+      search_priority: ["package.json", "README.md", "CLAUDE.md"]
+      
+    siso_business:
+      primary_locations: ["SISO_ECOSYSTEM/"]
+      search_priority: ["SISO-CLIENT-BASE/", "SISO-DEV-TOOLS/"]
+      
+    ai_enhancement:
+      primary_locations: ["claude-improvement/", "SISO_ECOSYSTEM/MCP-ACCESS-TOOLS/"]
+      search_priority: ["*.py", "*.yml", "CLAUDE.md"]
+      
+    documentation:
+      primary_locations: ["docs/", "SISO_ECOSYSTEM/DOCUMENTATION/", "*/README.md"]
+      search_priority: ["*.md", "*.txt"]
+
+Efficient_Data_Lookup: &Efficient_Data_Lookup
+  # Optimized search and retrieval patterns
+  lookup_strategies:
+    project_config:
+      targets: ["package.json", "CLAUDE.md", "README.md", "*.config.*"]
+      search_depth: 2
+      
+    source_code:
+      targets: ["src/", "components/", "lib/", "app/"]
+      file_types: ["*.ts", "*.tsx", "*.js", "*.jsx"]
+      
+    database_schema:
+      targets: ["db/", "database/", "schema/", "migrations/"]
+      file_types: ["*.sql", "*.ts", "*.js"]
+      
+    documentation:
+      targets: ["docs/", "*.md", "README*"]
+      search_depth: 3
+      
+    configuration:
+      targets: ["*.config.*", ".env*", "settings*"]
+      search_depth: 1
+
+Auto_Project_Routing: &Auto_Project_Routing
+  # Automatic project detection and routing
+  routing_logic:
+    new_client_work:
+      default_location: "ACTIVE-CLIENTS/"
+      template_source: "SISO_ECOSYSTEM/templates/"
+      
+    side_projects:
+      default_location: "SIDE-QUEST-CLIENTS/"
+      complexity_threshold: "medium"
+      
+    siso_features:
+      default_location: "SISO_ECOSYSTEM/SISO-CLIENT-BASE/"
+      requires_database: true
+      
+    ai_improvements:
+      default_location: "claude-improvement/"
+      file_types: ["*.py", "*.yml", "*.md"]
+      
+    tools_development:
+      default_location: "SISO_ECOSYSTEM/SISO-DEV-TOOLS/"
+      integration_focus: true
+
+File_Organization_Rules: &File_Organization_Rules
+  # Systematic file placement and organization
+  placement_rules:
+    client_projects:
+      structure: "CLIENT-NAME/src/, CLIENT-NAME/docs/, CLIENT-NAME/config/"
+      required_files: ["package.json", "README.md", "CLAUDE.md"]
+      
+    siso_components:
+      structure: "COMPONENT-NAME/src/, COMPONENT-NAME/docs/"
+      integration_files: ["*.config.*", "*.env.example"]
+      
+    ai_enhancements:
+      structure: "FEATURE-NAME/scripts/, FEATURE-NAME/configs/, FEATURE-NAME/docs/"
+      required_files: ["README.md", "requirements.txt"]
+      
+    documentation:
+      structure: "TOPIC/guides/, TOPIC/examples/, TOPIC/references/"
+      file_naming: "kebab-case.md"

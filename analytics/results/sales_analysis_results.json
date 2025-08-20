@@ -1,0 +1,146 @@
+{
+  "metadata": {
+    "analysis_timestamp": "2025-08-18T18:18:27.089250",
+    "total_records_processed": 20,
+    "analysis_version": "1.0"
+  },
+  "sales_metrics": {
+    "total_sales": 2464.7999999999993,
+    "total_quantity": 43,
+    "average_sale": 123.24000000000001,
+    "median_sale": 84.99,
+    "sales_std_dev": 114.22824565431773,
+    "min_sale": 14.99,
+    "max_sale": 399.99,
+    "total_transactions": 20
+  },
+  "category_analysis": {
+    "Electronics": {
+      "total_sales": 2069.8900000000003,
+      "total_quantity": 16,
+      "transaction_count": 11,
+      "average_sale": 188.1718181818182,
+      "top_products": [
+        {
+          "product_id": "P001",
+          "name": "Wireless Headphones",
+          "total_sales": 899.97
+        },
+        {
+          "product_id": "P002",
+          "name": "Bluetooth Speaker",
+          "total_sales": 449.97
+        },
+        {
+          "product_id": "P011",
+          "name": "Smart Watch",
+          "total_sales": 399.99
+        }
+      ]
+    },
+    "Accessories": {
+      "total_sales": 394.91,
+      "total_quantity": 27,
+      "transaction_count": 9,
+      "average_sale": 43.87888888888889,
+      "top_products": [
+        {
+          "product_id": "P004",
+          "name": "Laptop Stand",
+          "total_sales": 179.98
+        },
+        {
+          "product_id": "P003",
+          "name": "Smartphone Case",
+          "total_sales": 89.97
+        },
+        {
+          "product_id": "P007",
+          "name": "Tablet Stand",
+          "total_sales": 69.99
+        }
+      ]
+    }
+  },
+  "regional_analysis": {
+    "North America": {
+      "total_sales": 1054.93,
+      "transaction_count": 7,
+      "average_sale": 150.70428571428573,
+      "top_sales_rep": {
+        "name": "John Smith",
+        "total_sales": 759.96
+      }
+    },
+    "Europe": {
+      "total_sales": 859.9300000000001,
+      "transaction_count": 7,
+      "average_sale": 122.84714285714286,
+      "top_sales_rep": {
+        "name": "Emma Wilson",
+        "total_sales": 569.97
+      }
+    },
+    "Asia Pacific": {
+      "total_sales": 549.94,
+      "transaction_count": 6,
+      "average_sale": 91.65666666666667,
+      "top_sales_rep": {
+        "name": "David Lee",
+        "total_sales": 339.97
+      }
+    }
+  },
+  "trends_analysis": {
+    "daily_sales": {
+      "2024-01-15": 449.98,
+      "2024-01-16": 329.98,
+      "2024-01-17": 109.97999999999999,
+      "2024-01-18": 149.99,
+      "2024-01-19": 79.98,
+      "2024-01-20": 149.98,
+      "2024-01-21": 299.99,
+      "2024-01-22": 74.98,
+      "2024-01-23": 239.98000000000002,
+      "2024-01-24": 399.99,
+      "2024-01-25": 149.98000000000002,
+      "2024-01-26": 29.99
+    },
+    "daily_quantities": {
+      "2024-01-15": 3,
+      "2024-01-16": 4,
+      "2024-01-17": 6,
+      "2024-01-18": 1,
+      "2024-01-19": 3,
+      "2024-01-20": 3,
+      "2024-01-21": 1,
+      "2024-01-22": 5,
+      "2024-01-23": 5,
+      "2024-01-24": 1,
+      "2024-01-25": 9,
+      "2024-01-26": 2
+    },
+    "date_range": {
+      "start": "2024-01-15",
+      "end": "2024-01-26"
+    },
+    "peak_sales_date": "2024-01-15",
+    "average_daily_sales": 205.4
+  },
+  "performance_metrics": {
+    "operations": [
+      {
+        "operation": "data_loading",
+        "duration_seconds": 0.003485,
+        "success": true,
+        "timestamp": "2025-08-18T18:18:27.089245"
+      },
+      {
+        "operation": "data_analysis",
+        "duration_seconds": 0.000341,
+        "success": true,
+        "timestamp": "2025-08-18T18:18:27.089591"
+      }
+    ]
+  }
+}

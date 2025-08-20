@@ -1,0 +1,231 @@
+{
+  "learning_patterns": {
+    "42fe72d1127757ca": {
+      "pattern_id": "42fe72d1127757ca",
+      "task_characteristics": {
+        "complexity_level": "complex",
+        "primary_domains": [
+          "architecture",
+          "frontend"
+        ],
+        "technical_depth": 0.6349206349206349,
+        "urgency_profile": {
+          "high_priority": false,
+          "time_sensitive": false,
+          "quality_focus": false,
+          "cost_sensitive": false
+        },
+        "estimated_agents_needed": 4
+      },
+      "optimal_agents": [
+        "cerebras_ultra",
+        "gemini_flash",
+        "groq_lightning",
+        "scaleway_eu"
+      ],
+      "optimal_orchestration_type": "coordinated_multi_agent",
+      "average_quality": 0.85,
+      "average_cost": 0.0003,
+      "average_time": 15.0,
+      "success_rate": 1.0,
+      "confidence_score": 0.1,
+      "usage_count": 1,
+      "last_updated": "2025-08-18T06:09:40.495488"
+    },
+    "84cdccf1fbc9a580": {
+      "pattern_id": "84cdccf1fbc9a580",
+      "task_characteristics": {
+        "complexity_level": "simple",
+        "primary_domains": [],
+        "technical_depth": 0.0,
+        "urgency_profile": {
+          "high_priority": false,
+          "time_sensitive": false,
+          "quality_focus": false,
+          "cost_sensitive": false
+        },
+        "estimated_agents_needed": 1
+      },
+      "optimal_agents": [
+        "cerebras_ultra"
+      ],
+      "optimal_orchestration_type": "direct_single_agent",
+      "average_quality": 0.7,
+      "average_cost": 0.0001,
+      "average_time": 1.0,
+      "success_rate": 1.0,
+      "confidence_score": 0.1,
+      "usage_count": 1,
+      "last_updated": "2025-08-18T06:09:40.495556"
+    },
+    "3e66f76d47f8e0d3": {
+      "pattern_id": "3e66f76d47f8e0d3",
+      "task_characteristics": {
+        "complexity_level": "mega",
+        "primary_domains": [
+          "architecture",
+          "ai_ml"
+        ],
+        "technical_depth": 0.31746031746031744,
+        "urgency_profile": {
+          "high_priority": false,
+          "time_sensitive": false,
+          "quality_focus": false,
+          "cost_sensitive": false
+        },
+        "estimated_agents_needed": 13
+      },
+      "optimal_agents": [],
+      "optimal_orchestration_type": "hierarchical_3_tier",
+      "average_quality": 0.95,
+      "average_cost": 0.004,
+      "average_time": 25.0,
+      "success_rate": 1.0,
+      "confidence_score": 0.1,
+      "usage_count": 1,
+      "last_updated": "2025-08-18T06:09:40.495614"
+    }
+  },
+  "agent_expertise_map": {
+    "cerebras_ultra": {
+      "specializations": {
+        "architecture": {
+          "quality_scores": [
+            0.9
+          ],
+          "task_types": [
+            [
+              "architecture",
+              "frontend"
+            ]
+          ],
+          "average_quality": 0.9
+        }
+      },
+      "performance_history": [
+        {
+          "quality_score": 0.9,
+          "specialization": "architecture",
+          "task_domains": [
+            "architecture",
+            "frontend"
+          ],
+          "timestamp": "2025-08-18T06:09:40.495417"
+        }
+      ],
+      "average_quality": 0.9,
+      "task_count": 1,
+      "expertise_confidence": 0.0
+    },
+    "gemini_flash": {
+      "specializations": {
+        "reasoning": {
+          "quality_scores": [
+            0.85
+          ],
+          "task_types": [
+            [
+              "architecture",
+              "frontend"
+            ]
+          ],
+          "average_quality": 0.85
+        }
+      },
+      "performance_history": [
+        {
+          "quality_score": 0.85,
+          "specialization": "reasoning",
+          "task_domains": [
+            "architecture",
+            "frontend"
+          ],
+          "timestamp": "2025-08-18T06:09:40.495435"
+        }
+      ],
+      "average_quality": 0.85,
+      "task_count": 1,
+      "expertise_confidence": 0.0
+    },
+    "groq_lightning": {
+      "specializations": {
+        "documentation": {
+          "quality_scores": [
+            0.8
+          ],
+          "task_types": [
+            [
+              "architecture",
+              "frontend"
+            ]
+          ],
+          "average_quality": 0.8
+        }
+      },
+      "performance_history": [
+        {
+          "quality_score": 0.8,
+          "specialization": "documentation",
+          "task_domains": [
+            "architecture",
+            "frontend"
+          ],
+          "timestamp": "2025-08-18T06:09:40.495449"
+        }
+      ],
+      "average_quality": 0.8,
+      "task_count": 1,
+      "expertise_confidence": 0.0
+    },
+    "scaleway_eu": {
+      "specializations": {
+        "security": {
+          "quality_scores": [
+            0.75
+          ],
+          "task_types": [
+            [
+              "architecture",
+              "frontend"
+            ]
+          ],
+          "average_quality": 0.75
+        }
+      },
+      "performance_history": [
+        {
+          "quality_score": 0.75,
+          "specialization": "security",
+          "task_domains": [
+            "architecture",
+            "frontend"
+          ],
+          "timestamp": "2025-08-18T06:09:40.495461"
+        }
+      ],
+      "average_quality": 0.75,
+      "task_count": 1,
+      "expertise_confidence": 0.0
+    }
+  },
+  "optimization_rules": {
+    "parallel_for_moderate": {
+      "condition": "moderate_complexity and multiple_domains",
+      "action": "use_parallel_orchestration",
+      "confidence": 0.2,
+      "success_count": 2
+    },
+    "cost_optimize_simple": {
+      "condition": "simple_task and cost_sensitive",
+      "action": "use_single_efficient_agent",
+      "confidence": 0.1,
+      "success_count": 1
+    }
+  },
+  "performance_metrics": {
+    "total_learning_sessions": 3,
+    "patterns_discovered": 3,
+    "optimization_improvements": 3
+  },
+  "last_saved": "2025-08-18T06:09:40.497018"
+}

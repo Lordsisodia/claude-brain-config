@@ -1,0 +1,1 @@
+import{j as s}from"./vendor-C50ijZWh.js";import{cg as e}from"./libs-B3eAAgHd.js";const i=({children:o})=>s.jsxs("div",{className:"min-h-screen bg-background flex flex-col",children:[s.jsx("main",{className:"flex-1",children:o}),s.jsx(e,{position:"top-right"})]});export{i as M};

@@ -1,0 +1,18 @@
+{
+  "discoveries": [
+    {
+      "timestamp": "2025-08-18T04:13:35.992530",
+      "query": "analyze complex system architecture",
+      "results_count": 17,
+      "confidence": 0.7366666666666668
+    },
+    {
+      "timestamp": "2025-08-18T04:15:26.265742",
+      "query": "optimize performance and reduce costs",
+      "results_count": 6,
+      "confidence": 0.7000000000000001
+    }
+  ],
+  "activations": [],
+  "patterns": []
+}

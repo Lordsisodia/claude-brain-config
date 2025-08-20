@@ -1,0 +1,152 @@
+# Real-World Usage Intelligence
+# Actual workflow patterns and usage intelligence from live ecosystem
+
+Live_Workflow_Patterns: &Live_Workflow_Patterns
+  # Real workflow intelligence from actual usage
+  development_workflow_reality:
+    mallocra_development_cycle:
+      1_environment_setup: "source .env.local -> check MCP connections -> verify Supabase access"
+      2_development_startup: "npm run dev --turbo -> run scripts/setup-supabase-mcp.sh if needed"
+      3_testing_workflow: "scripts/test-booking-flow.js -> npm run test:e2e:console -> scripts/quick-test.js"
+      4_deployment_preparation: "scripts/deployment-checklist.sh -> npm run pre-deploy -> npm run vercel:build"
+      5_mcp_management: "scripts/mcp-manager.sh -> scripts/kill-mcp-processes.sh -> scripts/mcp-startup.sh"
+      
+    ubahcryp_trading_workflow:
+      1_multi_environment_startup: "cd backend && source .env -> cd .. && source .env.local"
+      2_complex_development: "npm run dev (frontend) + backend development + brain/scripts/"
+      3_blockchain_integration: "Connect to crypto APIs -> test trading logic -> validate blockchain calls"
+      4_github_integration: "github-goldminer-agent/ for code analysis -> github-source-code/ management"
+      
+    delta_sports_coordination:
+      1_orchestrated_startup: "orchestrator/orchestrator-config.json manages coordination"
+      2_frontend_backend_sync: "cd frontend && npm run dev + cd backend && npm run dev"
+      3_nested_structure_navigation: "Navigate frontend/backend/ vs backend/ complexity"
+      
+    siso_multi_platform_workflow:
+      1_platform_selection: "Choose electron:dev vs tauri:dev vs whatsapp:dev vs multi:dev"
+      2_project_switching: "npm run project:siso:dev vs npm run project:claudia:dev"
+      3_build_coordination: "scripts/build-projects.sh manages multiple build targets"
+      4_seo_generation: "scripts/generate-seo-files.js -> npm run build"
+
+Real_Usage_Intelligence: &Real_Usage_Intelligence
+  # Intelligence from actual usage patterns
+  command_usage_reality:
+    frequently_used_commands:
+      mallocra: ["npm run dev --turbo", "npm run test:e2e:console", "scripts/mcp-manager.sh"]
+      ubahcryp: ["npm run dev", "cd backend && npm run dev", "github-goldminer-agent/run.py"]
+      delta_sports: ["cd frontend && npm run dev", "cd backend && npm run dev"]
+      siso: ["npm run electron:dev", "npm run project:siso:dev", "npm run multi:dev"]
+      
+    debugging_command_patterns:
+      mcp_debugging: ["scripts/kill-mcp-processes.sh", "scripts/test-mcp-persistence.sh", "scripts/debug-env.js"]
+      environment_debugging: ["scripts/verify-env.js", "scripts/debug-env.js", "cat .env.local"]
+      testing_debugging: ["npm run test:e2e:debug", "npm run test:e2e:headed", "scripts/quick-test.js"]
+      
+    maintenance_command_patterns:
+      data_maintenance: ["scripts/cleanup-old-activities.js", "scripts/consolidate-activities.js"]
+      project_maintenance: ["scripts/create-milestones.sh", "scripts/add-project-example.sh"]
+      environment_maintenance: ["cp .env.local .env.local.backup-$(date +%s)"]
+
+Error_Recovery_Reality: &Error_Recovery_Reality
+  # Real error patterns and recovery strategies
+  common_error_scenarios:
+    mcp_connection_failures:
+      symptoms: "MCP server not responding, Supabase connection lost"
+      recovery_sequence: ["scripts/kill-mcp-processes.sh", "scripts/mcp-startup.sh", "scripts/test-mcp-persistence.sh"]
+      fallback_options: ["scripts/setup-simple-mcp.sh", "scripts/claude-auto-mcp.sh"]
+      
+    environment_configuration_issues:
+      symptoms: "Missing environment variables, API key failures"
+      recovery_sequence: ["scripts/verify-env.js", "scripts/debug-env.js", "check .env.example"]
+      backup_strategy: "Use .env.local.backup-* files for rollback"
+      
+    build_and_deployment_failures:
+      symptoms: "Build failures, deployment errors, type checking issues"
+      recovery_sequence: ["npm run type-check", "scripts/deployment-checklist.sh", "npm run clean"]
+      verification_steps: ["scripts/verify-env.js", "npm run pre-deploy", "npm run test"]
+      
+    multi_platform_issues:
+      electron_issues: ["rm -rf node_modules electron cache", "npm run electron:build", "npm run electron:dev"]
+      tauri_issues: ["cargo clean", "npm run tauri:build", "npm run tauri:dev"]
+      multi_dev_conflicts: ["kill conflicting processes", "npm run multi:dev with clean state"]
+
+File_Organization_Reality: &File_Organization_Reality
+  # How files are actually organized and used
+  actual_file_access_patterns:
+    configuration_priority:
+      1_project_specific: ".mcp.json, .claude.json, package.json"
+      2_environment_specific: ".env.local, .env.mcp, .env.example"
+      3_build_specific: "vite.config.ts, next.config.mjs, tsconfig.json"
+      4_automation_specific: "scripts/ directory contents"
+      
+    development_file_hotspots:
+      source_development: ["src/", "components/", "app/", "lib/"]
+      configuration_changes: ["*.config.*", ".env*", "package.json"]
+      script_management: ["scripts/", "automation/", "deploy/"]
+      testing_files: ["tests/", "e2e/", "__tests__/", "*.test.*"]
+      
+    cross_project_reference_patterns:
+      shared_patterns: "Similar structures across ACTIVE-CLIENTS/"
+      shared_tools: "SISO_ECOSYSTEM/MCP-ACCESS-TOOLS/ referenced by multiple projects"
+      shared_knowledge: "claude-improvement/ patterns applied across projects"
+      shared_automation: "Script patterns reused across projects"
+
+Integration_Reality: &Integration_Reality
+  # How integrations actually work in practice
+  mcp_integration_reality:
+    setup_complexity: "Each project requires specific MCP configuration"
+    token_management: "Supabase tokens in environment files and MCP configs"
+    multi_config_coordination: ".mcp.json + .claude.json + .cursor/mcp.json coordination"
+    automation_dependency: "Scripts manage MCP lifecycle and health"
+    
+  supabase_integration_reality:
+    mallocra_heavy_usage: "Primary database for tourism platform"
+    environment_coordination: "SUPABASE_* variables across multiple .env files"
+    mcp_specific_config: "Project-specific Supabase MCP configuration"
+    backup_and_recovery: "Multiple environment backups for rollback"
+    
+  github_integration_reality:
+    automated_issue_management: "scripts/create-github-issues.js, scripts/github_issues.py"
+    code_mining_automation: "github-goldminer-agent/ for automated code analysis"
+    source_code_management: "github-source-code/ for repository coordination"
+    ai_task_integration: "claude_task_github_*.json for AI-driven development"
+
+Performance_Optimization_Reality: &Performance_Optimization_Reality
+  # Real performance patterns and optimizations
+  build_optimization_patterns:
+    turbo_usage: "npm run dev --turbo for Next.js acceleration"
+    platform_specific_builds: "Separate build processes for electron, tauri, web"
+    seo_optimization: "scripts/generate-seo-files.js for production builds"
+    bundle_analysis: "npm run analyze:server, npm run analyze:browser"
+    
+  development_optimization_patterns:
+    multi_platform_efficiency: "npm run multi:dev for coordinated development"
+    script_automation: "Extensive automation reduces manual repetitive tasks"
+    environment_switching: "Quick environment switching with backup strategies"
+    mcp_optimization: "MCP connection pooling and persistence management"
+    
+  workflow_optimization_patterns:
+    testing_efficiency: "test:e2e:console for monitoring, quick-test.js for rapid iteration"
+    deployment_efficiency: "deployment-checklist.sh for systematic deployment"
+    debugging_efficiency: "Specialized debugging scripts for common issues"
+    maintenance_efficiency: "Automated cleanup and consolidation scripts"
+
+Context_Switching_Intelligence: &Context_Switching_Intelligence
+  # How context switching actually happens
+  project_switching_reality:
+    client_work_transitions: "ACTIVE-CLIENTS/ projects require immediate priority shifting"
+    environment_context_loading: "Each project loads specific .env configurations"
+    mcp_context_switching: "MCP connections need to be project-specific"
+    automation_context: "Different script sets for different project types"
+    
+  platform_switching_reality:
+    multi_platform_development: "Switch between electron:dev, tauri:dev, web dev"
+    environment_coordination: "Different environment setups for different platforms"
+    build_target_switching: "project:siso:dev vs project:claudia:dev"
+    testing_context_switching: "Different testing approaches for different platforms"
+    
+  ai_workflow_context_switching:
+    claude_task_management: "Different AI task queues for different purposes"
+    pattern_application: "AI patterns learned in one project applied to others"
+    automation_coordination: "AI automation scripts coordinate across projects"
+    memory_context_management: "Persistent AI memory across project switches"

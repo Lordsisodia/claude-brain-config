@@ -1,0 +1,231 @@
+# Hybrid MCP Patterns - Advanced Multi-Server Coordination
+# Enhanced SuperClaude integration with intelligent MCP orchestration
+
+## Legend
+@include universal-constants.yml#Universal_Legend
+
+## Hybrid MCP Coordination Patterns
+
+```yaml
+Multi_Server_Orchestration:
+  Parallel_Execution:
+    Pattern: "Execute multiple MCP servers simultaneously"
+    Use_Cases: ["Complex analysis", "Multi-domain tasks", "Performance optimization"]
+    Example: "--seq + --c7 + --magic"
+    
+  Sequential_Chaining:
+    Pattern: "Chain MCP servers in logical order"
+    Use_Cases: ["Dependent operations", "Progressive enhancement", "Validation workflows"]
+    Example: "--c7 → --seq → --magic → --pup"
+    
+  Intelligent_Fallback:
+    Pattern: "Graceful degradation when servers unavailable"
+    Fallback_Order: ["Native tools", "Context7", "Sequential", "Magic", "Puppeteer"]
+    Retry_Logic: "3 attempts with exponential backoff"
+
+Synergistic_Combinations:
+  Development_Powerhouse:
+    Servers: ["Sequential", "Magic", "Supabase"]
+    Purpose: "Full-stack development with AI reasoning"
+    Auto_Trigger: ["React components", "Database integration", "Complex architecture"]
+    
+  Analysis_Suite:
+    Servers: ["Sequential", "Context7", "Desktop Commander"]
+    Purpose: "Comprehensive code and system analysis"
+    Auto_Trigger: ["Large codebases", "Architecture review", "Performance issues"]
+    
+  Testing_Pipeline:
+    Servers: ["Magic", "Playwright", "Sequential"]
+    Purpose: "Component generation with instant testing"
+    Auto_Trigger: ["UI development", "E2E testing", "Visual validation"]
+    
+  Cleanup_Optimization:
+    Servers: ["Desktop Commander", "Sequential", "Context7"]
+    Purpose: "Intelligent project maintenance"
+    Auto_Trigger: ["Large projects", "Performance degradation", "Dependency issues"]
+```
+
+## Context-Aware MCP Selection
+
+```yaml
+Intelligent_Activation:
+  File_Type_Triggers:
+    "*.tsx|*.jsx": ["Magic", "Playwright"]
+    "*.sql|migrations/": ["Supabase", "Sequential"]
+    "package.json|deps": ["Context7", "Sequential"]
+    "large_projects": ["Desktop Commander", "Sequential"]
+    
+  Complexity_Thresholds:
+    Simple_Tasks: "Native tools only"
+    Medium_Tasks: "Single MCP server"
+    Complex_Tasks: "2-3 MCP servers"
+    Enterprise_Tasks: "Full MCP coordination"
+    
+  Performance_Optimization:
+    Cache_First: "Check cache before MCP activation"
+    Parallel_When_Possible: "Independent operations in parallel"
+    Session_Learning: "Adapt based on session patterns"
+```
+
+## Advanced Coordination Workflows
+
+```yaml
+Full_Stack_Development:
+  Pattern: "Magic + Supabase + Sequential + Playwright"
+  Workflow:
+    1: "Magic generates React components"
+    2: "Supabase handles database integration"
+    3: "Sequential coordinates complex logic"
+    4: "Playwright validates end-to-end functionality"
+  Auto_Flags: ["--ui-plus", "--database", "--full-stack", "--test"]
+
+Architecture_Analysis:
+  Pattern: "Sequential + Context7 + Desktop Commander"
+  Workflow:
+    1: "Desktop Commander scans file structure"
+    2: "Context7 validates against best practices"
+    3: "Sequential provides comprehensive analysis"
+  Auto_Flags: ["--arch", "--deep-scan", "--comprehensive"]
+
+Security_Audit:
+  Pattern: "Sequential + Supabase + Context7 + Playwright"
+  Workflow:
+    1: "Sequential analyzes security patterns"
+    2: "Supabase checks database security"
+    3: "Context7 validates security standards"
+    4: "Playwright tests security scenarios"
+  Auto_Flags: ["--security", "--database", "--comprehensive", "--test"]
+
+Performance_Optimization:
+  Pattern: "Sequential + Desktop Commander + Playwright"
+  Workflow:
+    1: "Desktop Commander analyzes file performance"
+    2: "Sequential provides optimization reasoning"
+    3: "Playwright validates performance improvements"
+  Auto_Flags: ["--perf", "--deep-scan", "--test", "--optimization"]
+```
+
+## Hybrid Command Enhancements
+
+```yaml
+Enhanced_Command_Patterns:
+  Analyze_Hybrid:
+    Base_Command: "/analyze"
+    Enhanced_Flags:
+      "--hybrid": "Multi-MCP coordination"
+      "--deep": "Maximum analysis depth"
+      "--cross-validate": "Multiple server validation"
+    Example: "/analyze --arch --hybrid --deep"
+    
+  Build_Hybrid:
+    Base_Command: "/build"
+    Enhanced_Flags:
+      "--ai-assisted": "AI-powered build process"
+      "--full-integration": "Complete MCP coordination"
+      "--smart-testing": "Intelligent test generation"
+    Example: "/build --feature --ai-assisted --full-integration"
+    
+  Review_Hybrid:
+    Base_Command: "/review"
+    Enhanced_Flags:
+      "--multi-perspective": "Multiple analysis viewpoints"
+      "--comprehensive": "All-MCP review process"
+      "--ai-insights": "Advanced AI analysis"
+    Example: "/review --security --multi-perspective --comprehensive"
+```
+
+## Error Handling & Recovery
+
+```yaml
+Resilient_Coordination:
+  Server_Health_Monitoring:
+    Health_Check: "Ping all servers before complex operations"
+    Response_Time_Tracking: "Monitor performance for optimization"
+    Availability_Mapping: "Track server availability patterns"
+    
+  Graceful_Degradation:
+    Partial_Success: "Continue with available servers"
+    Intelligent_Retry: "Retry failed operations with different servers"
+    User_Notification: "Inform about degraded capabilities"
+    
+  Recovery_Strategies:
+    Cache_Fallback: "Use cached results when servers unavailable"
+    Alternative_Paths: "Switch to different MCP combinations"
+    Native_Fallback: "Revert to native tools when necessary"
+```
+
+## Performance Optimization
+
+```yaml
+Optimization_Strategies:
+  Parallel_Execution:
+    Independent_Operations: "Run non-dependent MCP calls in parallel"
+    Result_Aggregation: "Combine results intelligently"
+    Timeout_Management: "Handle slow servers gracefully"
+    
+  Smart_Caching:
+    Cross_Server_Cache: "Share relevant cache between servers"
+    Predictive_Caching: "Pre-cache likely needed results"
+    Cache_Invalidation: "Intelligent cache refresh strategies"
+    
+  Load_Balancing:
+    Server_Selection: "Choose optimal server based on load"
+    Request_Distribution: "Distribute requests across servers"
+    Performance_Monitoring: "Track and optimize server usage"
+```
+
+## Auto-Activation Intelligence
+
+```yaml
+Contextual_MCP_Selection:
+  Project_Type_Detection:
+    React_Projects: "Magic + Playwright priority"
+    Database_Projects: "Supabase + Sequential priority"
+    Large_Codebases: "Desktop Commander + Sequential priority"
+    Performance_Critical: "Sequential + Playwright priority"
+    
+  User_Behavior_Learning:
+    Command_Patterns: "Learn user preferences"
+    Success_Tracking: "Track successful MCP combinations"
+    Adaptation: "Adjust recommendations based on outcomes"
+    
+  Session_Context_Awareness:
+    Previous_Commands: "Consider command history"
+    Project_State: "Analyze current project status"
+    Time_Patterns: "Consider time-based usage patterns"
+```
+
+# Implementation Examples
+
+## Example 1: Enhanced Analyze Command
+```yaml
+Command: "/analyze --arch --hybrid --supabase --desktop"
+MCP_Coordination:
+  - Desktop Commander: "Scan file structure and dependencies"
+  - Supabase: "Analyze database architecture and relationships"
+  - Sequential: "Provide comprehensive architectural analysis"
+  - Context7: "Validate against architectural best practices"
+Result: "Multi-dimensional architecture analysis with database integration"
+```
+
+## Example 2: AI-Powered Build Process
+```yaml
+Command: "/build --feature --ai-assisted --magic --supabase"
+MCP_Coordination:
+  - Magic: "Generate React components based on requirements"
+  - Supabase: "Create database integration code"
+  - Sequential: "Coordinate complex build logic"
+  - Playwright: "Generate end-to-end tests"
+Result: "Complete feature with UI, database integration, and tests"
+```
+
+## Example 3: Comprehensive Security Review
+```yaml
+Command: "/review --security --comprehensive --all-mcp"
+MCP_Coordination:
+  - Sequential: "Deep security pattern analysis"
+  - Supabase: "Database security audit"
+  - Context7: "Security best practice validation"
+  - Playwright: "Security testing scenarios"
+Result: "Complete security assessment across all layers"
+```

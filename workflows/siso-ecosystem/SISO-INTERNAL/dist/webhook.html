@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webhook Test</title>
+</head>
+<body>
+    <h1>Webhook Endpoint</h1>
+    <p>This is a test to see if public files are accessible.</p>
+    <script>
+        if (window.location.search.includes('test=1')) {
+            document.body.innerHTML = '<h1>✅ Public access works!</h1>';
+        }
+    </script>
+</body>
+</html> 

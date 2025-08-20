@@ -1,0 +1,61 @@
+{
+  "quality_thresholds": {
+    "excellent": 0.9,
+    "good": 0.7,
+    "acceptable": 0.5,
+    "poor": 0.3
+  },
+  "metric_weights": {
+    "relevance": 0.3,
+    "accuracy": 0.25,
+    "completeness": 0.2,
+    "innovation": 0.15,
+    "clarity": 0.1
+  },
+  "agent_performance_scores": {
+    "cerebras_ultra": [
+      {
+        "timestamp": "2025-08-18T05:53:42.237243",
+        "overall_score": 0.758,
+        "quality_level": "good",
+        "metrics": {
+          "relevance": 1.0,
+          "accuracy": 0.9,
+          "completeness": 0.338,
+          "innovation": 0.5,
+          "clarity": 0.9
+        }
+      }
+    ],
+    "scaleway_eu": [
+      {
+        "timestamp": "2025-08-18T05:53:42.237303",
+        "overall_score": 0.435,
+        "quality_level": "poor",
+        "metrics": {
+          "relevance": 0.3,
+          "accuracy": 0.75,
+          "completeness": 0.061,
+          "innovation": 0.5,
+          "clarity": 0.7
+        }
+      }
+    ],
+    "gemini_flash": [
+      {
+        "timestamp": "2025-08-18T05:53:42.237371",
+        "overall_score": 0.526,
+        "quality_level": "acceptable",
+        "metrics": {
+          "relevance": 0.45,
+          "accuracy": 0.74,
+          "completeness": 0.256,
+          "innovation": 0.5,
+          "clarity": 0.8
+        }
+      }
+    ]
+  },
+  "total_evaluations": 3,
+  "last_updated": "2025-08-18T05:53:42.237395"
+}

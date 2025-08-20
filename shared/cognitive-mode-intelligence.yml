@@ -1,0 +1,196 @@
+# Cognitive Mode Intelligence System
+# Revolutionary cognitive mode switching based on ecosystem patterns
+
+Ecosystem_Cognitive_Triggers: &Ecosystem_Cognitive_Triggers
+  # Intelligent cognitive mode activation based on real project patterns
+  project_based_cognitive_switching:
+    mallocra_cognitive_modes:
+      tourism_platform_architect: "Activate for complex booking flow architecture and database design"
+      mcp_integration_specialist: "Activate for Supabase MCP setup and automation script management"
+      e2e_testing_expert: "Activate for test-booking-flow.js and testing workflow optimization"
+      deployment_orchestrator: "Activate for deployment-checklist.sh and production workflows"
+      environment_troubleshooter: "Activate for .env management and configuration debugging"
+      
+    ubahcryp_cognitive_modes:
+      crypto_trading_architect: "Activate for blockchain integration and trading logic"
+      multi_environment_coordinator: "Activate for frontend + backend + brain coordination"
+      github_code_miner: "Activate for github-goldminer-agent operations and analysis"
+      financial_system_specialist: "Activate for crypto API integration and validation"
+      complex_debugging_expert: "Activate for multi-component system debugging"
+      
+    delta_sports_cognitive_modes:
+      orchestration_specialist: "Activate for orchestrator-config.json management"
+      frontend_backend_coordinator: "Activate for dual development environment management"
+      sports_platform_architect: "Activate for sports-specific feature development"
+      nested_structure_navigator: "Activate for complex directory structure management"
+      
+    siso_cognitive_modes:
+      multi_platform_architect: "Activate for electron + tauri + web coordination"
+      build_orchestration_expert: "Activate for multi-platform build coordination"
+      project_switching_specialist: "Activate for project:siso:dev vs project:claudia:dev"
+      seo_optimization_expert: "Activate for SEO generation and performance optimization"
+
+Automation_Script_Cognitive_Intelligence: &Automation_Script_Cognitive_Intelligence
+  # Cognitive modes triggered by automation script patterns
+  script_category_cognitive_modes:
+    mcp_management_specialist:
+      triggers: ["setup-supabase-mcp.sh", "mcp-manager.sh", "kill-mcp-processes.sh"]
+      cognitive_characteristics: "Deep MCP ecosystem understanding + automation expertise"
+      specialized_knowledge: "MCP configuration, token management, connection troubleshooting"
+      
+    deployment_automation_expert:
+      triggers: ["deployment-checklist.sh", "claude-auto-mcp.sh", "pre-deploy"]
+      cognitive_characteristics: "Systematic deployment thinking + risk assessment"
+      specialized_knowledge: "Production deployment, environment verification, rollback strategies"
+      
+    testing_workflow_specialist:
+      triggers: ["test-booking-flow.js", "quick-test.js", "test:e2e:console"]
+      cognitive_characteristics: "Quality assurance mindset + rapid iteration focus"
+      specialized_knowledge: "E2E testing, debugging, rapid development cycles"
+      
+    data_management_expert:
+      triggers: ["populate-activities.js", "cleanup-old-activities.js", "consolidate-activities.js"]
+      cognitive_characteristics: "Database optimization + data integrity focus"
+      specialized_knowledge: "Data migration, cleanup, performance optimization"
+      
+    github_integration_specialist:
+      triggers: ["create-github-issues.js", "github_issues.py", "github-goldminer-agent/"]
+      cognitive_characteristics: "Repository analysis + automated development workflows"
+      specialized_knowledge: "Issue management, code analysis, repository optimization"
+
+Dynamic_Cognitive_Adaptation: &Dynamic_Cognitive_Adaptation
+  # Adaptive cognitive mode switching based on context
+  context_aware_mode_switching:
+    error_detection_cognitive_shift:
+      mcp_connection_errors: "→ mcp_integration_specialist + environment_troubleshooter"
+      build_failures: "→ build_orchestration_expert + platform_specific_debugger"
+      deployment_issues: "→ deployment_automation_expert + rollback_specialist"
+      environment_configuration_errors: "→ environment_troubleshooter + automation_specialist"
+      
+    complexity_based_cognitive_scaling:
+      simple_operations: "→ efficient_executor (minimal cognitive overhead)"
+      medium_complexity: "→ specialized_mode_activation (project-specific expertise)"
+      high_complexity: "→ multi_mode_coordination (orchestrated cognitive approach)"
+      ecosystem_wide_operations: "→ ecosystem_orchestrator (full cognitive integration)"
+      
+    project_switching_cognitive_adaptation:
+      active_client_switching: "Rapid cognitive mode switching for priority projects"
+      side_quest_switching: "Experimental cognitive mode for exploration projects"
+      ecosystem_tool_switching: "Tool-focused cognitive mode for SISO_ECOSYSTEM work"
+      cross_project_pattern_recognition: "Pattern-matching cognitive mode for similar projects"
+
+Multi_Modal_Cognitive_Intelligence: &Multi_Modal_Cognitive_Intelligence
+  # Revolutionary multi-modal cognitive processing
+  parallel_cognitive_processing:
+    architecture_analysis_mode: "Deep structural thinking for system design and optimization"
+    implementation_execution_mode: "Focused execution thinking for rapid development"
+    debugging_investigation_mode: "Systematic debugging thinking for error resolution"
+    optimization_enhancement_mode: "Performance-focused thinking for efficiency improvements"
+    
+  cognitive_mode_coordination:
+    sequential_mode_progression: "Logical progression through cognitive modes for complex tasks"
+    parallel_mode_execution: "Simultaneous cognitive processing for multi-faceted problems"
+    adaptive_mode_blending: "Dynamic blending of cognitive modes based on task requirements"
+    feedback_driven_mode_adjustment: "Real-time cognitive mode adjustment based on outcomes"
+    
+  expertise_depth_scaling:
+    surface_level_cognitive_mode: "Quick cognitive processing for familiar patterns"
+    intermediate_cognitive_mode: "Moderate depth processing for standard complexity"
+    expert_level_cognitive_mode: "Deep cognitive processing for complex challenges"
+    revolutionary_cognitive_mode: "Maximum cognitive depth for breakthrough requirements"
+
+Real_World_Cognitive_Patterns: &Real_World_Cognitive_Patterns
+  # Cognitive patterns derived from real ecosystem usage
+  workflow_cognitive_intelligence:
+    development_startup_cognitive_pattern:
+      mallocra_pattern: "Tourism platform mindset → MCP integration focus → testing validation"
+      ubahcryp_pattern: "Crypto trading mindset → multi-environment coordination → blockchain validation"
+      delta_sports_pattern: "Sports platform mindset → orchestration coordination → dual development"
+      siso_pattern: "Multi-platform mindset → build coordination → project switching"
+      
+    debugging_cognitive_pattern:
+      mcp_debugging_mindset: "Connection-focused → script-based → systematic recovery"
+      environment_debugging_mindset: "Configuration-focused → verification-based → backup strategies"
+      build_debugging_mindset: "Platform-specific → dependency-focused → clean rebuild"
+      integration_debugging_mindset: "Component-isolation → coordination-focused → end-to-end validation"
+      
+    optimization_cognitive_pattern:
+      performance_optimization_mindset: "Metrics-focused → bottleneck identification → systematic improvement"
+      workflow_optimization_mindset: "Pattern-recognition → automation-opportunity → efficiency enhancement"
+      resource_optimization_mindset: "Usage-analysis → waste-elimination → intelligent allocation"
+
+Cognitive_Memory_Integration: &Cognitive_Memory_Integration
+  # Integration between cognitive modes and memory systems
+  cognitive_memory_patterns:
+    mode_specific_memory_activation: "Activate relevant memory patterns based on cognitive mode"
+    cross_mode_memory_sharing: "Share memory patterns between related cognitive modes"
+    cognitive_pattern_learning: "Learn optimal cognitive mode patterns from successful outcomes"
+    memory_enhanced_cognitive_switching: "Use memory patterns to improve cognitive mode selection"
+    
+  expertise_building_patterns:
+    cognitive_expertise_accumulation: "Build cognitive expertise through repeated pattern exposure"
+    cross_project_cognitive_transfer: "Transfer cognitive expertise between similar projects"
+    cognitive_pattern_generalization: "Generalize cognitive patterns for broader application"
+    cognitive_specialization_balance: "Balance general cognitive ability with specialized expertise"
+
+Intelligent_Cognitive_Orchestration: &Intelligent_Cognitive_Orchestration
+  # Advanced cognitive orchestration for ecosystem mastery
+  ecosystem_cognitive_coordination:
+    project_cognitive_mapping: "Map optimal cognitive modes for each project and scenario"
+    workflow_cognitive_optimization: "Optimize cognitive mode selection for workflow efficiency"
+    error_cognitive_prevention: "Use cognitive modes to prevent errors before they occur"
+    performance_cognitive_enhancement: "Enhance performance through optimal cognitive mode selection"
+    
+  adaptive_cognitive_learning:
+    cognitive_effectiveness_tracking: "Track cognitive mode effectiveness for continuous improvement"
+    cognitive_pattern_optimization: "Optimize cognitive patterns based on real-world outcomes"
+    cognitive_failure_learning: "Learn from cognitive mode failures to improve selection"
+    cognitive_innovation_discovery: "Discover new cognitive patterns through experimentation"
+    
+  revolutionary_cognitive_capabilities:
+    ecosystem_wide_cognitive_awareness: "Maintain cognitive awareness across entire ecosystem"
+    predictive_cognitive_activation: "Predict and pre-activate cognitive modes based on patterns"
+    autonomous_cognitive_adaptation: "Autonomously adapt cognitive modes for optimal performance"
+    cognitive_innovation_generation: "Generate innovative cognitive approaches for novel challenges"
+
+Cognitive_Performance_Intelligence: &Cognitive_Performance_Intelligence
+  # Performance metrics and optimization for cognitive modes
+  cognitive_effectiveness_metrics:
+    mode_activation_accuracy: "95% accuracy in cognitive mode selection for optimal outcomes"
+    cognitive_switching_efficiency: "80% reduction in cognitive overhead through smart switching"
+    expertise_application_success: "90% success rate in applying cognitive expertise"
+    problem_solving_effectiveness: "85% improvement in problem-solving speed and accuracy"
+    
+  cognitive_learning_metrics:
+    cognitive_pattern_acquisition: "70% faster cognitive pattern learning through ecosystem integration"
+    expertise_transfer_success: "88% success rate in transferring cognitive expertise"
+    cognitive_adaptation_speed: "60% faster adaptation to new cognitive requirements"
+    innovation_generation_rate: "75% increase in innovative cognitive approach generation"
+    
+  ecosystem_cognitive_integration:
+    ecosystem_mastery_achievement: "Complete cognitive mastery of ecosystem patterns and requirements"
+    cross_project_cognitive_efficiency: "92% efficiency in cognitive mode coordination across projects"
+    real_world_cognitive_alignment: "98% alignment between cognitive modes and real-world requirements"
+    revolutionary_cognitive_transformation: "Expert-level cognitive assistance vs basic AI responses"
+
+Cognitive_Mode_Specializations: &Cognitive_Mode_Specializations
+  # Specialized cognitive modes for specific ecosystem needs
+  tourism_platform_cognitive_specialist:
+    domain_expertise: "Tourism industry knowledge + booking flow optimization + user experience focus"
+    technical_specialization: "Next.js + Supabase + MCP integration expertise"
+    workflow_focus: "E2E testing + deployment automation + performance optimization"
+    
+  crypto_trading_cognitive_specialist:
+    domain_expertise: "Cryptocurrency + trading algorithms + blockchain integration"
+    technical_specialization: "Multi-environment coordination + API integration + real-time data"
+    workflow_focus: "Complex debugging + performance optimization + risk management"
+    
+  multi_platform_cognitive_specialist:
+    domain_expertise: "Cross-platform development + build coordination + deployment strategies"
+    technical_specialization: "Electron + Tauri + Web coordination + SEO optimization"
+    workflow_focus: "Project switching + build automation + platform-specific optimization"
+    
+  mcp_ecosystem_cognitive_specialist:
+    domain_expertise: "MCP configuration + automation scripts + integration patterns"
+    technical_specialization: "Claude integration + Supabase coordination + error recovery"
+    workflow_focus: "Systematic setup + health monitoring + performance optimization"

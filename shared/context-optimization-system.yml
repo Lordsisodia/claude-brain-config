@@ -1,0 +1,90 @@
+# Context Optimization System
+# Revolutionary context window management and memory efficiency
+
+Context_Management_Core: &Context_Management_Core
+  # Context Efficiency Strategies
+  efficiency_strategies:
+    relevance_filtering: "Only include directly relevant information"
+    progressive_disclosure: "Start high-level, drill down as needed"
+    pattern_caching: "Reference established patterns instead of repeating"
+    tool_result_summarization: "Compress tool outputs to key findings"
+    context_checkpoints: "Periodically assess and optimize context usage"
+  
+  # Memory Pattern Enhancement
+  memory_patterns:
+    working_memory: "Current task with dependencies and progress"
+    episodic_memory: "Recent successful patterns and approaches"
+    semantic_memory: "Domain knowledge and established best practices"
+    procedural_memory: "Successful workflows and tool combinations"
+    meta_memory: "Knowledge about what works and what doesn't"
+
+Context_Window_Optimization: &Context_Window_Optimization
+  # Token Usage Principles
+  token_optimization:
+    - "Prioritize actionable information over background context"
+    - "Use references to established patterns instead of repetition"
+    - "Summarize tool results focusing on key decisions needed"
+    - "Eliminate redundant information across tool calls"
+    - "Structure information for easy scanning and decision making"
+  
+  # Information Hierarchy
+  information_priority:
+    critical: "Current task requirements and blockers"
+    high: "Immediate dependencies and success criteria"
+    medium: "Relevant patterns and established approaches"
+    low: "Background context and historical information"
+    minimal: "Detailed explanations that can be referenced"
+
+Systematic_Reasoning_Enhancement: &Systematic_Reasoning_Enhancement
+  # Meta-Reasoning Checkpoints (Every 3 Steps)
+  reasoning_checkpoints:
+    problem_validation: "Am I solving the right problem?"
+    approach_optimization: "Is this approach optimal for the constraints?"
+    simplicity_check: "What simpler solution am I missing?"
+    verification_plan: "How can I verify this is working?"
+    learning_capture: "What would I do differently next time?"
+  
+  # Enhanced Musk Algorithm for AI
+  musk_algorithm_ai:
+    1_question_intelligently: 
+      - "What is the ACTUAL problem being solved?"
+      - "Are we solving symptoms or root causes?"
+      - "What would happen if we did nothing?"
+    
+    2_delete_with_precision:
+      - "What complexity can be eliminated?"
+      - "What assumptions can be removed?"
+      - "What steps are actually unnecessary?"
+    
+    3_simplify_using_patterns:
+      - "What's the simplest solution that could work?"
+      - "What existing patterns can be reused?"
+      - "How can we reduce cognitive load?"
+    
+    4_accelerate_with_tools:
+      - "What's the fastest feedback loop?"
+      - "How can we parallel process?"
+      - "What tools can automate the work?"
+    
+    5_automate_pattern_recognition:
+      - "What patterns should be captured?"
+      - "How can we make this reusable?"
+      - "What can be systematized?"
+
+Performance_Feedback_System: &Performance_Feedback_System
+  # Success Metrics (Track Automatically)
+  success_metrics:
+    task_completion_rate: "% of todos completed successfully"
+    error_recovery_rate: "How quickly problems are resolved"
+    context_efficiency: "Tokens used vs. value delivered"
+    tool_selection_accuracy: "How often optimal tools are chosen"
+    user_satisfaction: "Feedback on approach and results"
+  
+  # Continuous Learning Protocol
+  learning_protocol:
+    post_task_analysis:
+      - "What worked well? (Patterns to repeat)"
+      - "What could be improved? (Areas for optimization)"
+      - "What was unexpected? (Edge cases to remember)"
+      - "What tools were most effective? (Usage patterns)"
+      - "How can this be systematized? (Automation opportunities)"

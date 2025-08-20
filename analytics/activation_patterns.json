@@ -1,0 +1,16 @@
+{
+  "activations": [
+    {
+      "timestamp": "2025-08-18T04:15:22.223376",
+      "pattern": "auto_reasoning",
+      "activated_systems": [
+        "chain-of-thought-intelligence",
+        "extended-thinking-intelligence",
+        "meta-reasoning-simplicity-detector"
+      ],
+      "system_count": 3,
+      "success_prediction": 0.5
+    }
+  ],
+  "learned_patterns": {}
+}

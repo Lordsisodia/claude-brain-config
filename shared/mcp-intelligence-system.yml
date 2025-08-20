@@ -1,0 +1,60 @@
+# MCP Intelligence System
+# Revolutionary MCP awareness and optimization
+
+MCP_Intelligence_Core: &MCP_Intelligence_Core
+  # Available MCP Registry (Auto-Updated)
+  available_mcps:
+    database:
+      - "mcp__supabase__*: Database operations, SQL queries, table management"
+      - "mcp__notion__*: Documentation, knowledge management, database operations"
+    
+    development:
+      - "mcp__desktop-commander__*: File system operations, process management"
+      - "mcp__ide__*: VS Code integration, diagnostics"
+      - "mcp__youtube-data-mcp-server__*: YouTube API operations"
+    
+    web_research:
+      - "mcp__exa__*: Advanced web search, company research, deep analysis"
+      - "mcp__ref-tools-mcp__*: Documentation search and URL reading"
+      - "mcp__puppeteer__*: Browser automation, screenshot capture"
+    
+    communication:
+      - "mcp__applescript-mcp__*: macOS system integration, clipboard, notifications"
+      - "mcp__mcp-youtube-transcript__*: YouTube transcript extraction"
+    
+    ai_analysis:
+      - "mcp__clear-thought__*: Advanced reasoning operations"
+      - "mcp__context7-mcp__*: Library documentation retrieval"
+
+Smart_MCP_Selection: &Smart_MCP_Selection
+  # Decision Tree for Optimal Tool Selection
+  decision_tree:
+    research_analysis: "mcp__exa__ or mcp__ref-tools-mcp__"
+    database_operations: "mcp__supabase__ or mcp__notion__"
+    file_operations: "mcp__desktop-commander__"
+    web_automation: "mcp__puppeteer__"
+    system_integration: "mcp__applescript-mcp__"
+    complex_reasoning: "mcp__clear-thought__"
+    documentation: "mcp__context7-mcp__"
+  
+  # Tool Combination Strategies
+  combination_patterns:
+    - "Batch similar operations (multiple reads, searches)"
+    - "Use parallel tool calls for independent tasks"
+    - "Chain tools for dependent operations (research → implement → test)"
+    - "Combine complementary tools for comprehensive solutions"
+
+MCP_Usage_Optimization: &MCP_Usage_Optimization
+  # Intelligent Batching Rules
+  batching_strategies:
+    read_operations: "Batch all file reads in single message"
+    search_operations: "Combine related searches efficiently"
+    database_operations: "Group related queries"
+    analysis_tasks: "Parallel process independent analyses"
+  
+  # Common Tool Chains
+  tool_chains:
+    research_implement: "Research → Analyze → Plan → Implement → Test → Document"
+    code_modification: "Read → Edit → Verify → Commit"
+    content_creation: "Search → Filter → Synthesize → Apply"
+    problem_solving: "Analyze → Hypothesize → Test → Iterate → Verify"

@@ -1,0 +1,27 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer Circle -->
+  <circle cx="100" cy="100" r="100" fill="#000000"/>
+  <circle cx="100" cy="100" r="85" fill="#FFA726"/>
+  
+  <!-- Simplified Lion Head -->
+  <g transform="translate(100, 100)">
+    <!-- Main head -->
+    <circle cx="0" cy="0" r="30" fill="#000000"/>
+    
+    <!-- Eyes -->
+    <circle cx="-9" cy="-3" r="4.5" fill="#FFA726"/>
+    <circle cx="9" cy="-3" r="4.5" fill="#FFA726"/>
+    <circle cx="-9" cy="-3" r="2.4" fill="#000000"/>
+    <circle cx="9" cy="-3" r="2.4" fill="#000000"/>
+    
+    <!-- Simple Crown -->
+    <g transform="translate(0, -36)">
+      <!-- Crown base -->
+      <rect x="-18" y="0" width="36" height="6" fill="#FFA726"/>
+      <!-- Crown points -->
+      <polygon points="-12,0 -6,0 -9,-12" fill="#FFA726"/>
+      <polygon points="-3,0 3,0 0,-15" fill="#FFA726"/>
+      <polygon points="6,0 12,0 9,-12" fill="#FFA726"/>
+    </g>
+  </g>
+</svg>

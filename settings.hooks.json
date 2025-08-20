@@ -1,0 +1,213 @@
+{
+  "hooks": [
+    {
+      "matcher": "UserPromptSubmit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/prompt-debug-logger.sh \"$CLAUDE_LAST_PROMPT\"",
+          "timeout": 20,
+          "modifyPrompt": true,
+          "description": "OpenAI Framework-based prompt optimization"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/prompt-enhancer.sh \"$CLAUDE_LAST_PROMPT\"",
+          "timeout": 15,
+          "modifyPrompt": false,
+          "description": "Context-aware prompt enhancement (supplementary)"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/auto-agent-detector.sh \"$CLAUDE_LAST_PROMPT\" \"$PWD\"",
+          "timeout": 5,
+          "modifyPrompt": false,
+          "description": "Autonomous agent detection and recommendation"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/intelligent-tool-selector.sh \"$CLAUDE_LAST_PROMPT\" \"$PWD\"",
+          "timeout": 3,
+          "modifyPrompt": false,
+          "description": "Intelligent tool selection to remove bottlenecks"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/smart-command-interceptor.sh \"$CLAUDE_LAST_PROMPT\" \"$PWD\"",
+          "timeout": 3,
+          "modifyPrompt": false,
+          "description": "Intercept basic commands and redirect to powerful alternatives"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/auto-team-spawner.sh \"$CLAUDE_LAST_PROMPT\" \"$PWD\"",
+          "timeout": 4,
+          "modifyPrompt": false,
+          "description": "Automatically analyze task complexity and recommend agent teams"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/security-validator.sh \"$CLAUDE_LAST_PROMPT\" \"\"",
+          "timeout": 10,
+          "description": "Security validation"
+        },
+        {
+          "type": "command", 
+          "command": "~/.claude/scripts/intelligent-session.sh \"$CLAUDE_LAST_PROMPT\"",
+          "description": "Session intelligence tracking"
+        }
+      ]
+    },
+    {
+      "matcher": "PreToolUse",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/cross-platform-notifier.sh \"Starting $CLAUDE_TOOL_NAME\" \"SISO Development\" \"low\"",
+          "suppressOutput": true,
+          "background": true
+        }
+      ]
+    },
+    {
+      "matcher": "Edit.*\\.(ts|tsx|js|jsx)$",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/tdd-enforcement-guard.sh \"$CLAUDE_FILE_PATHS\" \"edit\"",
+          "timeout": 15
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/smart-code-processor.sh \"$CLAUDE_FILE_PATHS\""
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/auto-documentation-generator.sh \"$CLAUDE_FILE_PATHS\"",
+          "background": true
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/command-validator.sh \"npx prettier --check $CLAUDE_FILE_PATHS\" \"npx eslint $CLAUDE_FILE_PATHS\"",
+          "timeout": 30
+        }
+      ]
+    },
+    {
+      "matcher": "Write.*\\.(ts|tsx|js|jsx)$", 
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/smart-code-processor.sh \"$CLAUDE_FILE_PATHS\""
+        }
+      ]
+    },
+    {
+      "matcher": "Bash.*git.*commit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/auto-commit-enhance.sh"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/command-validator.sh \"git status --porcelain\" \"git diff --cached --name-only\"",
+          "timeout": 15
+        }
+      ]
+    },
+    {
+      "matcher": "PostToolUse",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/task-completion-briefer.sh \"$CLAUDE_TOOL_NAME\" \"$CLAUDE_FILE_PATHS\"",
+          "timeout": 5
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/improvement-tracker.sh \"hook_triggered\" \"$CLAUDE_TOOL_NAME\" \"Tool executed successfully\"",
+          "background": true,
+          "timeout": 3
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/contextual-audio-feedback.sh \"$CLAUDE_TOOL_NAME\" \"success\"",
+          "background": true,
+          "timeout": 5
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/multi-agent-observer.sh \"$CLAUDE_TOOL_NAME\" \"$CLAUDE_FILE_PATHS\"",
+          "background": true
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/intelligent-post-tool.sh \"$CLAUDE_TOOL_NAME\" \"$CLAUDE_FILE_PATHS\""
+        }
+      ]
+    },
+    {
+      "matcher": "Edit.*package\\.json$",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/smart-dependency-manager.sh \"$CLAUDE_FILE_PATHS\""
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/cross-platform-notifier.sh \"Dependencies updated - security scan initiated\" \"SISO Security\"",
+          "background": true
+        }
+      ]
+    },
+    {
+      "matcher": "Write.*\\.test\\.(ts|tsx|js|jsx)$",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/auto-test-runner.sh \"$CLAUDE_FILE_PATHS\""
+        }
+      ]
+    },
+    {
+      "matcher": "Bash.*npm.*run.*build",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/build-optimizer.sh"
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/cross-platform-notifier.sh \"Build process initiated\" \"SISO Development\"",
+          "background": true
+        }
+      ]
+    },
+    {
+      "matcher": "Bash.*(rm|delete|sudo)",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/security-validator.sh \"$CLAUDE_TOOL_ARGS\" \"\"",
+          "timeout": 5
+        },
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/cross-platform-notifier.sh \"⚠️ Potentially destructive command detected\" \"SISO Security Alert\" \"critical\"",
+          "background": true
+        }
+      ]
+    },
+    {
+      "matcher": "Stop",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/cross-platform-notifier.sh \"Session completed successfully\" \"SISO Development\"",
+          "background": true
+        }
+      ]
+    }
+  ]
+}

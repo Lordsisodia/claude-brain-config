@@ -1,0 +1,10 @@
+{
+  "timestamp": "2025-08-17T21:00:27Z",
+  "prompt": "Build a complete e-commerce platform with user authentication, product catalog, shopping cart, payment processing, and admin dashboard",
+  "complexity_score": 6,
+  "word_count":       17,
+  "tech_stack": " auth",
+  "team_recommendation": "medium
+small",
+  "auto_spawn": true
+}

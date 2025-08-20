@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Channel ID Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .working { background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .broken { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        .testing { background-color: #fff3cd; border: 1px solid #ffeaa7; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        input { width: 300px; padding: 8px; margin: 5px; }
+        #results { margin-top: 20px; }
+        .channel-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+        .channel-item { padding: 5px; background: #f8f9fa; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 YouTube Channel ID Tester</h1>
+    
+    <div>
+        <h3>Test Individual Channel:</h3>
+        <input type="text" id="channelId" placeholder="Enter YouTube channel ID (UC...)" />
+        <input type="text" id="channelName" placeholder="Channel name" />
+        <button onclick="testSingleChannel()">Test Channel</button>
+    </div>
+
+    <div>
+        <h3>Test All Configured Channels:</h3>
+        <button onclick="testAllChannels()">Test All 47 Channels</button>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="channel-list">
+        <h3>Quick Channel Finder:</h3>
+        <div>
+            <strong>Popular AI Channels:</strong><br>
+            <div class="channel-item">Anthropic: Check @anthropic</div>
+            <div class="channel-item">OpenAI: Check @openai</div>
+            <div class="channel-item">MatthewBerman: Check @matthew_berman</div>
+        </div>
+    </div>
+
+    <script>
+        const channels = [
+            { id: 'UCJmJgKCYrNvK3pgIgLyC4aQ', name: 'Anthropic' },
+            { id: 'UCXZCJLdBC09xxGZ6gcdrc6A', name: 'OpenAI' },
+            { id: 'UCbfYPyITQ-7l4upoX8nvctg', name: 'Two Minute Papers' },
+            { id: 'UCSHZKyawb77ixDdsGog4iWA', name: 'Lex Fridman' },
+            { id: 'UC6biysICWOJ-C3P4Tyeggzg', name: 'Andrej Karpathy' },
+            { id: 'UCsBjURrPoezykLs9EqgamOA', name: 'Fireship' },
+            { id: 'UCYO_jab_esuFRV4b17AJtAw', name: '3Blue1Brown' },
+            { id: 'UCfzlCWGWYyIQ0aLC5w48gBQ', name: 'sentdex' },
+            { id: 'UC8butISFwT-Wl7EV0hUK0BQ', name: 'freeCodeCamp.org' },
+            { id: 'UCZHmQk67mSJgfCCTn7xBfew', name: 'Yannic Kilcher' },
+            { id: 'UCLB7AzTwc6VFZrBsO2ucBMg', name: 'Robert Miles AI Safety' },
+            { id: 'UCWv7vMbMWH4-V0ZXdmDpPBA', name: 'Programming with Mosh' },
+            { id: 'UC29ju8bIPH5as8OGnQzwJyA', name: 'Traversy Media' },
+            { id: 'UCCezIgC97PvUuR4_gbFUs5g', name: 'Corey Schafer' },
+            { id: 'UCW5YeuERMmlnqo4oq8vwUpg', name: 'The Net Ninja' },
+            { id: 'UCWN3xxRkmTPmbKwht9FuE5A', name: 'Siraj Raval' },
+            { id: 'UCiT9RITQ9PW6BhXK0y2jaeg', name: 'Ken Jee' },
+            { id: 'UCtYLUTtgS3k1Fg4y5tAhLbw', name: 'StatQuest with Josh Starmer' },
+            { id: 'UCP7jMXSY2xbc3KCAE0MHQ-A', name: 'Google DeepMind' },
+            { id: 'UCKWaEZ-_VweaEx1j62do_vQ', name: 'IBM Technology' },
+            { id: 'UCcabW7890RKJzL968QWEykA', name: 'CS50' },
+            { id: 'UCEBb1b_L6zDS3xTUrIALZOw', name: 'MIT OpenCourseWare' },
+            { id: 'UC4JX40jDee_tINbkjycV4Sg', name: 'Tech With Tim' },
+            { id: 'UCtxCXg-UvSnTKPOzLH4wJaQ', name: 'Coding Tech' },
+            { id: 'UC9x0AN7BWHpCDHSm9NiJFJQ', name: 'NetworkChuck' },
+            { id: 'UCdngmbVKX1Tgre699-XLlUA', name: 'TechWorld with Nana' },
+            { id: 'UCI0vQvr9aFn27yR6Ej6n5UA', name: 'Real Python' },
+            { id: 'UCcefcZRL2oaA_uBNeo5UOWg', name: 'Y Combinator' },
+            { id: 'UCqRlEXn0Z_0pIYvxm8dGamw', name: 'Matthew Berman' },
+            { id: 'UCqvAImgAO_A1cAYLNPbLbPg', name: 'AI Explained' },
+            { id: 'UCcHjnufvwvPEcXKOJN5QhZw', name: 'The AI Advantage' },
+            { id: 'UCoEDHvR6fDCnrV5HbTGUG1A', name: 'Wes Roth' },
+            { id: 'UCkpRz7mKAFMbMTHQkF2_z8w', name: 'Hugging Face' },
+            { id: 'UCPGrgwfbkjTIgPoOh2q1BAg', name: 'David Ondrej' },
+            { id: 'UCvr4zqpB6RCmm3MaLxgMNgA', name: 'TheAIGRID' },
+            { id: 'UCJaLkuNfXCfh9qhHKl8Uilw', name: 'AI Jason' },
+            { id: 'UCk1tKh0unKiZWQQDd9sO9fg', name: 'Aitrepreneur' },
+            { id: 'UCTgM2c_pCxYyI7e_u93UzHA', name: 'WorldofAI' },
+            { id: 'UCbRP3c757lWg9M-U7TyEkXA', name: 'Theo - t3.gg' },
+            { id: 'UC-8QAzbLcRglXeN_MY9blyw', name: 'Ben Awad' },
+            { id: 'UC6vRUjYqDuoUsYsku86Lrsw', name: 'Jack Herrington' },
+            { id: 'UCJZv4d5rbIKd4QHMPkcABCw', name: 'Kevin Powell' },
+            { id: 'UCFbNIlppjAuEX4znoulh0Cw', name: 'Web Dev Simplified' },
+            { id: 'UC80PWRj_ZU8Zu0HSMNVwKWw', name: 'Codevolution' },
+            { id: 'UC7aBRsP86lm5HbLnmRH0r8g', name: 'Vercel' },
+            { id: 'UC5RjCpD9fg5cLHLSlED-D1Q', name: 'Supabase' },
+            { id: 'UCmU5lSARSFtLQjJgELGKXqw', name: 'Matt Pocock' }
+        ];
+
+        async function testChannel(channelId, channelName) {
+            const url = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+            
+            try {
+                const response = await fetch(url, { mode: 'no-cors' });
+                // Since we can't read the response due to CORS, we'll assume it worked if no error
+                return { status: 'unknown', message: 'CORS blocked - test manually' };
+            } catch (error) {
+                return { status: 'error', message: error.message };
+            }
+        }
+
+        function addResult(channelName, channelId, status, message = '') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${status}`;
+            
+            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+            
+            div.innerHTML = `
+                <strong>${channelName}</strong> (${channelId})<br>
+                Status: ${status}<br>
+                ${message ? `Message: ${message}<br>` : ''}
+                <a href="${rssUrl}" target="_blank">Test RSS Feed</a>
+            `;
+            
+            results.appendChild(div);
+        }
+
+        async function testSingleChannel() {
+            const channelId = document.getElementById('channelId').value.trim();
+            const channelName = document.getElementById('channelName').value.trim();
+            
+            if (!channelId || !channelName) {
+                alert('Please enter both channel ID and name');
+                return;
+            }
+            
+            document.getElementById('results').innerHTML = '';
+            addResult(channelName, channelId, 'testing', 'Testing channel...');
+            
+            const result = await testChannel(channelId, channelName);
+            
+            document.getElementById('results').innerHTML = '';
+            addResult(channelName, channelId, result.status, result.message);
+        }
+
+        async function testAllChannels() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h3>Testing all channels...</h3>';
+            
+            let working = 0;
+            let broken = 0;
+            
+            for (const channel of channels) {
+                addResult(channel.name, channel.id, 'testing', 'Testing...');
+                
+                const result = await testChannel(channel.id, channel.name);
+                
+                // Update the last result
+                const lastResult = results.lastElementChild;
+                lastResult.className = `result ${result.status}`;
+                lastResult.innerHTML = `
+                    <strong>${channel.name}</strong> (${channel.id})<br>
+                    Status: ${result.status}<br>
+                    ${result.message ? `Message: ${result.message}<br>` : ''}
+                    <a href="https://www.youtube.com/feeds/videos.xml?channel_id=${channel.id}" target="_blank">Test RSS Feed</a>
+                `;
+                
+                if (result.status === 'working') working++;
+                else broken++;
+                
+                // Small delay to not overwhelm
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Add summary
+            const summary = document.createElement('div');
+            summary.className = 'result';
+            summary.innerHTML = `<h3>Summary: ${working} working, ${broken} need fixing</h3>`;
+            results.insertBefore(summary, results.firstChild);
+        }
+    </script>
+
+    <div style="margin-top: 40px; padding: 20px; background: #e9ecef; border-radius: 5px;">
+        <h4>📖 How to Use:</h4>
+        <ol>
+            <li><strong>Test Individual:</strong> Enter a channel ID and name, click "Test Channel"</li>
+            <li><strong>Test All:</strong> Click "Test All 47 Channels" to check everything</li>
+            <li><strong>Manual Check:</strong> Click "Test RSS Feed" links to open feeds directly</li>
+            <li><strong>Fix Broken:</strong> For 404 errors, visit the YouTube channel and get the correct ID</li>
+        </ol>
+        
+        <h4>🔍 Finding Correct Channel IDs:</h4>
+        <ul>
+            <li>Go to YouTube channel page</li>
+            <li>Right-click → View Page Source</li>
+            <li>Search for: <code>"channelId":"UC</code></li>
+            <li>Copy the full UC... ID (24 characters)</li>
+        </ul>
+    </div>
+</body>
+</html>

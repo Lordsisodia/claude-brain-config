@@ -1,0 +1,412 @@
+# Federated GraphQL Schema for Distributed Knowledge Graph
+# This schema supports querying across billions of nodes and relationships
+
+# Core Knowledge Node Types
+type KnowledgeNode @key(fields: "id") {
+  id: ID!
+  type: String!
+  properties: JSON!
+  embeddings: [Float!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  shardId: String!
+  
+  # Relationships (resolved via federation)
+  incomingRelationships(first: Int = 10, after: String): RelationshipConnection!
+  outgoingRelationships(first: Int = 10, after: String): RelationshipConnection!
+  
+  # Vector similarity search
+  similarNodes(threshold: Float = 0.8, limit: Int = 10): [SimilarityResult!]!
+  
+  # Cross-shard traversal
+  traverse(
+    direction: TraversalDirection = BOTH
+    relationshipTypes: [String!]
+    maxDepth: Int = 3
+    limit: Int = 100
+  ): TraversalResult!
+}
+
+type Relationship @key(fields: "id") {
+  id: ID!
+  type: String!
+  properties: JSON!
+  fromNode: KnowledgeNode!
+  toNode: KnowledgeNode!
+  weight: Float
+  createdAt: DateTime!
+  crossShard: Boolean!
+  fromShard: String
+  toShard: String
+}
+
+# Pagination and Connection Types
+type RelationshipConnection {
+  edges: [RelationshipEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type RelationshipEdge {
+  node: Relationship!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# Search and Similarity Results
+type SimilarityResult {
+  node: KnowledgeNode!
+  score: Float!
+  distance: Float!
+}
+
+type TraversalResult {
+  nodes: [KnowledgeNode!]!
+  relationships: [Relationship!]!
+  paths: [Path!]!
+  executionTime: Int!
+  shardsQueried: [String!]!
+}
+
+type Path {
+  nodes: [KnowledgeNode!]!
+  relationships: [Relationship!]!
+  length: Int!
+  weight: Float
+}
+
+# Agent Memory and Context Types
+type AgentMemory @key(fields: "agentId sessionId") {
+  agentId: ID!
+  sessionId: ID!
+  workingMemory: JSON!
+  episodicMemory: [MemoryEvent!]!
+  semanticMemory: [KnowledgeNode!]!
+  proceduralMemory: [Procedure!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MemoryEvent {
+  id: ID!
+  type: MemoryEventType!
+  content: JSON!
+  timestamp: DateTime!
+  importance: Float!
+  relatedNodes: [KnowledgeNode!]!
+}
+
+type Procedure {
+  id: ID!
+  name: String!
+  steps: [String!]!
+  conditions: JSON!
+  outcomes: JSON!
+  usageCount: Int!
+  successRate: Float!
+}
+
+# Consensus and Verification Types
+type ConsensusRecord @key(fields: "id") {
+  id: ID!
+  knowledgeNodeId: ID!
+  proposedChange: JSON!
+  votingAgents: [ID!]!
+  votes: [ConsensusVote!]!
+  status: ConsensusStatus!
+  blockHash: String
+  timestamp: DateTime!
+  finalizedAt: DateTime
+}
+
+type ConsensusVote {
+  agentId: ID!
+  vote: VoteType!
+  confidence: Float!
+  reasoning: String
+  timestamp: DateTime!
+}
+
+# Synchronization and Conflict Resolution
+type SyncEvent @key(fields: "id") {
+  id: ID!
+  type: SyncEventType!
+  sourceNode: String!
+  targetNodes: [String!]!
+  changes: JSON!
+  conflictResolution: ConflictResolution
+  status: SyncStatus!
+  timestamp: DateTime!
+}
+
+type ConflictResolution {
+  strategy: String!
+  winningVersion: JSON!
+  mergingRules: JSON!
+  automaticallyResolved: Boolean!
+  humanIntervention: Boolean!
+}
+
+# Enums
+enum TraversalDirection {
+  INCOMING
+  OUTGOING
+  BOTH
+}
+
+enum MemoryEventType {
+  INTERACTION
+  LEARNING
+  DECISION
+  ERROR
+  SUCCESS
+}
+
+enum ConsensusStatus {
+  PROPOSED
+  VOTING
+  ACCEPTED
+  REJECTED
+  FINALIZED
+}
+
+enum VoteType {
+  APPROVE
+  REJECT
+  ABSTAIN
+}
+
+enum SyncEventType {
+  NODE_CREATE
+  NODE_UPDATE
+  NODE_DELETE
+  RELATIONSHIP_CREATE
+  RELATIONSHIP_UPDATE
+  RELATIONSHIP_DELETE
+  BULK_OPERATION
+}
+
+enum SyncStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CONFLICT
+}
+
+# Custom Scalars
+scalar DateTime
+scalar JSON
+
+# Input Types for Mutations
+input CreateKnowledgeNodeInput {
+  type: String!
+  properties: JSON!
+  embeddings: [Float!]
+  agentId: ID!
+}
+
+input UpdateKnowledgeNodeInput {
+  id: ID!
+  type: String
+  properties: JSON
+  embeddings: [Float!]
+  agentId: ID!
+}
+
+input CreateRelationshipInput {
+  fromNodeId: ID!
+  toNodeId: ID!
+  type: String!
+  properties: JSON
+  weight: Float
+  agentId: ID!
+}
+
+input SearchKnowledgeInput {
+  query: String
+  embeddingQuery: [Float!]
+  filters: JSON
+  limit: Int = 20
+  offset: Int = 0
+  includeEmbeddings: Boolean = false
+}
+
+input BulkOperationInput {
+  operations: [BulkOperationItem!]!
+  agentId: ID!
+  validateConsensus: Boolean = true
+}
+
+input BulkOperationItem {
+  type: BulkOperationType!
+  nodeData: CreateKnowledgeNodeInput
+  relationshipData: CreateRelationshipInput
+  updateData: UpdateKnowledgeNodeInput
+  deleteId: ID
+}
+
+enum BulkOperationType {
+  CREATE_NODE
+  UPDATE_NODE
+  DELETE_NODE
+  CREATE_RELATIONSHIP
+  DELETE_RELATIONSHIP
+}
+
+# Query Root
+type Query {
+  # Node and relationship queries
+  knowledgeNode(id: ID!): KnowledgeNode
+  knowledgeNodes(ids: [ID!]!): [KnowledgeNode!]!
+  relationship(id: ID!): Relationship
+  
+  # Search and discovery
+  searchKnowledge(input: SearchKnowledgeInput!): KnowledgeSearchResult!
+  findSimilarNodes(nodeId: ID!, threshold: Float = 0.8, limit: Int = 10): [SimilarityResult!]!
+  
+  # Graph traversal and analysis
+  shortestPath(fromId: ID!, toId: ID!, relationshipTypes: [String!]): Path
+  pathsWithinDepth(fromId: ID!, maxDepth: Int!, relationshipTypes: [String!]): [Path!]!
+  
+  # Agent memory queries  
+  agentMemory(agentId: ID!, sessionId: ID!): AgentMemory
+  agentSessions(agentId: ID!): [AgentMemory!]!
+  
+  # System status and monitoring
+  clusterHealth: ClusterHealth!
+  consensusStatus(knowledgeNodeId: ID!): [ConsensusRecord!]!
+  syncEvents(limit: Int = 50): [SyncEvent!]!
+  
+  # Analytics and insights
+  graphStatistics: GraphStatistics!
+  agentActivityAnalytics(timeRange: TimeRange!): AgentActivityAnalytics!
+}
+
+type KnowledgeSearchResult {
+  nodes: [KnowledgeNode!]!
+  totalCount: Int!
+  executionTime: Int!
+  shardsQueried: [String!]!
+  searchType: String!
+}
+
+type ClusterHealth {
+  overallStatus: HealthStatus!
+  neo4jCluster: [NodeHealth!]!
+  redisCluster: [NodeHealth!]!
+  vectorDatabase: NodeHealth!
+  ipfsNodes: [NodeHealth!]!
+  consensusNetwork: NodeHealth!
+  lastUpdated: DateTime!
+}
+
+type NodeHealth {
+  nodeId: String!
+  status: HealthStatus!
+  latency: Int
+  errorRate: Float
+  lastHealthCheck: DateTime!
+}
+
+enum HealthStatus {
+  HEALTHY
+  DEGRADED
+  UNHEALTHY
+  UNKNOWN
+}
+
+type GraphStatistics {
+  totalNodes: Int!
+  totalRelationships: Int!
+  nodesByType: JSON!
+  relationshipsByType: JSON!
+  averageDegree: Float!
+  clusteringCoefficient: Float!
+  shardDistribution: JSON!
+  lastCalculated: DateTime!
+}
+
+type AgentActivityAnalytics {
+  totalOperations: Int!
+  operationsByType: JSON!
+  averageResponseTime: Float!
+  consensusSuccessRate: Float!
+  conflictResolutionRate: Float!
+  mostActiveAgents: [AgentActivity!]!
+}
+
+type AgentActivity {
+  agentId: ID!
+  operationCount: Int!
+  successRate: Float!
+  averageResponseTime: Float!
+}
+
+input TimeRange {
+  start: DateTime!
+  end: DateTime!
+}
+
+# Mutation Root
+type Mutation {
+  # Node operations
+  createKnowledgeNode(input: CreateKnowledgeNodeInput!): KnowledgeNode!
+  updateKnowledgeNode(input: UpdateKnowledgeNodeInput!): KnowledgeNode!
+  deleteKnowledgeNode(id: ID!, agentId: ID!): Boolean!
+  
+  # Relationship operations
+  createRelationship(input: CreateRelationshipInput!): Relationship!
+  deleteRelationship(id: ID!, agentId: ID!): Boolean!
+  
+  # Bulk operations
+  bulkOperation(input: BulkOperationInput!): BulkOperationResult!
+  
+  # Agent memory operations
+  updateAgentMemory(agentId: ID!, sessionId: ID!, updates: JSON!): AgentMemory!
+  addMemoryEvent(agentId: ID!, sessionId: ID!, event: JSON!): MemoryEvent!
+  
+  # Consensus operations
+  proposeChange(knowledgeNodeId: ID!, changes: JSON!, agentId: ID!): ConsensusRecord!
+  castVote(consensusId: ID!, vote: VoteType!, confidence: Float!, agentId: ID!): ConsensusVote!
+  
+  # System operations
+  triggerSync(targetNodes: [String!], agentId: ID!): [SyncEvent!]!
+  resolveConflict(syncEventId: ID!, resolution: JSON!, agentId: ID!): SyncEvent!
+}
+
+type BulkOperationResult {
+  successful: Int!
+  failed: Int!
+  errors: [BulkOperationError!]!
+  consensusRecords: [ConsensusRecord!]!
+  syncEvents: [SyncEvent!]!
+}
+
+type BulkOperationError {
+  operation: JSON!
+  error: String!
+  code: String!
+}
+
+# Subscription Root for Real-time Updates
+type Subscription {
+  # Node and relationship changes
+  knowledgeNodeUpdated(nodeId: ID): KnowledgeNode!
+  relationshipCreated(nodeId: ID): Relationship!
+  
+  # Agent activity
+  agentActivity(agentId: ID): AgentActivity!
+  consensusUpdated(knowledgeNodeId: ID): ConsensusRecord!
+  
+  # System events
+  syncEventCreated: SyncEvent!
+  conflictDetected: SyncEvent!
+  clusterHealthChanged: ClusterHealth!
+}

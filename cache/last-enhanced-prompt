@@ -1,0 +1,31 @@
+create a React component for notifications
+
+✨ **FEATURE DEVELOPMENT MODE**
+- Follow existing code patterns in the codebase
+- Check for similar implementations to reuse patterns
+- Consider test coverage for new functionality
+
+🎨 **UI/COMPONENT MODE**
+- Check existing design system components first
+- Follow established styling patterns (Tailwind classes, etc.)
+- Consider responsive design and accessibility
+
+📁 **RELEVANT FILES FOUND:**
+- 
+- ./claude-multi-agent-ui-UPDATED-feasibility.md
+- ./SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/.cursor/tasks/page-improvement-workflow.md
+- ./SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/.cursor/tasks/session-prompts.md
+- ./SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/demo-breakthrough-digest.py
+- ./SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/siso-core-clean/src/App.tsx
+- ./SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/siso-core-clean/src/components/chat/WhatsAppIntegration.tsx
+- ./SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/siso-core-clean/src/components/landing/sections/PortfolioData.ts
+
+🏢 **SISO ECOSYSTEM CONTEXT**
+- Follow SISO brand guidelines (orange/yellow theme)
+- Check CLAUDE.md for project-specific patterns
+- Run quality checks: `npm run lint && npm run build`
+- **Main Platform:** SISO-CLIENT-BASE/siso-agency-onboarding-app-main-dev/
+- **Dev Tools:** SISO-DEV-TOOLS/ (Claudia Fresh, ClaudeCodeUI)
+
+---
+*🤖 Auto-enhanced by Claude Code Prompt Engine - Context added to 100x your outcome*

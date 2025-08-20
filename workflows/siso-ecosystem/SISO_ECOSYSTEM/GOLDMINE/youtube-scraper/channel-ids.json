@@ -1,0 +1,67 @@
+{
+  "channels": [
+    {
+      "name": "David Ondrej",
+      "id": "UCPGrgwfbkjTIgPoOh2q1BAg",
+      "category": "Claude Code Specialist"
+    },
+    {
+      "name": "Fireship",
+      "id": "UCsBjURrPoezykLs9EqgamOA",
+      "category": "Elite Educator",
+      "notes": "100-second explanations, modern stack"
+    },
+    {
+      "name": "Traversy Media",
+      "id": "UC29ju8bIPH5as8OGnQzwJyA",
+      "category": "Elite Educator",
+      "notes": "Full project builds"
+    },
+    {
+      "name": "Web Dev Simplified",
+      "id": "UCFbNIlppjAuEX4znoulh0Cw",
+      "category": "Elite Educator"
+    },
+    {
+      "name": "The Net Ninja",
+      "id": "UCW5YeuERMmlnqo4oq8vwUpg",
+      "category": "Elite Educator"
+    },
+    {
+      "name": "Theo - t3.gg",
+      "id": "UCbRP3c757lWg9M-U7TyEkXA",
+      "category": "Modern Stack Master"
+    },
+    {
+      "name": "Ben Awad",
+      "id": "UC-8QAzbLcRglXeN_MY9blyw",
+      "category": "Modern Stack Master"
+    },
+    {
+      "name": "Jack Herrington",
+      "id": "UC6vRUjYqDuoUsYsku86Lrsw",
+      "category": "Modern Stack Master"
+    },
+    {
+      "name": "Kevin Powell",
+      "id": "UCJZv4d5rbIKd4QHMPkcABCw",
+      "category": "CSS Master"
+    },
+    {
+      "name": "Codevolution",
+      "id": "UC80PWRj_ZU8Zu0HSMNVwKWw",
+      "category": "React/Next.js"
+    }
+  ],
+  "notes": {
+    "total_channels": 50,
+    "included_here": 10,
+    "instructions": "Add the remaining 40 channels by finding their channel IDs from YouTube",
+    "how_to_get_channel_id": [
+      "1. Go to the YouTube channel page",
+      "2. View page source (Ctrl+U)",
+      "3. Search for 'channelId' or 'externalChannelId'",
+      "4. Copy the UC... ID (24 characters total)"
+    ]
+  }
+}

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fix SISO Admin Access</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 10px 5px; 
+            cursor: pointer;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover { background: #ff8555; }
+        #output { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #2a2a2a; 
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Fix SISO Admin Access</h1>
+    <p>This tool will help fix the infinite loading issue by adding admin role to your user.</p>
+    
+    <div>
+        <button onclick="checkCurrentUser()">1. Check Current User</button>
+        <button onclick="addAdminRole()">2. Add Admin Role</button>
+        <button onclick="testAdminAccess()">3. Test Admin Access</button>
+        <button onclick="goToLifeLock()">4. Go to LifeLock</button>
+    </div>
+    
+    <div id="output"></div>
+
+    <script>
+        const SUPABASE_URL = 'https://avdgyrepwrvsvwgxrccr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2ZGd5cmVwd3J2c3Z3Z3hyY2NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM2MzgwODIsImV4cCI6MjA1OTIxNDA4Mn0.8MZ2etAhQ1pTJnK84uoqAFfUirv_kaoYcmKHhKgLAWU';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const output = document.getElementById('output');
+        
+        function log(message, type = 'info') {
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            output.innerHTML += `<span class="${className}">${message}</span>\n`;
+        }
+        
+        async function checkCurrentUser() {
+            output.innerHTML = '';
+            log('🔍 Checking current user...');
+            
+            const { data: { user }, error } = await supabase.auth.getUser();
+            
+            if (error) {
+                log('❌ Error: ' + error.message, 'error');
+                log('\n📝 Please sign in first at http://localhost:5173/auth', 'info');
+                return;
+            }
+            
+            if (!user) {
+                log('❌ No user signed in', 'error');
+                log('\n📝 Please sign in first at http://localhost:5173/auth', 'info');
+                return;
+            }
+            
+            log('✅ Current user: ' + user.email, 'success');
+            log('User ID: ' + user.id);
+            
+            // Check existing roles
+            const { data: roles, error: roleError } = await supabase
+                .from('user_roles')
+                .select('*')
+                .eq('user_id', user.id);
+                
+            if (roleError) {
+                log('❌ Error checking roles: ' + roleError.message, 'error');
+            } else {
+                log('\n📋 Current roles: ' + JSON.stringify(roles, null, 2));
+            }
+        }
+        
+        async function addAdminRole() {
+            output.innerHTML = '';
+            log('🔧 Adding admin role...');
+            
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            
+            if (userError || !user) {
+                log('❌ Please sign in first', 'error');
+                return;
+            }
+            
+            log('User: ' + user.email);
+            
+            // First, check if role already exists
+            const { data: existingRole, error: checkError } = await supabase
+                .from('user_roles')
+                .select('*')
+                .eq('user_id', user.id)
+                .eq('role', 'admin')
+                .single();
+                
+            if (existingRole) {
+                log('ℹ️ User already has admin role', 'info');
+                return;
+            }
+            
+            // Add admin role
+            const { error: insertError } = await supabase
+                .from('user_roles')
+                .insert({ 
+                    user_id: user.id, 
+                    role: 'admin'
+                });
+                
+            if (insertError) {
+                log('❌ Error adding role: ' + insertError.message, 'error');
+                
+                // If table doesn't exist, show SQL to create it
+                if (insertError.message.includes('relation') && insertError.message.includes('does not exist')) {
+                    log('\n📝 The user_roles table might not exist. Run this SQL in Supabase:', 'info');
+                    log(`
+CREATE TABLE IF NOT EXISTS user_roles (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    role TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_id, role)
+);
+
+-- Enable RLS
+ALTER TABLE user_roles ENABLE ROW LEVEL SECURITY;
+
+-- Create policy for users to read their own roles
+CREATE POLICY "Users can view their own roles" ON user_roles
+    FOR SELECT USING (auth.uid() = user_id);
+
+-- Create policy for inserting roles (you might want to restrict this)
+CREATE POLICY "Service role can insert roles" ON user_roles
+    FOR INSERT WITH CHECK (true);
+                    `);
+                }
+            } else {
+                log('✅ Admin role added successfully!', 'success');
+                log('\n🎉 You should now be able to access the LifeLock page', 'success');
+            }
+        }
+        
+        async function testAdminAccess() {
+            output.innerHTML = '';
+            log('🧪 Testing admin access...');
+            
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            
+            if (userError || !user) {
+                log('❌ Please sign in first', 'error');
+                return;
+            }
+            
+            // Test the checkIsAdmin logic
+            const { data, error } = await supabase
+                .from('user_roles')
+                .select('role')
+                .eq('user_id', user.id)
+                .eq('role', 'admin')
+                .single();
+                
+            if (error) {
+                if (error.code === 'PGRST116') {
+                    log('❌ User is NOT an admin', 'error');
+                } else {
+                    log('❌ Error: ' + error.message, 'error');
+                }
+            } else if (data) {
+                log('✅ User IS an admin!', 'success');
+                log('Admin check passed: ' + JSON.stringify(data));
+            }
+        }
+        
+        function goToLifeLock() {
+            log('🚀 Redirecting to LifeLock page...', 'success');
+            setTimeout(() => {
+                window.location.href = 'http://localhost:5173/admin/life-lock';
+            }, 1000);
+        }
+        
+        // Auto-check on load
+        window.onload = () => {
+            checkCurrentUser();
+        };
+    </script>
+</body>
+</html>

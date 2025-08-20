@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "metrics": {
+    "system_performance": true,
+    "agent_execution": true,
+    "cost_tracking": true,
+    "error_monitoring": true
+  },
+  "alerts": {
+    "email_enabled": false,
+    "webhook_enabled": false,
+    "log_alerts": true
+  },
+  "dashboards": {
+    "telemetry_dashboard": true,
+    "performance_dashboard": true,
+    "cost_dashboard": true
+  }
+}

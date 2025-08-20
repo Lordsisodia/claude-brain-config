@@ -1,0 +1,46 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer Circle -->
+  <circle cx="100" cy="100" r="100" fill="#000000"/>
+  <circle cx="100" cy="100" r="85" fill="#FFA726"/>
+  
+  <!-- Lion Head -->
+  <g transform="translate(100, 100)">
+    <!-- Main head shape -->
+    <ellipse cx="0" cy="6" rx="36" ry="30" fill="#000000"/>
+    
+    <!-- Mane -->
+    <circle cx="-24" cy="-6" r="12" fill="#FFA726"/>
+    <circle cx="24" cy="-6" r="12" fill="#FFA726"/>
+    <circle cx="-18" cy="18" r="9" fill="#FFA726"/>
+    <circle cx="18" cy="18" r="9" fill="#FFA726"/>
+    <circle cx="0" cy="-24" r="15" fill="#FFA726"/>
+    
+    <!-- Eyes -->
+    <circle cx="-12" cy="0" r="4.5" fill="#FFA726"/>
+    <circle cx="12" cy="0" r="4.5" fill="#FFA726"/>
+    <circle cx="-12" cy="0" r="2.4" fill="#000000"/>
+    <circle cx="12" cy="0" r="2.4" fill="#000000"/>
+    
+    <!-- Nose -->
+    <ellipse cx="0" cy="9" rx="4.5" ry="3" fill="#FFA726"/>
+    
+    <!-- Mouth -->
+    <path d="M -6 15 Q 0 21 6 15" stroke="#FFA726" stroke-width="3" fill="none"/>
+    
+    <!-- Crown -->
+    <g transform="translate(0, -45)">
+      <!-- Crown base -->
+      <rect x="-24" y="6" width="48" height="9" fill="#FFA726"/>
+      
+      <!-- Crown points -->
+      <polygon points="-18,6 -12,6 -15,-6" fill="#FFA726"/>
+      <polygon points="-6,6 6,6 0,-12" fill="#FFA726"/>
+      <polygon points="12,6 18,6 15,-6" fill="#FFA726"/>
+      
+      <!-- Crown jewels -->
+      <circle cx="-15" cy="0" r="2.4" fill="#000000"/>
+      <circle cx="0" cy="-3" r="3" fill="#000000"/>
+      <circle cx="15" cy="0" r="2.4" fill="#000000"/>
+    </g>
+  </g>
+</svg>

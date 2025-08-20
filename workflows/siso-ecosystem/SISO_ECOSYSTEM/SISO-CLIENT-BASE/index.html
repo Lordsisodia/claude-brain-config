@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SISO AGENCY</title>
+    <meta name="description" content="SISO AGENCY - Scalable Intelligence Systems Operator. Premium digital solutions for ambitious businesses." />
+    <meta name="author" content="SISO AGENCY" />
+    <meta property="og:title" content="SISO AGENCY" />
+    <meta property="og:description" content="Scalable Intelligence Systems Operator. We build and manage intelligent systems that scale with your business." />
+    <meta property="og:image" content="/lovable-uploads/c5921a2f-8856-42f4-bec5-2d08b81c5691.png" />
+    <meta property="og:url" content="https://www.siso.agency" />
+    <meta property="og:type" content="website" />
+    <!-- Cross-Origin-Opener-Policy helps with security and storage access -->
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+    <!-- Cross-Origin-Embedder-Policy helps with security and service workers -->
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="credentialless" />
+    <link rel="icon" href="/lovable-uploads/c5921a2f-8856-42f4-bec5-2d08b81c5691.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Configure allowed origins for postMessage
+      window.ALLOWED_ORIGINS = [
+        'https://gptengineer.app',
+        'http://localhost:3000',
+        'https://lovable.dev',
+        'https://www.siso.agency',
+        'https://siso.agency'
+      ];
+      
+      // Attempt to prevent third-party script errors
+      window.addEventListener('error', function(event) {
+        // Prevent errors from solanaActionsContentScript.js
+        if (event.filename && event.filename.includes('solanaActionsContentScript.js')) {
+          event.preventDefault();
+          console.warn('Suppressed error from solanaActionsContentScript.js');
+          return false;
+        }
+      }, true);
+    </script>
+    <!-- External scripts removed to fix rendering issues -->
+  </body>
+</html>

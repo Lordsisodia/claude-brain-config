@@ -1,0 +1,441 @@
+version: '3.8'
+
+services:
+  # Redis Cluster Master Nodes
+  redis-cluster-01:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-01
+    hostname: redis-cluster-01
+    ports:
+      - "6379:6379"
+      - "16379:16379"
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes-6379.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --tcp-backlog 511
+      --timeout 0
+      --databases 1
+      --logfile ""
+      --syslog-enabled no
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --lazyfree-lazy-eviction yes
+      --lazyfree-lazy-expire yes
+      --lazyfree-lazy-server-del yes
+      --replica-lazy-flush yes
+      --bind 0.0.0.0
+      --protected-mode no
+    volumes:
+      - redis-cluster-01-data:/data
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.2
+    healthcheck:
+      test: ["CMD", "redis-cli", "--cluster", "check", "172.21.0.2:6379"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  redis-cluster-02:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-02
+    hostname: redis-cluster-02
+    ports:
+      - "6380:6379"
+      - "16380:16379"
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes-6379.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --tcp-backlog 511
+      --timeout 0
+      --databases 1
+      --logfile ""
+      --syslog-enabled no
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --lazyfree-lazy-eviction yes
+      --lazyfree-lazy-expire yes
+      --lazyfree-lazy-server-del yes
+      --replica-lazy-flush yes
+      --bind 0.0.0.0
+      --protected-mode no
+    volumes:
+      - redis-cluster-02-data:/data
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.3
+    healthcheck:
+      test: ["CMD", "redis-cli", "--cluster", "check", "172.21.0.3:6379"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  redis-cluster-03:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-03
+    hostname: redis-cluster-03
+    ports:
+      - "6381:6379"
+      - "16381:16379"
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes-6379.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --tcp-backlog 511
+      --timeout 0
+      --databases 1
+      --logfile ""
+      --syslog-enabled no
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --lazyfree-lazy-eviction yes
+      --lazyfree-lazy-expire yes
+      --lazyfree-lazy-server-del yes
+      --replica-lazy-flush yes
+      --bind 0.0.0.0
+      --protected-mode no
+    volumes:
+      - redis-cluster-03-data:/data
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.4
+    healthcheck:
+      test: ["CMD", "redis-cli", "--cluster", "check", "172.21.0.4:6379"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Redis Cluster Replica Nodes
+  redis-cluster-04:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-04
+    hostname: redis-cluster-04
+    ports:
+      - "6382:6379"
+      - "16382:16379"
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes-6379.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --tcp-backlog 511
+      --timeout 0
+      --databases 1
+      --logfile ""
+      --syslog-enabled no
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --lazyfree-lazy-eviction yes
+      --lazyfree-lazy-expire yes
+      --lazyfree-lazy-server-del yes
+      --replica-lazy-flush yes
+      --bind 0.0.0.0
+      --protected-mode no
+    volumes:
+      - redis-cluster-04-data:/data
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.5
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  redis-cluster-05:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-05
+    hostname: redis-cluster-05
+    ports:
+      - "6383:6379"
+      - "16383:16379"
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes-6379.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --tcp-backlog 511
+      --timeout 0
+      --databases 1
+      --logfile ""
+      --syslog-enabled no
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --lazyfree-lazy-eviction yes
+      --lazyfree-lazy-expire yes
+      --lazyfree-lazy-server-del yes
+      --replica-lazy-flush yes
+      --bind 0.0.0.0
+      --protected-mode no
+    volumes:
+      - redis-cluster-05-data:/data
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.6
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  redis-cluster-06:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-06
+    hostname: redis-cluster-06
+    ports:
+      - "6384:6379"
+      - "16384:16379"
+    command: >
+      redis-server
+      --cluster-enabled yes
+      --cluster-config-file nodes-6379.conf
+      --cluster-node-timeout 5000
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --tcp-backlog 511
+      --timeout 0
+      --databases 1
+      --logfile ""
+      --syslog-enabled no
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --lazyfree-lazy-eviction yes
+      --lazyfree-lazy-expire yes
+      --lazyfree-lazy-server-del yes
+      --replica-lazy-flush yes
+      --bind 0.0.0.0
+      --protected-mode no
+    volumes:
+      - redis-cluster-06-data:/data
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.7
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Redis Cluster Setup Service
+  redis-cluster-init:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-init
+    command: >
+      sh -c "
+        echo 'Waiting for Redis nodes to be ready...' &&
+        sleep 30 &&
+        redis-cli --cluster create 
+        172.21.0.2:6379 
+        172.21.0.3:6379 
+        172.21.0.4:6379 
+        172.21.0.5:6379 
+        172.21.0.6:6379 
+        172.21.0.7:6379 
+        --cluster-replicas 1 --cluster-yes &&
+        echo 'Redis cluster initialized successfully!' &&
+        
+        echo 'Configuring cluster for knowledge graph...' &&
+        redis-cli -c -h 172.21.0.2 -p 6379 CONFIG SET save '900 1 300 10 60 10000' &&
+        redis-cli -c -h 172.21.0.2 -p 6379 CONFIG SET maxmemory-policy allkeys-lru &&
+        redis-cli -c -h 172.21.0.2 -p 6379 CONFIG SET timeout 300 &&
+        redis-cli -c -h 172.21.0.2 -p 6379 CONFIG SET tcp-keepalive 300 &&
+        
+        echo 'Testing cluster functionality...' &&
+        redis-cli -c -h 172.21.0.2 -p 6379 SET knowledge:test:key 'cluster-working' &&
+        redis-cli -c -h 172.21.0.3 -p 6379 GET knowledge:test:key &&
+        redis-cli -c -h 172.21.0.2 -p 6379 DEL knowledge:test:key &&
+        
+        echo 'Cluster setup completed!' &&
+        redis-cli --cluster info 172.21.0.2:6379
+      "
+    depends_on:
+      - redis-cluster-01
+      - redis-cluster-02
+      - redis-cluster-03
+      - redis-cluster-04
+      - redis-cluster-05
+      - redis-cluster-06
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.8
+
+  # Redis Cluster Manager/Monitor
+  redis-cluster-monitor:
+    image: redis:7.4-alpine
+    container_name: redis-cluster-monitor
+    command: >
+      sh -c "
+        echo 'Starting Redis cluster monitoring...' &&
+        while true; do
+          echo '=== Cluster Status ===' &&
+          date &&
+          redis-cli --cluster info 172.21.0.2:6379 &&
+          echo '=== Node Info ===' &&
+          redis-cli --cluster nodes 172.21.0.2:6379 &&
+          echo '=== Memory Usage ===' &&
+          redis-cli -h 172.21.0.2 -p 6379 INFO memory | grep 'used_memory_human' &&
+          redis-cli -h 172.21.0.3 -p 6379 INFO memory | grep 'used_memory_human' &&
+          redis-cli -h 172.21.0.4 -p 6379 INFO memory | grep 'used_memory_human' &&
+          echo '=== Key Statistics ===' &&
+          redis-cli -h 172.21.0.2 -p 6379 INFO keyspace &&
+          echo '========================' &&
+          sleep 60
+        done
+      "
+    depends_on:
+      - redis-cluster-init
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.9
+    restart: unless-stopped
+
+  # Redis Commander - Web UI for cluster management
+  redis-commander:
+    image: ghcr.io/joeferner/redis-commander:latest
+    container_name: redis-commander
+    hostname: redis-commander
+    ports:
+      - "8081:8081"
+    environment:
+      REDIS_HOSTS: >
+        cluster-01:redis-cluster-01:6379,
+        cluster-02:redis-cluster-02:6379,
+        cluster-03:redis-cluster-03:6379,
+        cluster-04:redis-cluster-04:6379,
+        cluster-05:redis-cluster-05:6379,
+        cluster-06:redis-cluster-06:6379
+      HTTP_USER: admin
+      HTTP_PASSWORD: ${REDIS_COMMANDER_PASSWORD:-admin123}
+      REDIS_CONNECTION_NAME: knowledge-graph-cluster
+    depends_on:
+      - redis-cluster-init
+    networks:
+      redis-cluster:
+        ipv4_address: 172.21.0.10
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8081/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  redis-cluster-01-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis/cluster-01
+  redis-cluster-02-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis/cluster-02
+  redis-cluster-03-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis/cluster-03
+  redis-cluster-04-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis/cluster-04
+  redis-cluster-05-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis/cluster-05
+  redis-cluster-06-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis/cluster-06
+
+networks:
+  redis-cluster:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+          gateway: 172.21.0.1
+
+# Environment Variables:
+# REDIS_COMMANDER_PASSWORD=your-secure-password-here
+
+# Cluster Configuration:
+# - 3 Master nodes (redis-cluster-01, 02, 03)
+# - 3 Replica nodes (redis-cluster-04, 05, 06) 
+# - Automatic failover enabled
+# - Data persistence with AOF and RDB
+# - Memory optimization for large datasets
+# - Monitoring and web-based management

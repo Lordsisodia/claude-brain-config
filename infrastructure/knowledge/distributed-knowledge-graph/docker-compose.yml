@@ -1,0 +1,363 @@
+version: '3.8'
+
+services:
+  # Main Federation Gateway
+  federation-gateway:
+    build:
+      context: ./graphql-gateway
+      dockerfile: Dockerfile
+    container_name: kg-federation-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      GRAPHQL_PORT: 4000
+      REDIS_HOST: redis-cluster-01
+      NEO4J_URI: bolt://neo4j-core-01:7687
+      IPFS_HOST: ipfs-node-01
+      CONSENSUS_HOST: consensus-node-01
+      VECTOR_DB_HOST: qdrant-cluster
+    depends_on:
+      - redis-cluster-01
+      - neo4j-core-01
+      - ipfs-node-01
+      - qdrant-cluster
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Knowledge Agent Service
+  knowledge-agent-service:
+    build:
+      context: ./knowledge-agent
+      dockerfile: Dockerfile
+    container_name: kg-agent-service
+    ports:
+      - "4010:4010"
+    environment:
+      NODE_ENV: production
+      AGENT_PORT: 4010
+      FEDERATION_GATEWAY: http://federation-gateway:4000
+      AGENT_TYPE: GeneralPurposeAgent
+    depends_on:
+      - federation-gateway
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+    deploy:
+      replicas: 3
+
+  # Sync Manager Service
+  sync-manager-service:
+    build:
+      context: ./sync-protocols
+      dockerfile: Dockerfile
+    container_name: kg-sync-manager
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: production
+      SYNC_PORT: 8080
+      PEERS: "ws://sync-node-01:8080,ws://sync-node-02:8080,ws://sync-node-03:8080"
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+    deploy:
+      replicas: 3
+
+  # Example Agent Instance
+  test-agent:
+    build:
+      context: ./knowledge-agent
+      dockerfile: Dockerfile
+    container_name: kg-test-agent
+    environment:
+      NODE_ENV: development
+      AGENT_ID: test-agent-001
+      AGENT_TYPE: TestAgent
+      FEDERATION_GATEWAY: http://federation-gateway:4000
+    depends_on:
+      - federation-gateway
+    networks:
+      - knowledge-graph
+    restart: "no"
+    profiles:
+      - testing
+
+  # Load Balancer (NGINX)
+  load-balancer:
+    image: nginx:1.25-alpine
+    container_name: kg-load-balancer
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - federation-gateway
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  # Monitoring Stack
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: kg-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: kg-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin123}
+      GF_USERS_ALLOW_SIGN_UP: false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: kg-node-exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  # Logging Stack
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: kg-elasticsearch
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+      xpack.security.enabled: false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kg-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.0
+    container_name: kg-logstash
+    volumes:
+      - ./logging/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+    depends_on:
+      - elasticsearch
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  # Backup and Recovery
+  backup-service:
+    build:
+      context: ./backup
+      dockerfile: Dockerfile
+    container_name: kg-backup-service
+    environment:
+      BACKUP_SCHEDULE: "0 2 * * *"  # Daily at 2 AM
+      S3_BUCKET: ${BACKUP_S3_BUCKET}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - backup-data:/backup
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+
+  # Development Tools (only for development profile)
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: kg-portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    networks:
+      - knowledge-graph
+    restart: unless-stopped
+    profiles:
+      - development
+
+  # Testing Service
+  integration-tests:
+    build:
+      context: ./testing
+      dockerfile: Dockerfile
+    container_name: kg-integration-tests
+    environment:
+      NODE_ENV: test
+      FEDERATION_GATEWAY: http://federation-gateway:4000
+      TEST_TIMEOUT: 300000
+    depends_on:
+      - federation-gateway
+      - knowledge-agent-service
+    networks:
+      - knowledge-graph
+    restart: "no"
+    profiles:
+      - testing
+    command: npm test
+
+# Include external service compositions
+include:
+  # Neo4j Cluster
+  - ./neo4j-cluster/docker-compose.neo4j.yml
+  
+  # Redis Cluster  
+  - ./redis-cluster/docker-compose.redis.yml
+  
+  # IPFS Cluster
+  - ./ipfs-storage/docker-compose.ipfs.yml
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+  elasticsearch-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/elasticsearch
+  backup-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/backup
+  portainer-data:
+    driver: local
+
+networks:
+  knowledge-graph:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+
+# Environment Variables Configuration
+x-environment: &default-environment
+  NODE_ENV: ${NODE_ENV:-production}
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+  
+  # Database connections
+  NEO4J_URI: ${NEO4J_URI:-bolt://neo4j-core-01:7687}
+  NEO4J_USERNAME: ${NEO4J_USERNAME:-neo4j}
+  NEO4J_PASSWORD: ${NEO4J_PASSWORD:-password}
+  
+  # Redis cluster
+  REDIS_CLUSTER_HOSTS: ${REDIS_CLUSTER_HOSTS:-redis-cluster-01:6379,redis-cluster-02:6379,redis-cluster-03:6379}
+  REDIS_PASSWORD: ${REDIS_PASSWORD}
+  
+  # Vector databases
+  PINECONE_API_KEY: ${PINECONE_API_KEY}
+  PINECONE_ENVIRONMENT: ${PINECONE_ENVIRONMENT:-us-west1-gcp-free}
+  WEAVIATE_HOST: ${WEAVIATE_HOST:-weaviate-cluster}
+  QDRANT_HOST: ${QDRANT_HOST:-qdrant-cluster}
+  QDRANT_API_KEY: ${QDRANT_API_KEY}
+  
+  # IPFS configuration
+  IPFS_NODES: ${IPFS_NODES:-ipfs-node-01:5001,ipfs-node-02:5001,ipfs-node-03:5001}
+  
+  # Consensus configuration
+  CONSENSUS_NODES: ${CONSENSUS_NODES:-consensus-node-01:8545,consensus-node-02:8545,consensus-node-03:8545}
+  
+  # Authentication and security
+  JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+  API_RATE_LIMIT: ${API_RATE_LIMIT:-1000}
+  CORS_ORIGINS: ${CORS_ORIGINS:-*}
+  
+  # Performance settings
+  MAX_CONCURRENT_OPERATIONS: ${MAX_CONCURRENT_OPERATIONS:-100}
+  CACHE_TTL: ${CACHE_TTL:-300}
+  BATCH_SIZE: ${BATCH_SIZE:-1000}
+  
+  # Monitoring and observability
+  PROMETHEUS_ENDPOINT: ${PROMETHEUS_ENDPOINT:-http://prometheus:9090}
+  GRAFANA_ENDPOINT: ${GRAFANA_ENDPOINT:-http://grafana:3000}
+  ELASTICSEARCH_ENDPOINT: ${ELASTICSEARCH_ENDPOINT:-http://elasticsearch:9200}
+
+# Health check template
+x-healthcheck: &default-healthcheck
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 60s
+
+# Deployment configuration for production
+x-deploy: &default-deploy
+  restart_policy:
+    condition: unless-stopped
+    delay: 5s
+    max_attempts: 3
+  resources:
+    limits:
+      cpus: '2'
+      memory: 4G
+    reservations:
+      cpus: '0.5'
+      memory: 1G
+
+# Usage:
+# Development: docker-compose --profile development up -d
+# Production: docker-compose up -d  
+# Testing: docker-compose --profile testing up --abort-on-container-exit
+# Full stack with external services: docker-compose -f docker-compose.yml -f neo4j-cluster/docker-compose.neo4j.yml -f redis-cluster/docker-compose.redis.yml -f ipfs-storage/docker-compose.ipfs.yml up -d
